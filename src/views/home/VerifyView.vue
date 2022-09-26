@@ -14,17 +14,25 @@
                 <span class="w-10">{{(index + 1)}})</span>
                 <span class="px-2 py-2 rounded w-full bg-gray-200 dark:bg-gray-600 dark:text-gray-300">
                     <input type="text" v-model="mnemonic[index]"
-                        class="!outline-none !focus:ring-transparent bg-transparent w-full border-b-2 border-gray-400" />
+                        class="!outline-none !focus:ring-transparent bg-transparent w-full border-b-2 border-gray-400"
+                        :disabled="loading" />
                 </span>
             </div>
         </div>
 
-        <button @click="verify"
-            class="m-auto mt-6 text-center block px-4 py-2 my-1 w-full max-w-xs rounded transition-colors text-gray-50 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
-            {{t("Create.Verify")}}</button>
-        <router-link to="/"
-            class="m-auto text-center block px-4 py-2 my-2 w-full max-w-xs rounded transition-colors text-gray-50 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
-            {{t("Create.Back")}}</router-link>
+        <div v-if="!loading">
+            <button @click="verify"
+                class="m-auto mt-6 text-center block px-4 py-2 my-1 w-full max-w-xs rounded transition-colors text-gray-50 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
+                {{t("Create.Verify")}}</button>
+            <router-link to="/"
+                class="m-auto text-center block px-4 py-2 my-2 w-full max-w-xs rounded transition-colors text-gray-50 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
+                {{t("Create.Back")}}</router-link>
+        </div>
+        <div v-else>
+            <div class="mt-6 mb-4 text-center">
+                <span class="loader"></span>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -41,6 +49,7 @@ const { t, tm } = useI18n();
 const router = useRouter();
 const uiState = coreUIStore.getState();
 const errorMessage = ref("");
+const loading = ref(false);
 
 const verify = () => {
     const genMnemonic = uiState.tmpMnemonic.join(" ");
@@ -53,6 +62,7 @@ const verify = () => {
         errorMessage.value = t("Create.Errors.UserInputFailed");
     } else {
         // show loading
+        loading.value = true;
     }
 };
 </script>

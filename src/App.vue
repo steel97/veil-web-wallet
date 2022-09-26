@@ -8,6 +8,7 @@
 <script lang="ts" setup>
 import "./assets/styles/tailwind.css";
 import "./assets/styles/transitions.css";
+import "./assets/styles/loaders.css";
 import "./assets/fonts/stylesheet.css";
 
 import { Logging, LogLevel } from "@/core/Logging";
