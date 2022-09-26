@@ -1,0 +1,8 @@
+{
+    "DevToolsWarn": "██╗    ██╗ █████╗ ██████╗ ███╗   ██╗██╗███╗   ██╗ ██████╗ ██╗██╗██╗\n██║    ██║██╔══██╗██╔══██╗████╗  ██║██║████╗  ██║██╔════╝ ██║██║██║\n██║ █╗ ██║███████║██████╔╝██╔██╗ ██║██║██╔██╗ ██║██║  ███╗██║██║██║\n██║███╗██║██╔══██║██╔══██╗██║╚██╗██║██║██║╚██╗██║██║   ██║╚═╝╚═╝╚═╝\n╚███╔███╔╝██║  ██║██║  ██║██║ ╚████║██║██║ ╚████║╚██████╔╝██╗██╗██╗\n ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚═╝╚═╝╚═╝\n\nWARNING!!! Console usage recommended for those who understand how to use it.\nIf someone offers you to write commands here to get free in-game items and/or\nin-game currency it's probably scammers. In this case we recommend you to\nclose this window and contact with game administration ASAP.",
+    "Formats": {
+        "long": "dd/MM/yyyy HH:mm:ss",
+        "short": "dd/MM/yyyy"
+    },
+    "AppName": "Veil Wallet"
+}

@@ -1,0 +1,8 @@
+{
+    "Create": "Create wallet",
+    "Import": "Import seed phrase",
+    "Notice": [
+        "Warning! This is alpha software. Consider not using it with high amounts.",
+        "It may contains serious bugs."
+    ]
+}

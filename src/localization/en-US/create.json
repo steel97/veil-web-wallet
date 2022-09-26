@@ -1,0 +1,15 @@
+{
+    "YourMnemonic": "1. Your mnemonic phrase",
+    "VerifyMnemonic": "2. Write your mnemonic phrase",
+    "DownloadMnemonic": "Save phrase",
+    "Next": "Next",
+    "Back": "Back",
+    "Verify": "Verify and create",
+    "Notice": [
+        "Please save mnemonic phrase! You can restore your wallet",
+        "only with this phrase"
+    ],
+    "Errors": {
+        "UserInputFailed": "Wrong mnemonic phrase!"
+    }
+}
