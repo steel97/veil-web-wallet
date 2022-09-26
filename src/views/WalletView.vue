@@ -7,9 +7,9 @@
                 </div>
                 <div v-else>
                     <div class="flex justify-between w-full">
-                        <div class="flex flex-col items-center">
+                        <div class="flex items-center">
                             <img src="../assets/logo.png" width="42" alt="Veil Web Wallet" class="block">
-                            <div class="mt-4 font-semibold my-1 text-xs uppercase hidden">
+                            <div class="font-semibold ml-1 text-xs uppercase hidden sm:block">
                                 {{uiState.currentWallet?.name}}
                             </div>
                         </div>
@@ -120,7 +120,7 @@ onMounted(async () => {
     width: 100%;
 }
 
-@media (min-width: 700px) {
+@media (min-width: 768px) {
     .static-width {
         width: 106px;
     }
