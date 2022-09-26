@@ -34,7 +34,7 @@
                     </button>
                 </div>
                 <div class="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                    Version: {{version}}
+                    {{t("Core.Version")}}: <a :href="link" target="_blank" class="underline">{{version}}</a>
                 </div>
             </div>
         </div>
@@ -58,6 +58,11 @@ const { setLocale } = useLocalization();
 const selectedLocale = ref("");
 
 const version = computed(() => process.env.VUE_APP_COMMIT_HASH ?? "Unknown");
+const link = computed(() => {
+    const v = version.value;
+    if (v == "Unknown") return process.env.VUE_APP_REPOSITORY;
+    return process.env.VUE_APP_REPOSITORY + "commit/" + v;
+});
 
 watch(selectedLocale, (nval) => {
     const split = nval.split("-");
