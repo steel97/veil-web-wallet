@@ -1,0 +1,18 @@
+{
+    "SetInformation": "",
+    "WalletName": "Имя кошелька",
+    "PasswordTitle": "Пароль (не обязательно)",
+    "PasswordPlaceholder": "Пароль",
+    "RePasswordTitle": "Повторите пароль",
+    "RePasswordPlaceholder": "Повторите пароль",
+    "Save": "Сохранить",
+    "Back": "Назад",
+    "Errors": {
+        "PasswordTooShort": "Мин. длина пароля {len} символов",
+        "PasswordNotMatch": "Пароли не совпадают",
+        "NameTooLong": "Имя слишком длинное (макс. длина {len})",
+        "CantSync": "Не удалось сохранить кошелек!",
+        "VerifyFailed": "Произошла ошибка!",
+        "UnknownError": "Произошла ошибка!"
+    }
+}

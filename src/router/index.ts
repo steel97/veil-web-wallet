@@ -4,6 +4,8 @@ import WelcomeView from "@/views/home/WelcomeView.vue";
 import CreateView from "@/views/home/CreateView.vue";
 import VerifyView from "@/views/home/VerifyView.vue";
 import ImportView from "@/views/home/ImportView.vue";
+import SaveView from "@/views/home/SaveView.vue";
+import WalletView from "@/views/WalletView.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -30,8 +32,18 @@ const routes: Array<RouteRecordRaw> = [
         path: "/import",
         name: "import",
         component: ImportView
+      },
+      {
+        path: "/save",
+        name: "save",
+        component: SaveView
       }
     ]
+  },
+  {
+    path: "/wallet",
+    name: "wallet",
+    component: WalletView
   }
 ];
 

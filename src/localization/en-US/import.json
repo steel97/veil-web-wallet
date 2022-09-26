@@ -1,5 +1,8 @@
 {
     "Title": "Write your mnemonic phrase",
     "Import": "Import",
-    "Back": "Back"
+    "Back": "Back",
+    "Errors": {
+        "UserInputFailed": "Mnenmonic phrase contains wrong words!"
+    }
 }

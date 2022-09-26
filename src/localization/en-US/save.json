@@ -1,0 +1,18 @@
+{
+    "SetInformation": "",
+    "WalletName": "Wallet name",
+    "PasswordTitle": "Wallet password (optional)",
+    "PasswordPlaceholder": "Password",
+    "RePasswordTitle": "Repeat password",
+    "RePasswordPlaceholder": "Repeat password",
+    "Save": "Save",
+    "Back": "Back",
+    "Errors": {
+        "PasswordTooShort": "Password should be at least {len} length",
+        "PasswordNotMatch": "Passwords doesn't match",
+        "NameTooLong": "Name is too long ({len} maximum)",
+        "CantSync": "Can't save wallet!",
+        "VerifyFailed": "Error occured!",
+        "UnknownError": "Error occured!"
+    }
+}

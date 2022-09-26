@@ -4,7 +4,7 @@
     "DownloadMnemonic": "Save phrase",
     "Next": "Next",
     "Back": "Back",
-    "Verify": "Verify and create",
+    "Verify": "Verify",
     "Notice": [
         "Please save mnemonic phrase! You can restore your wallet",
         "only with this phrase"

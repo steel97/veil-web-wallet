@@ -1,4 +1,4 @@
-//import { sha256 } from "js-sha256";
+import { sha256 } from "js-sha256";
 //import { DateTime } from "luxon";
 
 // async
@@ -53,7 +53,7 @@ export const pad = (num: number, size: number) => {
 
 
 
-//export const hash = (base: string) => sha256(base);
+export const hash = (base: string) => sha256(base);
 
 
 

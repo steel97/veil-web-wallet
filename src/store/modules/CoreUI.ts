@@ -1,16 +1,25 @@
+import { IWallet } from "@/database/WalletDb";
 import { Store } from "@/store/Store";
 
 interface CoreUI extends Object {
     darkTheme: boolean;
+    isNewWallet: boolean;
     tmpMnemonic: Array<string>;
+    currentWallet: IWallet | undefined;
 }
 
 class CoreUIStore extends Store<CoreUI> {
     constructor() {
         super({
             darkTheme: false,
-            tmpMnemonic: []
+            isNewWallet: false,
+            tmpMnemonic: [],
+            currentWallet: undefined
         });
+    }
+
+    setIsNewWallet(state: boolean) {
+        this.state.isNewWallet = state;
     }
 
     setTheme(state: boolean) {
@@ -19,6 +28,10 @@ class CoreUIStore extends Store<CoreUI> {
 
     setTmpMnemonic(state: Array<string>) {
         this.state.tmpMnemonic = state;
+    }
+
+    setCurrentWallet(state: IWallet) {
+        this.state.currentWallet = state;
     }
 }
 

@@ -63,6 +63,7 @@ const downloadConfig = () => {
 
 onMounted(() => {
     mnemonic.value = Lightwallet.generateMnemonic();
+    coreUIStore.setIsNewWallet(true);
     coreUIStore.setTmpMnemonic(mnemonic.value);
 });
 </script>
