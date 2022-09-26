@@ -5,6 +5,7 @@ import CreateView from "@/views/home/CreateView.vue";
 import VerifyView from "@/views/home/VerifyView.vue";
 import ImportView from "@/views/home/ImportView.vue";
 import SaveView from "@/views/home/SaveView.vue";
+import UnlockView from "@/views/home/UnlockView.vue";
 import WalletView from "@/views/WalletView.vue";
 
 const routes: Array<RouteRecordRaw> = [
@@ -37,6 +38,11 @@ const routes: Array<RouteRecordRaw> = [
         path: "/save",
         name: "save",
         component: SaveView
+      },
+      {
+        path: "/unlock",
+        name: "unlock",
+        component: UnlockView
       }
     ]
   },

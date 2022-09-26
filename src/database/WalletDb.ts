@@ -13,6 +13,8 @@ export class WalletDb extends Dexie {
         this.version(version).stores({
             wallets: "++id"
         });
+
+        this.wallets = this.table("wallets");
     }
 }
 

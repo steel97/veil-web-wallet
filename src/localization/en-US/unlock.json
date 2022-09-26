@@ -1,0 +1,9 @@
+{
+    "Information": "Type your password to unlock wallet",
+    "PasswordTitle": "Your password",
+    "PasswordPlaceholder": "Password",
+    "Unlock": "Unlock",
+    "Errors": {
+        "InvalidPassword": "Invalid password!"
+    }
+}

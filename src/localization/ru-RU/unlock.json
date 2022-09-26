@@ -1,0 +1,9 @@
+{
+    "Information": "Введите пароль для разблокировки кошелька",
+    "PasswordTitle": "Ваш пароль",
+    "PasswordPlaceholder": "Пароль",
+    "Unlock": "Разблокировать",
+    "Errors": {
+        "InvalidPassword": "Неверный пароль!"
+    }
+}

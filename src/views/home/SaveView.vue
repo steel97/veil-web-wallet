@@ -55,7 +55,7 @@ import { useRouter } from "vue-router";
 import { applyEncryptionMiddleware, cryptoOptions } from "dexie-encrypted";
 import { hash } from "@/core/Core";
 import { WalletDb, IWallet } from "@/database/WalletDb";
-import Dexie from "dexie";
+import { PreferenceKey, Preferences } from "@/core/Preferences";
 
 const { t } = useI18n();
 const router = useRouter();
@@ -145,13 +145,14 @@ const save = async () => {
 
     // save wallet
     const walname = name.value.length > 0 ? name.value : "Default";
-    localStorage.setItem("primary-wallet", walname);
+    Preferences.setString(PreferenceKey.PRIMARY_WALLET, walname);
 
-    const symmetricKey = Buffer.from(hash(password.value.length > 0 ? password.value : ""), "hex");
+    const curHash = hash(password.value.length > 0 ? password.value : "");
+    const symmetricKey = Buffer.from(curHash, "hex");
     const db = new WalletDb(walname);
     applyEncryptionMiddleware(db, symmetricKey, {
         wallets: cryptoOptions.NON_INDEXED_FIELDS
-    }, async (db) => {
+    }, async () => {
 
     });
 
@@ -170,6 +171,7 @@ const save = async () => {
 
     // save current IWallet to ui store
     coreUIStore.setCurrentWallet(dbWal);
+    coreUIStore.setPasshash(curHash);
 
     // show loading
     loading.value = false;

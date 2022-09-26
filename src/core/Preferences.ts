@@ -1,7 +1,8 @@
 export enum PreferenceKey {
     LOCALE = "vww.storage.locale",
     INITIAL_RUN = "vww.core.initial_run",
-    DARK_THEME = "vww.core.dark_theme"
+    DARK_THEME = "vww.core.dark_theme",
+    PRIMARY_WALLET = "vww.wallet.primary"
 }
 
 export class Preferences {

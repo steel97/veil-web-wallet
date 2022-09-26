@@ -14,11 +14,15 @@ import "./assets/fonts/stylesheet.css";
 import { Logging, LogLevel } from "@/core/Logging";
 import { onMounted } from "vue";
 import { useLocalization } from "@/composables/core/Localization";
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import devTools, { DevToolsEvent } from "devtools-detect";
 import { useTheming } from "./composables/core/Theming";
 import { coreUIStore } from "./store/modules/CoreUI";
+import { applyEncryptionMiddleware, cryptoOptions } from "dexie-encrypted";
+import { hash } from "@/core/Core";
+import { WalletDb } from "@/database/WalletDb";
+import { PreferenceKey, Preferences } from "./core/Preferences";
 
 const uiState = coreUIStore.getState();
 
@@ -26,7 +30,6 @@ const { setLocale, detectLocale } = useLocalization();
 const { loadMode } = useTheming();
 const { t } = useI18n();
 const router = useRouter();
-const route = useRoute();
 
 const printWarnMessage = () => {
   // eslint-disable-next-line
@@ -66,6 +69,31 @@ onMounted(async () => {
     }, 250);
   }*/
 
+  const walname = Preferences.getString(PreferenceKey.PRIMARY_WALLET, "");
+  if (walname == "") return;
+
+  const emptyHash = hash("");
+  const symmetricKey = Buffer.from(emptyHash, "hex");
+  const db = new WalletDb(walname);
+  applyEncryptionMiddleware(db, symmetricKey, {
+    wallets: cryptoOptions.NON_INDEXED_FIELDS
+  }, async () => {
+    // redirect to enter password state
+    router.replace("/unlock");
+  });
+
+  db.setDb(2);
+
+  const wallet = await db.wallets.get(1);
+  if (wallet == undefined) {
+    // drop table?
+    return;
+  }
+
+  coreUIStore.setCurrentWallet(wallet);
+  coreUIStore.setPasshash(emptyHash);
+
+  router.replace("/wallet");
 });
 </script>
 <style lang="scss">

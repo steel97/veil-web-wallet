@@ -6,6 +6,7 @@ interface CoreUI extends Object {
     isNewWallet: boolean;
     tmpMnemonic: Array<string>;
     currentWallet: IWallet | undefined;
+    passHash: string;
 }
 
 class CoreUIStore extends Store<CoreUI> {
@@ -14,7 +15,8 @@ class CoreUIStore extends Store<CoreUI> {
             darkTheme: false,
             isNewWallet: false,
             tmpMnemonic: [],
-            currentWallet: undefined
+            currentWallet: undefined,
+            passHash: ""
         });
     }
 
@@ -32,6 +34,10 @@ class CoreUIStore extends Store<CoreUI> {
 
     setCurrentWallet(state: IWallet) {
         this.state.currentWallet = state;
+    }
+
+    setPasshash(state: string) {
+        this.state.passHash = state;
     }
 }
 
