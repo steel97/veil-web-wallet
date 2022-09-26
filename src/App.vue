@@ -1,6 +1,6 @@
 <template>
   <div class="transition-all" :class="uiState.darkTheme ? 'dark' : ''">
-    <div class="transition-all bg-gray-50 text-gray-700 dark:bg-gray-800 dark:text-gray-50">
+    <div class="transition-all bg-gray-50 text-gray-700 dark:bg-gray-800 dark:text-gray-300">
       <router-view />
     </div>
   </div>
@@ -23,6 +23,7 @@ import { applyEncryptionMiddleware, cryptoOptions } from "dexie-encrypted";
 import { hash } from "@/core/Core";
 import { WalletDb } from "@/database/WalletDb";
 import { PreferenceKey, Preferences } from "./core/Preferences";
+import LightwalletService from "./lightwallet/LightwalletService";
 
 const uiState = coreUIStore.getState();
 
@@ -68,6 +69,8 @@ onMounted(async () => {
       document.body.removeChild(preloaderElement);
     }, 250);
   }*/
+
+  LightwalletService.run();
 
   const walname = Preferences.getString(PreferenceKey.PRIMARY_WALLET, "");
   if (walname == "") return;

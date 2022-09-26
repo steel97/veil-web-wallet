@@ -7,6 +7,7 @@ import ImportView from "@/views/home/ImportView.vue";
 import SaveView from "@/views/home/SaveView.vue";
 import UnlockView from "@/views/home/UnlockView.vue";
 import WalletView from "@/views/WalletView.vue";
+import { coreUIStore } from "@/store/modules/CoreUI";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -49,13 +50,27 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/wallet",
     name: "wallet",
-    component: WalletView
+    component: WalletView,
+    meta: {
+      wallet: true
+    }
   }
 ];
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes
+});
+
+router.beforeEach(route => {
+  if (!route.meta.wallet)
+    return;
+
+  const cwallet = coreUIStore.getState().currentWallet;
+  if (cwallet == undefined) {
+    router.replace("/");
+    return;
+  }
 });
 
 export default router;
