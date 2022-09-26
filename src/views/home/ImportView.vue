@@ -14,7 +14,7 @@
                 <span class="w-10">{{(index + 1)}})</span>
                 <span class="px-2 py-2 rounded w-full bg-gray-200 dark:bg-gray-600 dark:text-gray-300">
                     <input type="text" v-model="mnemonic[index]"
-                        class="!outline-none bg-transparent w-full border-b-2 border-gray-400" />
+                        class="!outline-none !focus:ring-transparent bg-transparent w-full border-b-2 border-gray-400" />
                 </span>
             </div>
         </div>
