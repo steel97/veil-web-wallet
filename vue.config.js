@@ -4,6 +4,11 @@ const webpack = require("webpack");
 module.exports = defineConfig({
   transpileDependencies: true,
   publicPath: "./",
+  pwa: {
+    themeColor: "#FFFFFF",
+    appleMobileWebAppCapable: "yes",
+
+  },
   configureWebpack: config => {
     config.experiments = {
       asyncWebAssembly: true,
