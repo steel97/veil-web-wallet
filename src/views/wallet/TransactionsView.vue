@@ -76,9 +76,9 @@ const { t } = useI18n();
 const addressIndex = ref(0);
 const isSendState = ref(false);
 
-watch(uiState, (v) => {
-    if (addressIndex.value == v.addressIndex) return;
-    addressIndex.value = v.addressIndex;
+watch(uiState, () => {
+    if (addressIndex.value == uiState.addressIndex) return;
+    addressIndex.value = uiState.addressIndex;
     scan();
 });
 const address = computed(() => {

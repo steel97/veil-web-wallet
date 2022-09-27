@@ -139,7 +139,7 @@ const next = async () => {
 const publish = async () => {
     try {
         loading.value = true;
-        const res = await LightwalletService.publishTransaction(rawTx!);
+        const res = await LightwalletService.publishTransaction(props.addressIndex, rawTx!);
         if (res == undefined) throw new Error();
         successMessage.value = t("Wallet.TxSent");
     } catch {

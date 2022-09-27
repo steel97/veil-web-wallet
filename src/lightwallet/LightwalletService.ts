@@ -14,6 +14,8 @@ export default class LightwalletService {
 
     private static _addresses: Array<LightwalletAddress> = [];
     private static _watching = false;
+    private static _pendingUtxos: Array<string> = [];
+    private static _lockedUtxos: Array<string> = [];
 
     public static getAddress(index = 0) {
         return LightwalletService._addresses[index];
@@ -29,17 +31,19 @@ export default class LightwalletService {
             const recipientAddress = CVeilAddress.parse(LightwalletService.params, recipient);
 
             const utxos = (await address.getUnspentOutputs()).sort((a, b) => a.getAmount(LightwalletService.params) - b.getAmount(LightwalletService.params));
-            const pending = LightwalletService._walletData.pendingTxes;
+            const pending = LightwalletService._lockedUtxos;
 
             const targetUtxos: Array<CWatchOnlyTxWithIndex> = [];
             const fee = LightwalletService.getFee();
             const targetAmount = amount + fee;
             let currentAmount = 0;
+            LightwalletService._pendingUtxos = [];
             for (const utxo of utxos) {
                 const isPending = pending?.find(val => val == address.getStringAddress() + "_" + utxo.getId());
                 if (isPending) break;
                 currentAmount += utxo.getAmount(LightwalletService.params);
                 targetUtxos.push(utxo);
+                LightwalletService._pendingUtxos.push(utxo.getId()!);
                 if (currentAmount >= targetAmount)
                     break;
             }
@@ -52,15 +56,26 @@ export default class LightwalletService {
         }
     }
 
-    public static async publishTransaction(rawTx: string) {
+    public static async publishTransaction(index: number, rawTx: string) {
         try {
+            const address = LightwalletService.getAddress(index);
             const res = await Lightwallet.publishTransaction(rawTx);
             if (res.errorCode != null) {
                 return undefined;
             }
-
-            LightwalletService._walletData.pendingTxes.push(res.txid!);
             // TO-DO save walletData to dexie database
+            // TO-DO return from build transaction which utxos was used
+            if (res.txid != undefined) {
+                LightwalletService._pendingUtxos.forEach(utxo => {
+                    LightwalletService._lockedUtxos.push(address.getStringAddress() + "_" + utxo);
+                });
+            }
+
+            try {
+                await address.fetchTxes();
+            } catch {
+
+            }
             return res.txid;
         } catch {
             return undefined;
@@ -70,16 +85,17 @@ export default class LightwalletService {
     public static async getAvailableBalance(index = 0) {
         const address = LightwalletService.getAddress(index);
         const locked = await LightwalletService.getLockedBalance(index);
-        return (await address.getBalance()) - locked;
+        const balance = await address.getBalance();
+        return balance - locked;
     }
 
     public static async getLockedBalance(index = 0) {
         const address = LightwalletService.getAddress(index);
         const utxos = await address.getUnspentOutputs();
-        const pending = LightwalletService._walletData.pendingTxes;
+        const pending = LightwalletService._lockedUtxos;
         let locked = 0;
         utxos.forEach(utxo => {
-            if (pending?.find(val => val == address.getStringAddress() + "_" + utxo.getId())) {
+            if (pending?.find(val => val == address.getStringAddress() + "_" + utxo.getId()) != undefined) {
                 locked += utxo.getAmount(LightwalletService.params);
             }
         });
@@ -93,7 +109,7 @@ export default class LightwalletService {
     public static async getUtxos(index: number) {
         const address = LightwalletService.getAddress(index);
         const utxos = (await address.getAllOutputs() ?? []).reverse();
-        const pending = LightwalletService._walletData.pendingTxes;
+        const pending = LightwalletService._lockedUtxos;
 
         const targetUtxos: Array<IUtxo> = [];
         utxos.forEach(utxo => {
@@ -141,6 +157,7 @@ export default class LightwalletService {
         } catch (e) {
             Logging.trace(e, LogLevel.ERROR);
         }
+        // TO-DO fill _lockedUtxos from db
         setTimeout(LightwalletService.watchWallet, parseInt(reloadDelay));
     }
 
