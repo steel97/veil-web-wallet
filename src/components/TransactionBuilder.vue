@@ -1,5 +1,18 @@
 <template>
     <div class="flex justify-center">
+        <transition name="fade" mode="out-in">
+            <div class="absolute bg-gray-900/70 w-full h-screen top-0 left-0 flex justify-center items-center"
+                v-if="showQr">
+                <div class="max-w-xs bg-gray-50 text-gray-700 dark:bg-gray-800 dark:text-gray-300 p-4 rounded">
+                    <qrcode-stream @decode="onQrDecode"></qrcode-stream>
+                    <qrcode-drop-zone @decode="onQrDecode"></qrcode-drop-zone>
+                    <qrcode-capture @decode="onQrDecode"></qrcode-capture>
+                    <button @click="closeQr"
+                        class="m-auto text-center block px-4 py-2 my-1 w-full rounded transition-colors text-gray-50 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
+                        {{t("Wallet.Back")}}</button>
+                </div>
+            </div>
+        </transition>
         <div class="max-w-md w-full">
             <transition name="fade" mode="out-in">
                 <div class="m-auto max-w-md text-sm text-center text-rose-600 dark:text-rose-500 mt-2"
@@ -14,15 +27,34 @@
                     <div>
                         <div class="mt-4">
                             <label for="address" class="block text-center">{{t("Wallet.TargetAddress")}}:</label>
-                            <input v-model="address"
-                                class="text-center !rounded-none !outline-none !focus:ring-transparent bg-transparent w-full border-b-2 border-gray-400"
-                                type="text" id="address" :placeholder="t('Wallet.TargetAddressPlaceholder')" />
+                            <div class="flex">
+                                <div class="h-5 w-5"></div>
+                                <input v-model="address"
+                                    class="grow text-center !rounded-none !outline-none !focus:ring-transparent bg-transparent w-full border-b-2 border-gray-400"
+                                    type="text" id="address" :placeholder="t('Wallet.TargetAddressPlaceholder')" />
+                                <button @click="showQr = true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor"
+                                        class="w-6 h-6 text-blue-500 hover:text-blue-600 dark:text-blue-600 dark:hover:text-blue-700 transition-colors">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M6.75 6.75h.75v.75h-.75v-.75zM6.75 16.5h.75v.75h-.75v-.75zM16.5 6.75h.75v.75h-.75v-.75zM13.5 13.5h.75v.75h-.75v-.75zM13.5 19.5h.75v.75h-.75v-.75zM19.5 13.5h.75v.75h-.75v-.75zM19.5 19.5h.75v.75h-.75v-.75zM16.5 16.5h.75v.75h-.75v-.75z" />
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                         <div class="mt-4">
                             <label for="amount" class="block text-center">{{t("Wallet.Amount")}}:</label>
-                            <input v-model="amount"
-                                class="text-center !rounded-none !outline-none !focus:ring-transparent bg-transparent w-full border-b-2 border-gray-400"
-                                type="text" id="amount" :placeholder="t('Wallet.AmountPlaceholder')" />
+                            <div class="flex">
+                                <div class="h-5 w-5"></div>
+                                <input v-model="amount"
+                                    class="grow text-center !rounded-none !outline-none !focus:ring-transparent bg-transparent w-full border-b-2 border-gray-400"
+                                    type="text" id="amount" :placeholder="t('Wallet.AmountPlaceholder')" />
+                                <div class="fixed-width">
+                                    <img src="../assets/logo.png" width="20" alt="Veil coin" class="block ml-1 my-1">
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -98,8 +130,10 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
-import LightwalletService from "@/lightwallet/LightwalletService";
 import { computed } from "@vue/reactivity";
+import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from "vue-qrcode-reader";
+import LightwalletService from "@/lightwallet/LightwalletService";
+import { getParameterByName } from "@/core/Core";
 
 // eslint-disable-next-line
 const props = defineProps({
@@ -118,6 +152,47 @@ enum TxBuildState {
 const { t } = useI18n();
 const loading = ref(false);
 const step = ref(TxBuildState.INFORMATION);
+
+const showQr = ref(false);
+
+const closeQr = () => {
+    showQr.value = false;
+};
+
+const onQrDecode = (decodedString: string) => {
+    // check veil:<> address
+    let target = "";
+    if (decodedString.indexOf(":") !== -1) {
+        const dstr = decodedString.split(":");
+        if (dstr[0].toLowerCase() == "veil") {
+            target = dstr[1];
+        } else {
+            return;
+        }
+    } else {
+        target = decodedString;
+    }
+
+    // check amounts
+    const localAmount = getParameterByName("amount", target);
+    console.log(localAmount);
+
+    target = target.split("?")[0];
+
+    // verify address
+    if (!LightwalletService.isAddressValid(target)) {
+        return;
+    }
+    if (localAmount != undefined) {
+        const amountNum = parseFloat(localAmount.replaceAll(",", "."));
+        if (amountNum > 0 && isFinite(amountNum) && !isNaN(amountNum)) {
+            amount.value = LightwalletService.formatAmount(amountNum);
+        }
+    }
+
+    address.value = target;
+    closeQr();
+};
 
 const errorMessage = ref("");
 const successMessage = ref("");

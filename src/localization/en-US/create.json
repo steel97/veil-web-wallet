@@ -6,8 +6,8 @@
     "Back": "Back",
     "Verify": "Verify",
     "Notice": [
-        "Please save mnemonic phrase! You can restore your wallet",
-        "only with this phrase"
+        "Make sure you save this phrase, otherwise",
+        "you can't restore your access to your wallet."
     ],
     "Errors": {
         "UserInputFailed": "Wrong mnemonic phrase!"

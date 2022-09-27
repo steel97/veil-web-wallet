@@ -26,6 +26,16 @@ export default class LightwalletService {
         return (Number(LightwalletService.params.CENT) / Number(LightwalletService.params.COIN));
     }
 
+    public static isAddressValid(address: string) {
+        try {
+            CVeilAddress.parse(LightwalletService.params, address);
+            return true;
+        } catch {
+
+        }
+        return false;
+    }
+
     public static async buildTransaction(index: number, amount: number, recipient: string) {
         try {
             const address = LightwalletService.getAddress(index);
