@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
+import { coreUIStore } from "@/store/modules/CoreUI";
 import HomeView from "@/views/HomeView.vue";
 import WelcomeView from "@/views/home/WelcomeView.vue";
 import CreateView from "@/views/home/CreateView.vue";
@@ -7,7 +8,7 @@ import ImportView from "@/views/home/ImportView.vue";
 import SaveView from "@/views/home/SaveView.vue";
 import UnlockView from "@/views/home/UnlockView.vue";
 import WalletView from "@/views/WalletView.vue";
-import { coreUIStore } from "@/store/modules/CoreUI";
+import TransactionsView from "@/views/wallet/TransactionsView.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -53,7 +54,14 @@ const routes: Array<RouteRecordRaw> = [
     component: WalletView,
     meta: {
       wallet: true
-    }
+    },
+    children: [
+      {
+        path: "/wallet",
+        name: "transactions",
+        component: TransactionsView
+      }
+    ]
   }
 ];
 

@@ -16,7 +16,7 @@ export class Logging {
         return `[veil] :: ${prefix}\t::\t${message}`;
     }
 
-    public static trace(message: string, level: LogLevel = LogLevel.INFO) {
+    public static trace(message: any, level: LogLevel = LogLevel.INFO) {
         if (level < this.currentLogLevel) return;
 
         switch (level) {

@@ -7,6 +7,7 @@ interface CoreUI extends Object {
     tmpMnemonic: Array<string>;
     currentWallet: IWallet | undefined;
     passHash: string;
+    addressIndex: number;
 }
 
 class CoreUIStore extends Store<CoreUI> {
@@ -16,7 +17,8 @@ class CoreUIStore extends Store<CoreUI> {
             isNewWallet: false,
             tmpMnemonic: [],
             currentWallet: undefined,
-            passHash: ""
+            passHash: "",
+            addressIndex: 0
         });
     }
 
@@ -38,6 +40,10 @@ class CoreUIStore extends Store<CoreUI> {
 
     setPasshash(state: string) {
         this.state.passHash = state;
+    }
+
+    setAddressIndex(state: number) {
+        this.state.addressIndex = state;
     }
 }
 
