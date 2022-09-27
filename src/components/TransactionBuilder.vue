@@ -40,17 +40,17 @@
                 <div v-else-if="step == TxBuildState.BUILT">
                     <div class="font-semibold text-md">Summary:</div>
                     <div class="grid grid-cols-2 text-xs">
-                        <div class="border-b-1 border-gray-400 py-1 px-1">Recipient:</div>
+                        <div class="border-b-1 border-gray-400 py-1 px-1">{{t("Wallet.Form.Recipient")}}:</div>
                         <div class="border-b-1 border-gray-400 py-1 px-1 overflow-hidden truncate">{{address}}</div>
-                        <div class="border-b-1 border-gray-400 py-1 px-1">Amount to send:</div>
-                        <div class="border-b-1 border-gray-400 py-1 px-1">{{computeAmount}}</div>
-                        <div class="border-b-1 border-gray-400 py-1 px-1">Fee:</div>
-                        <div class="border-b-1 border-gray-400 py-1 px-1">{{computeFee}}</div>
-                        <div class="border-b-1 border-gray-400 py-1 px-1">Total:</div>
-                        <div class="border-b-1 border-gray-400 py-1 px-1">{{computeTotal}}</div>
+                        <div class="border-b-1 border-gray-400 py-1 px-1">{{t("Wallet.Form.AmountSend")}}:</div>
+                        <div class="border-b-1 border-gray-400 py-1 px-1 text-right">{{computeAmount}}</div>
+                        <div class="border-b-1 border-gray-400 py-1 px-1">{{t("Wallet.Form.Fee")}}:</div>
+                        <div class="border-b-1 border-gray-400 py-1 px-1 text-right">{{computeFee}}</div>
+                        <div class="border-b-1 border-gray-400 py-1 px-1">{{t("Wallet.Form.Total")}}:</div>
+                        <div class="border-b-1 border-gray-400 py-1 px-1 text-right">{{computeTotal}}</div>
                     </div>
                     <div v-if="successMessage != ''">
-                        <div class="flex items-center">
+                        <div class="flex items-center justify-center">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                 class="w-10 h-10 text-green-400 mr-2">
                                 <path fill-rule="evenodd"
@@ -59,6 +59,12 @@
                             </svg>
                             <div class="font-semibold text-md">
                                 {{successMessage}}
+                            </div>
+                        </div>
+                        <div>
+                            <div class="border-b-1 border-gray-400 py-1 px-1 overflow-hidden truncate">
+                                <a class="p-2 w-full text-sm overflow-hidden truncate text-center underline underline-offset-3 transition-colors hover:text-blue-600 dark:hover:text-blue-700"
+                                    :href="LightwalletService.txViewUrl + txid" target="_blank">Txid: {{txid}}</a>
                             </div>
                         </div>
                     </div>
@@ -105,6 +111,7 @@ const successMessage = ref("");
 
 const address = ref("");
 const amount = ref("");
+const txid = ref("");
 
 const fee = ref(LightwalletService.getFee());
 const computeFee = computed(() => LightwalletService.formatAmount(fee.value));
@@ -123,6 +130,7 @@ const computeTotal = computed(() => LightwalletService.formatAmount(camount.valu
 let rawTx: string | undefined = "";
 
 const next = async () => {
+    errorMessage.value = "";
     try {
         loading.value = true;
         const tamount = parseFloat(amount.value);
@@ -130,20 +138,22 @@ const next = async () => {
         if (rawTx == undefined) throw new Error();
         step.value = TxBuildState.BUILT;
     } catch {
-        errorMessage.value = t("Wallet.Errors.UnknownError");
+        errorMessage.value = t("Wallet.Errors.Unknown");
     } finally {
         loading.value = false;
     }
 };
 
 const publish = async () => {
+    errorMessage.value = "";
     try {
         loading.value = true;
         const res = await LightwalletService.publishTransaction(props.addressIndex, rawTx!);
         if (res == undefined) throw new Error();
+        txid.value = res;
         successMessage.value = t("Wallet.TxSent");
     } catch {
-        errorMessage.value = t("Wallet.Errors.UnknownError");
+        errorMessage.value = t("Wallet.Errors.Unknown");
     } finally {
         loading.value = false;
     }

@@ -9,6 +9,12 @@
     "Next": "Next",
     "Publish": "Send transaction",
     "TxSent": "Transaction successfully sent!",
+    "Form": {
+        "Recipient": "Recipient",
+        "AmountSend": "Amount to send",
+        "Fee": "Fee",
+        "Total": "Total"
+    },
     "Errors": {
         "Unknown": "Error occured"
     }

@@ -43,8 +43,11 @@ import LightwalletService from "@/lightwallet/LightwalletService";
 import { onMounted, onUnmounted, ref, watch } from "vue";
 import { IUtxo } from "@/models/IUtxo";
 import { useI18n } from "vue-i18n";
+import { coreUIStore } from "@/store/modules/CoreUI";
 
 const { t } = useI18n();
+const forceScan = ref(0);
+const uiState = coreUIStore.getState();
 
 // eslint-disable-next-line
 const props = defineProps({
@@ -54,9 +57,17 @@ const props = defineProps({
 const addressIndex = ref(0);
 
 watch(props, (nval) => {
-    if (addressIndex.value == nval.addressIndex) return;
-    addressIndex.value = nval.addressIndex;
-    scan();
+    if (addressIndex.value != nval.addressIndex) {
+        addressIndex.value = nval.addressIndex;
+        scan();
+        return;
+    }
+
+    if (forceScan.value < uiState.forceScan) {
+        forceScan.value = uiState.forceScan;
+        scan();
+        return;
+    }
 });
 
 const utxos = ref<Array<IUtxo>>([]);
@@ -80,6 +91,7 @@ const runScan = async () => {
 };
 
 onMounted(async () => {
+    forceScan.value = uiState.forceScan;
     runScan();
 });
 

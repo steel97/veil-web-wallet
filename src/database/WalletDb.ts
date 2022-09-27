@@ -22,5 +22,4 @@ export interface IWallet {
     id?: number;
     name: string;
     mnemonic: string;
-    pendingTxes: Array<string>;
 }

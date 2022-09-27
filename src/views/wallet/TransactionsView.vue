@@ -70,6 +70,7 @@ import { useI18n } from "vue-i18n";
 import TransactionsTable from "@/components/TransactionsTable.vue";
 import TransactionBuilder from "@/components/TransactionBuilder.vue";
 import QrcodeVue from "qrcode.vue";
+import { sleep } from "@/core/Core";
 
 const uiState = coreUIStore.getState();
 const { t } = useI18n();
@@ -77,9 +78,15 @@ const addressIndex = ref(0);
 const isSendState = ref(false);
 
 watch(uiState, () => {
-    if (addressIndex.value == uiState.addressIndex) return;
-    addressIndex.value = uiState.addressIndex;
-    scan();
+    if (addressIndex.value != uiState.addressIndex) {
+        addressIndex.value = uiState.addressIndex;
+        scan();
+    }
+
+    if (forceScan.value < uiState.forceScan) {
+        forceScan.value = uiState.forceScan;
+        scan();
+    }
 });
 const address = computed(() => {
     return LightwalletService.getAddress(addressIndex.value).getStringAddress();
@@ -87,6 +94,7 @@ const address = computed(() => {
 
 const balanceAvailable = ref("0");
 const balanceLocked = ref("0");
+const forceScan = ref(0);
 
 let stopScan = false;
 
@@ -94,7 +102,9 @@ const showTxes = () => {
     isSendState.value = false;
 };
 
-const showSend = () => {
+const showSend = async () => {
+    isSendState.value = false;
+    await sleep(20);
     isSendState.value = true;
 };
 
@@ -118,6 +128,7 @@ const copyToClipboard = async (content: string) => {
 };
 
 onMounted(async () => {
+    forceScan.value = uiState.forceScan;
     addressIndex.value = uiState.addressIndex;
     runScan();
 });
