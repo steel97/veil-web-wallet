@@ -102,7 +102,7 @@ export default class LightwalletService {
 
     public static async getUtxos(index: number) {
         const address = LightwalletService.getAddress(index);
-        const utxos = (await address.getAllOutputs() ?? []).reverse();
+        const utxos = (await address.getAllOutputs() ?? []).slice().reverse();
         const pending = LightwalletService._lockedUtxos;
 
         const targetUtxos: Array<IUtxo> = [];
