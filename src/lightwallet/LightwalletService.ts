@@ -17,6 +17,11 @@ export default class LightwalletService {
     private static _watching = false;
     private static _pendingUtxos: Array<string> = [];
     private static _lockedUtxos: Array<string> = [];
+    private static _scanned = false;
+
+    public static getScanned() {
+        return LightwalletService._scanned;
+    }
 
     public static getAddress(index = 0) {
         return LightwalletService._addresses[index];
@@ -151,6 +156,15 @@ export default class LightwalletService {
         LightwalletService._watching = true;
 
         await LightwalletService.fetchData();
+        let scanned = true;
+        for (const addr of LightwalletService._addresses) {
+            const syncStatus = addr.getSyncStatus();
+            if (syncStatus == "scanning") {
+                scanned = false;
+                break;
+            }
+        }
+        LightwalletService._scanned = scanned;
     }
 
     public static run() {

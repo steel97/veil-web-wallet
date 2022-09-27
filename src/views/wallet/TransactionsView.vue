@@ -24,6 +24,15 @@
                             {{address}}
                         </a>
                     </div>
+                    <div class="flex md:w-full" v-if="!scanned">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                            class="w-4 h-4 mr-2 pending">
+                            <path fill-rule="evenodd"
+                                d="M4.755 10.059a7.5 7.5 0 0112.548-3.364l1.903 1.903h-3.183a.75.75 0 100 1.5h4.992a.75.75 0 00.75-.75V4.356a.75.75 0 00-1.5 0v3.18l-1.9-1.9A9 9 0 003.306 9.67a.75.75 0 101.45.388zm15.408 3.352a.75.75 0 00-.919.53 7.5 7.5 0 01-12.548 3.364l-1.902-1.903h3.183a.75.75 0 000-1.5H2.984a.75.75 0 00-.75.75v4.992a.75.75 0 001.5 0v-3.18l1.9 1.9a9 9 0 0015.059-4.035.75.75 0 00-.53-.918z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        <div class="font-semibold text-sm">{{t("Wallet.Scanning")}}</div>
+                    </div>
                     <div class="flex items-center w-fit md:w-full">
                         <div class="fixed-width">
                             <img src="../../assets/logo.png" width="20" alt="Veil coin" class="block grow mr-1 my-1">
@@ -80,6 +89,7 @@ const uiState = coreUIStore.getState();
 const { t } = useI18n();
 const addressIndex = ref(0);
 const isSendState = ref(false);
+const scanned = ref(false);
 
 watch(uiState, () => {
     if (addressIndex.value != uiState.addressIndex) {
@@ -115,12 +125,13 @@ const showSend = async () => {
 const scan = async () => {
     balanceAvailable.value = LightwalletService.formatAmount(await LightwalletService.getAvailableBalance(addressIndex.value));
     balanceLocked.value = LightwalletService.formatAmount(await LightwalletService.getLockedBalance(addressIndex.value));
+    scanned.value = LightwalletService.getScanned();
 };
 
 const runScan = async () => {
     if (stopScan) return;
     try {
-        scan();
+        await scan();
     } catch {
 
     }
@@ -135,6 +146,7 @@ onMounted(async () => {
     forceScan.value = uiState.forceScan;
     addressIndex.value = uiState.addressIndex;
     runScan();
+    scanned.value = LightwalletService.getScanned();
 });
 
 onUnmounted(() => stopScan = true);
@@ -157,5 +169,22 @@ onUnmounted(() => stopScan = true);
 
 .button {
     min-width: 130px;
+}
+
+.pending {
+    animation-name: spin-p;
+    animation-duration: 5000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+@keyframes spin-p {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
 </style>
