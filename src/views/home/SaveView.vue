@@ -23,10 +23,10 @@
                     type="password" id="password" :placeholder="t('Save.PasswordPlaceholder')" />
             </div>
             <div class="mt-4" v-if="password.length > 0">
-                <label for="password" class="block text-center">{{t("Save.RePasswordTitle")}}:</label>
+                <label for="re-password" class="block text-center">{{t("Save.RePasswordTitle")}}:</label>
                 <input v-model="repassword"
                     class="text-center !rounded-none !outline-none !focus:ring-transparent bg-transparent w-full border-b-2 border-gray-400"
-                    type="password" id="password" :placeholder="t('Save.RePasswordPlaceholder')" />
+                    type="password" id="re-password" :placeholder="t('Save.RePasswordPlaceholder')" />
             </div>
         </div>
 

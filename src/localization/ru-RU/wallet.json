@@ -1,5 +1,15 @@
 {
     "Transactions": "Последние транзакции",
     "Send": "Отправить",
-    "NoTransactions": "Тоанзакции не найдены."
+    "NoTransactions": "Тоанзакции не найдены.",
+    "TargetAddress": "Адрес получателя",
+    "TargetAddressPlaceholder": "Адрес",
+    "Amount": "Сумма к отправке",
+    "AmountPlaceholder": "Сумма",
+    "Next": "Далее",
+    "Publish": "Отправить",
+    "TxSent": "Транзакция успешно отправлена",
+    "Errors": {
+        "Unknown": "Произошла ошибка"
+    }
 }

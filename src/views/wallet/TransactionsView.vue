@@ -54,7 +54,7 @@
                         @click="showTxes()">{{t("Wallet.Transactions")}}</button>
                     <transition name="fade" mode="out-in">
                         <TransactionsTable :addressIndex="addressIndex" v-if="!isSendState" />
-                        <TransactionBuilder v-else />
+                        <TransactionBuilder :addressIndex="addressIndex" v-else />
                     </transition>
                 </div>
             </div>

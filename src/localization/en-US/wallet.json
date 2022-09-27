@@ -1,5 +1,15 @@
 {
     "Transactions": "Latest transactions",
     "Send": "Send",
-    "NoTransactions": "No transactions found."
+    "NoTransactions": "No transactions found.",
+    "TargetAddress": "Recipient address",
+    "TargetAddressPlaceholder": "Address",
+    "Amount": "Send amount",
+    "AmountPlaceholder": "Amount",
+    "Next": "Next",
+    "Publish": "Send transaction",
+    "TxSent": "Transaction successfully sent!",
+    "Errors": {
+        "Unknown": "Error occured"
+    }
 }

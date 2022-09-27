@@ -1,7 +1,7 @@
 import { Logging, LogLevel } from "@/core/Logging";
 import { IWallet } from "@/database/WalletDb";
 import { IUtxo } from "@/models/IUtxo";
-import { AccountType, Chainparams, Lightwallet, LightwalletAccount, LightwalletAddress, mainNetParams } from "veil-light";
+import { AccountType, Chainparams, CVeilAddress, CWatchOnlyTxWithIndex, Lightwallet, LightwalletAccount, LightwalletAddress, mainNetParams } from "veil-light";
 
 export default class LightwalletService {
     public static params: Chainparams;
@@ -17,6 +17,54 @@ export default class LightwalletService {
 
     public static getAddress(index = 0) {
         return LightwalletService._addresses[index];
+    }
+
+    public static getFee() {
+        return (Number(LightwalletService.params.CENT) / Number(LightwalletService.params.COIN));
+    }
+
+    public static async buildTransaction(index: number, amount: number, recipient: string) {
+        try {
+            const address = LightwalletService.getAddress(index);
+            const recipientAddress = CVeilAddress.parse(LightwalletService.params, recipient);
+
+            const utxos = (await address.getUnspentOutputs()).sort((a, b) => a.getAmount(LightwalletService.params) - b.getAmount(LightwalletService.params));
+            const pending = LightwalletService._walletData.pendingTxes;
+
+            const targetUtxos: Array<CWatchOnlyTxWithIndex> = [];
+            const fee = LightwalletService.getFee();
+            const targetAmount = amount + fee;
+            let currentAmount = 0;
+            for (const utxo of utxos) {
+                const isPending = pending?.find(val => val == address.getStringAddress() + "_" + utxo.getId());
+                if (isPending) break;
+                currentAmount += utxo.getAmount(LightwalletService.params);
+                targetUtxos.push(utxo);
+                if (currentAmount >= targetAmount)
+                    break;
+            }
+            const rawTx = await address.buildTransaction(amount, recipientAddress, targetUtxos);
+            if (rawTx == undefined) return undefined;
+
+            return rawTx;
+        } catch {
+            return undefined;
+        }
+    }
+
+    public static async publishTransaction(rawTx: string) {
+        try {
+            const res = await Lightwallet.publishTransaction(rawTx);
+            if (res.errorCode != null) {
+                return undefined;
+            }
+
+            LightwalletService._walletData.pendingTxes.push(res.txid!);
+            // TO-DO save walletData to dexie database
+            return res.txid;
+        } catch {
+            return undefined;
+        }
     }
 
     public static async getAvailableBalance(index = 0) {
@@ -44,7 +92,7 @@ export default class LightwalletService {
 
     public static async getUtxos(index: number) {
         const address = LightwalletService.getAddress(index);
-        const utxos = (await address.getUnspentOutputs()).reverse();
+        const utxos = (await address.getAllOutputs() ?? []).reverse();
         const pending = LightwalletService._walletData.pendingTxes;
 
         const targetUtxos: Array<IUtxo> = [];
