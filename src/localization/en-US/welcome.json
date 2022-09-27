@@ -2,7 +2,7 @@
     "Create": "Create wallet",
     "Import": "Import seed phrase",
     "Notice": [
-        "This is an alpha version of the software/application.",
+        "This is an alpha version of the software.",
         "We are strongly recommends not to use it with high amount of funds. It may contains serious bugs."
     ]
 }

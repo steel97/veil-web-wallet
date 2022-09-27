@@ -3,8 +3,8 @@
         <div class="mt-2">
             <div class="flex flex-col items-center md:items-start md:flex-row">
                 <div class="w-full md:w-fit flex items-center flex-col">
-                    <qrcode-vue :size="120" :value="'veil:' + address">
-                    </qrcode-vue>
+                    <vue-qr :logoCornerRadius="4" :margin="10" :size="120" :text="'veil:' + address" qid="testid">
+                    </vue-qr>
                     <div class="flex items-center mt-2 w-full">
                         <div class="fixed-width">
                             <button @click="copyToClipboard(address)">
@@ -73,7 +73,7 @@ import { onMounted, onUnmounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import TransactionsTable from "@/components/TransactionsTable.vue";
 import TransactionBuilder from "@/components/TransactionBuilder.vue";
-import QrcodeVue from "qrcode.vue";
+import vueQr from "vue-qr/src/packages/vue-qr.vue";
 import { sleep } from "@/core/Core";
 
 const uiState = coreUIStore.getState();
