@@ -23,7 +23,7 @@
                     {{utx.txid}}
                 </div>
             </div>
-            <div class="w-2"></div>
+            <div class="w-2 grow"></div>
             <div>
                 <div class="flex items-center">
                     <div class="text-sm">{{utx.amount}}</div>
