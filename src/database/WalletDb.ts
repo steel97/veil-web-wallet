@@ -22,4 +22,5 @@ export interface IWallet {
     id?: number;
     name: string;
     mnemonic: string;
+    walletEncryptPassword: string;
 }

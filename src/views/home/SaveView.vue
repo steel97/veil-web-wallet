@@ -28,6 +28,18 @@
                     class="text-center !rounded-none !outline-none !focus:ring-transparent bg-transparent w-full border-b-2 border-gray-400"
                     type="password" id="re-password" :placeholder="t('Save.RePasswordPlaceholder')" />
             </div>
+            <div class="mt-4">
+                <label for="wpassword" class="block text-center">{{t("Save.WalletPasswordTitle")}}:</label>
+                <input v-model="walletPassword"
+                    class="text-center !rounded-none !outline-none !focus:ring-transparent bg-transparent w-full border-b-2 border-gray-400"
+                    type="password" id="wpassword" :placeholder="t('Save.WalletPasswordTitlePlaceholder')" />
+            </div>
+            <div class="mt-4" v-if="password.length > 0">
+                <label for="re2-password" class="block text-center">{{t("Save.RePasswordTitle")}}:</label>
+                <input v-model="walletRePassword"
+                    class="text-center !rounded-none !outline-none !focus:ring-transparent bg-transparent w-full border-b-2 border-gray-400"
+                    type="password" id="re2-password" :placeholder="t('Save.RePasswordPlaceholder')" />
+            </div>
         </div>
 
         <div v-if="!loading">
@@ -68,6 +80,9 @@ const name = ref("");
 const password = ref("");
 const repassword = ref("");
 
+const walletPassword = ref("");
+const walletRePassword = ref("");
+
 const save = async () => {
     const minPassLen = 5;
     const maxNameLen = 32;
@@ -91,6 +106,17 @@ const save = async () => {
 
     if (name.value.length > maxNameLen) {
         errorMessage.value = t("Save.Errors.NameTooLong", { len: maxNameLen });
+        return;
+    }
+
+    // verify encrypt password
+    if (walletPassword.value.length > 0 && walletPassword.value.length < minPassLen) {
+        errorMessage.value = t("Save.Errors.PasswordTooShort", { len: minPassLen });
+        return;
+    }
+
+    if (walletPassword.value.length > 0 && walletPassword.value != walletRePassword.value) {
+        errorMessage.value = t("Save.Errors.PasswordNotMatch");
         return;
     }
 
@@ -164,7 +190,7 @@ const save = async () => {
         id: 1,
         name: walname,
         mnemonic: genMnemonic,
-        pendingTxes: []
+        walletEncryptPassword: walletPassword.value
     };
 
     await db.table("wallets").add(dbWal);

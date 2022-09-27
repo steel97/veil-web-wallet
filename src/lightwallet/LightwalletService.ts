@@ -146,7 +146,8 @@ export default class LightwalletService {
         LightwalletService._walletData = wallet;
         LightwalletService.params = mainNetParams;
 
-        LightwalletService._wallet = await Lightwallet.fromMnemonic(LightwalletService.params, wallet.mnemonic.split(" "));
+        const walletEncryptPassword = LightwalletService._walletData.walletEncryptPassword.length > 0 ? LightwalletService._walletData.walletEncryptPassword : undefined;
+        LightwalletService._wallet = await Lightwallet.fromMnemonic(LightwalletService.params, wallet.mnemonic.split(" "), walletEncryptPassword);
         LightwalletService._account = new LightwalletAccount(LightwalletService._wallet);
         LightwalletService._addresses = [];
 

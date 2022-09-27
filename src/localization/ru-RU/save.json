@@ -5,6 +5,8 @@
     "PasswordPlaceholder": "Пароль",
     "RePasswordTitle": "Повторите пароль",
     "RePasswordPlaceholder": "Повторите пароль",
+    "WalletPasswordTitle": "Пароль шифрования кошелька (не обязательно)",
+    "WalletPasswordTitlePlaceholder": "Пароль",
     "Save": "Сохранить",
     "Back": "Назад",
     "Errors": {

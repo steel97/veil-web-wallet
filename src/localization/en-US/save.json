@@ -1,10 +1,12 @@
 {
     "SetInformation": "",
     "WalletName": "Wallet name",
-    "PasswordTitle": "Wallet password (optional)",
+    "PasswordTitle": "Lock password (optional)",
     "PasswordPlaceholder": "Password",
     "RePasswordTitle": "Repeat password",
     "RePasswordPlaceholder": "Repeat password",
+    "WalletPasswordTitle": "Wallet encrypt password (optional)",
+    "WalletPasswordTitlePlaceholder": "Password",
     "Save": "Save",
     "Back": "Back",
     "Errors": {
