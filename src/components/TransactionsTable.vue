@@ -34,7 +34,7 @@
     </div>
     <div v-else>
         <div class="font-semibold flex justify-center mt-20">
-            No transactions found.
+            {{t("Wallet.NoTransactions")}}
         </div>
     </div>
 </template>
@@ -42,6 +42,9 @@
 import LightwalletService from "@/lightwallet/LightwalletService";
 import { onMounted, onUnmounted, ref, watch } from "vue";
 import { IUtxo } from "@/models/IUtxo";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 // eslint-disable-next-line
 const props = defineProps({

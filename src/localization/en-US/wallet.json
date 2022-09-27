@@ -1,4 +1,5 @@
 {
     "Transactions": "Latest transactions",
-    "Send": "Send"
+    "Send": "Send",
+    "NoTransactions": "No transactions found."
 }

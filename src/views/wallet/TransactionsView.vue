@@ -42,15 +42,20 @@
                         <div class="text-sm">{{balanceLocked}}</div>
                     </div>
                     <div class="w-full md:w-fit">
-                        <button
+                        <button @click="showSend()"
                             class="button m-auto mt-2 text-center block px-4 py-2 my-1 w-full rounded transition-colors text-gray-50 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
                             {{t("Wallet.Send")}}</button>
                     </div>
                 </div>
                 <div class="w-2"></div>
                 <div class="w-full grow">
-                    <div class="font-semibold text-md">{{t("Wallet.Transactions")}}</div>
-                    <TransactionsTable :addressIndex="addressIndex" />
+                    <button
+                        class="font-semibold text-md underline underline-offset-3 transition-colors hover:text-blue-600 dark:hover:text-blue-700"
+                        @click="showTxes()">{{t("Wallet.Transactions")}}</button>
+                    <transition name="fade" mode="out-in">
+                        <TransactionsTable :addressIndex="addressIndex" v-if="!isSendState" />
+                        <TransactionBuilder v-else />
+                    </transition>
                 </div>
             </div>
         </div>
@@ -63,11 +68,13 @@ import { computed } from "@vue/reactivity";
 import { onMounted, onUnmounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import TransactionsTable from "@/components/TransactionsTable.vue";
+import TransactionBuilder from "@/components/TransactionBuilder.vue";
 import QrcodeVue from "qrcode.vue";
 
 const uiState = coreUIStore.getState();
 const { t } = useI18n();
 const addressIndex = ref(0);
+const isSendState = ref(false);
 
 watch(uiState, (v) => {
     if (addressIndex.value == v.addressIndex) return;
@@ -82,6 +89,14 @@ const balanceAvailable = ref("0");
 const balanceLocked = ref("0");
 
 let stopScan = false;
+
+const showTxes = () => {
+    isSendState.value = false;
+};
+
+const showSend = () => {
+    isSendState.value = true;
+};
 
 const scan = async () => {
     balanceAvailable.value = LightwalletService.formatAmount(await LightwalletService.getAvailableBalance(addressIndex.value));
