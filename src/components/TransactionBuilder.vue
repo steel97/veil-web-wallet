@@ -28,8 +28,11 @@
 
                     <div v-if="!loading">
                         <button @click="next"
-                            class="m-auto mt-6 text-center block px-4 py-2 my-1 w-full max-w-xs rounded transition-colors text-gray-50 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
+                            class="m-auto mt-6 text-center block px-4 py-2 my-1 w-full md:max-w-xs rounded transition-colors text-gray-50 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
                             {{t("Wallet.Next")}}</button>
+                        <button @click="back"
+                            class="m-auto text-center block px-4 py-2 my-1 w-full md:max-w-xs rounded transition-colors text-gray-50 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
+                            {{t("Wallet.Back")}}</button>
                     </div>
                     <div v-else>
                         <div class="mt-6 mb-4 text-center">
@@ -66,13 +69,19 @@
                                 <a class="p-2 w-full text-sm overflow-hidden truncate text-center underline underline-offset-3 transition-colors hover:text-blue-600 dark:hover:text-blue-700"
                                     :href="LightwalletService.txViewUrl + txid" target="_blank">Txid: {{txid}}</a>
                             </div>
+                            <button @click="back"
+                                class="m-auto text-center block px-4 py-2 my-1 w-full md:max-w-xs rounded transition-colors text-gray-50 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
+                                {{t("Wallet.Continue")}}</button>
                         </div>
                     </div>
                     <div v-else>
                         <div v-if="!loading">
                             <button @click="publish"
-                                class="m-auto mt-6 text-center block px-4 py-2 my-1 w-full rounded transition-colors text-gray-50 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
+                                class="m-auto mt-6 text-center block px-4 py-2 my-1 w-full md:max-w-xs rounded transition-colors text-gray-50 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
                                 {{t("Wallet.Publish")}}</button>
+                            <button @click="back"
+                                class="m-auto text-center block px-4 py-2 my-1 w-full md:max-w-xs rounded transition-colors text-gray-50 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
+                                {{t("Wallet.Back")}}</button>
                         </div>
                         <div v-else>
                             <div class="mt-6 mb-4 text-center">
@@ -96,6 +105,10 @@ import { computed } from "@vue/reactivity";
 const props = defineProps({
     addressIndex: { type: Number, required: true }
 });
+// eslint-disable-next-line
+const emit = defineEmits<{
+    (event: "close"): void
+}>();
 
 enum TxBuildState {
     INFORMATION,
@@ -128,6 +141,10 @@ const computeAmount = computed(() => {
 const computeTotal = computed(() => LightwalletService.formatAmount(camount.value + fee.value));
 
 let rawTx: string | undefined = "";
+
+const back = () => {
+    emit("close");
+};
 
 const next = async () => {
     errorMessage.value = "";

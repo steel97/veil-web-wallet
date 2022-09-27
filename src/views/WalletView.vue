@@ -13,7 +13,7 @@
                                 {{uiState.currentWallet?.name}}
                             </div>
                         </div>
-                        <div class="grow h-min mx-2 md:mx-10 flex justify-center">
+                        <div class="grow h-min mx-2 md:ml-24 md:mx-10 flex justify-center">
                             <button class="px-4 py-2 border-b-2"
                                 :class="uiState.addressIndex == 0 ? 'border-blue-500 text-blue-500 hover:text-blue-600 dark:text-blue-600 dark:hover:text-blue-700': 'border-gray-400'"
                                 @click="switchAddress(0)">Main</button>

@@ -41,7 +41,12 @@
                         </div>
                         <div class="text-sm">{{balanceLocked}}</div>
                     </div>
-                    <div class="w-full md:w-fit">
+                    <div class="w-full hidden md:block md:w-fit">
+                        <button @click="showSend()"
+                            class="button m-auto mt-2 text-center block px-4 py-2 my-1 w-full rounded transition-colors text-gray-50 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
+                            {{t("Wallet.Send")}}</button>
+                    </div>
+                    <div class="w-full md:hidden" v-if="!isSendState">
                         <button @click="showSend()"
                             class="button m-auto mt-2 text-center block px-4 py-2 my-1 w-full rounded transition-colors text-gray-50 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
                             {{t("Wallet.Send")}}</button>
@@ -49,12 +54,11 @@
                 </div>
                 <div class="w-2"></div>
                 <div class="w-full grow">
-                    <button
-                        class="font-semibold text-md underline underline-offset-3 transition-colors hover:text-blue-600 dark:hover:text-blue-700"
-                        @click="showTxes()">{{t("Wallet.Transactions")}}</button>
+                    <div class="text-center font-semibold" v-if="!isSendState">{{t("Wallet.Transactions")}}</div>
+                    <div class="text-center font-semibold" v-else>{{t("Wallet.NewTransaction")}}</div>
                     <transition name="fade" mode="out-in">
                         <TransactionsTable :addressIndex="addressIndex" v-if="!isSendState" />
-                        <TransactionBuilder :addressIndex="addressIndex" v-else />
+                        <TransactionBuilder @close="showTxes" :addressIndex="addressIndex" v-else />
                     </transition>
                 </div>
             </div>

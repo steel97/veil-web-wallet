@@ -1,7 +1,10 @@
 {
     "Transactions": "Последние транзакции",
     "Send": "Отправить",
+    "Back": "Назад",
+    "Continue": "Продолжить",
     "NoTransactions": "Тоанзакции не найдены.",
+    "NewTransaction": "Новая транзакция",
     "TargetAddress": "Адрес получателя",
     "TargetAddressPlaceholder": "Адрес",
     "Amount": "Сумма к отправке",

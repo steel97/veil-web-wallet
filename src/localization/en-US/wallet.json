@@ -1,7 +1,10 @@
 {
     "Transactions": "Latest transactions",
     "Send": "Send",
+    "Back": "Back",
+    "Continue": "Continue",
     "NoTransactions": "No transactions found.",
+    "NewTransaction": "New transaction",
     "TargetAddress": "Recipient address",
     "TargetAddressPlaceholder": "Address",
     "Amount": "Send amount",

@@ -1,8 +1,8 @@
 <template>
     <div class="w-full" v-if="utxos.length > 0">
-        <a v-for="utx, index in utxos" :key="utx.txid + '-'+index"
+        <a v-for="utx in utxos" :key="utx.txid + '-'+utx.rid"
             class="p-2 border-b-2 border-gray-400 w-full text-sm flex justify-between items-center"
-            :href="LightwalletService.txViewUrl + utx.rid" target="_blank">
+            :href="LightwalletService.txViewUrl + utx.txid" target="_blank">
             <div>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 mr-2"
                     v-if="!utx.pending">
