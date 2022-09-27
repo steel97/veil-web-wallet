@@ -102,18 +102,21 @@ export default class LightwalletService {
 
     public static async getUtxos(index: number) {
         const address = LightwalletService.getAddress(index);
-        const utxos = (await address.getAllOutputs() ?? []).slice().reverse();
+        const utxos = (await address.getAllOutputs() ?? []).slice();
         const pending = LightwalletService._lockedUtxos;
 
         const targetUtxos: Array<IUtxo> = [];
+        const indexNum = 0;
         utxos.forEach(utxo => {
             const isPending = pending?.find(val => val == address.getStringAddress() + "_" + utxo.getId());
-            targetUtxos.push({
+            targetUtxos.unshift({
+                rid: indexNum,
                 pending: isPending != undefined,
                 txid: utxo.getId() ?? "",
                 amount: LightwalletService.formatAmount(utxo.getAmount(LightwalletService.params)),
                 amountUnformatted: utxo.getAmount(LightwalletService.params)
             });
+            index++;
         });
 
         return targetUtxos;
