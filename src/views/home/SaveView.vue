@@ -34,7 +34,7 @@
                     class="text-center !rounded-none !outline-none !focus:ring-transparent bg-transparent w-full border-b-2 border-gray-400"
                     type="password" id="wpassword" :placeholder="t('Save.WalletPasswordTitlePlaceholder')" />
             </div>
-            <div class="mt-4" v-if="password.length > 0">
+            <div class="mt-4" v-if="walletPassword.length > 0">
                 <label for="re2-password" class="block text-center">{{t("Save.RePasswordTitle")}}:</label>
                 <input v-model="walletRePassword"
                     class="text-center !rounded-none !outline-none !focus:ring-transparent bg-transparent w-full border-b-2 border-gray-400"
