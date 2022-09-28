@@ -1,5 +1,16 @@
 <template>
   <div class="transition-all" :class="uiState.darkTheme ? 'dark' : ''">
+    <transition name="fade" mode="out-in">
+      <div class="absolute bg-gray-900/70 w-full h-screen top-0 left-0 flex justify-center items-center"
+        v-if="updateAvailable">
+        <div class="max-w-md w-full bg-gray-50 text-gray-700 dark:bg-gray-800 dark:text-gray-300 p-4 rounded">
+          {{t("Core.UpdateAvailable")}}
+          <button @click="update"
+            class="m-auto text-center block px-4 py-2 my-1 w-full rounded transition-colors text-gray-50 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
+            {{t("Core.Reload")}}</button>
+        </div>
+      </div>
+    </transition>
     <div class="transition-all bg-gray-50 text-gray-700 dark:bg-gray-800 dark:text-gray-300">
       <router-view />
     </div>
@@ -12,7 +23,7 @@ import "./assets/styles/loaders.css";
 import "./assets/fonts/stylesheet.css";
 
 import { Logging, LogLevel } from "@/core/Logging";
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { useLocalization } from "@/composables/core/Localization";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
@@ -31,6 +42,11 @@ const { setLocale, detectLocale } = useLocalization();
 const { loadMode } = useTheming();
 const { t } = useI18n();
 const router = useRouter();
+const updateAvailable = ref(false);
+
+const update = () => {
+  window.location.href = window.location.href.replace(/#.*$/, "");
+};
 
 const printWarnMessage = () => {
   // eslint-disable-next-line
@@ -39,6 +55,7 @@ const printWarnMessage = () => {
 
 onMounted(async () => {
   // eslint-disable-next-line
+  window.addEventListener("appUpdated", () => updateAvailable.value = true);
 
   loadMode();
 

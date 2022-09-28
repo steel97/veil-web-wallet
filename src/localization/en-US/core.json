@@ -5,5 +5,7 @@
         "short": "dd/MM/yyyy"
     },
     "AppName": "Veil Wallet",
-    "Version": "Version"
+    "Version": "Version",
+    "UpdateAvailable": "New update available! Please reload page to get new version",
+    "Reload": "Reload"
 }

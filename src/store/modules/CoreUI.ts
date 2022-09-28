@@ -9,6 +9,7 @@ interface CoreUI extends Object {
     passHash: string;
     addressIndex: number;
     forceScan: number;
+    walletLoaded: boolean;
 }
 
 class CoreUIStore extends Store<CoreUI> {
@@ -20,7 +21,8 @@ class CoreUIStore extends Store<CoreUI> {
             currentWallet: undefined,
             passHash: "",
             addressIndex: 0,
-            forceScan: 0
+            forceScan: 0,
+            walletLoaded: false
         });
     }
 
@@ -50,6 +52,10 @@ class CoreUIStore extends Store<CoreUI> {
 
     incrementForceScan() {
         this.state.forceScan++;
+    }
+
+    setWalletLoaded(state: boolean) {
+        this.state.walletLoaded = state;
     }
 }
 

@@ -15,6 +15,9 @@ const routes: Array<RouteRecordRaw> = [
     path: "/",
     name: "home",
     component: HomeView,
+    meta: {
+      skipLoad: true
+    },
     children: [
       {
         path: "/",
@@ -71,6 +74,11 @@ const router = createRouter({
 });
 
 router.beforeEach(route => {
+  if (!route.meta.skipLoad && !coreUIStore.getState().walletLoaded) {
+    router.replace("/");
+    return;
+  }
+
   if (!route.meta.wallet)
     return;
 
