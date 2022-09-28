@@ -19,9 +19,8 @@
         </div>
 
         <div>
-            <button @click="unlock"
-                class="m-auto mt-6 text-center block px-4 py-2 my-1 w-full max-w-xs rounded transition-colors text-gray-50 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
-                {{t("Unlock.Unlock")}}</button>
+            <BaseButton @click="unlock" class="m-auto mt-6 my-1 w-full max-w-xs">
+                {{t("Unlock.Unlock")}}</BaseButton>
         </div>
     </div>
 </template>
@@ -35,6 +34,7 @@ import { applyEncryptionMiddleware, cryptoOptions } from "dexie-encrypted";
 import { hash } from "@/core/Core";
 import { WalletDb } from "@/database/WalletDb";
 import { PreferenceKey, Preferences } from "@/core/Preferences";
+import BaseButton from "@/components/ui/BaseButton.vue";
 
 const { t } = useI18n();
 const router = useRouter();

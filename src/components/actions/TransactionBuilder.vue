@@ -35,7 +35,7 @@
                                 <button @click="showQr = true">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke-width="1.5" stroke="currentColor"
-                                        class="w-6 h-6 text-blue-500 hover:text-blue-600 dark:text-blue-600 dark:hover:text-blue-700 transition-colors">
+                                        class="w-6 h-6 text-blue-500 hover:text-blue-600 dark:text-blue-500 dark:hover:text-blue-600 transition-colors">
                                         <path stroke-linecap="round" stroke-linejoin="round"
                                             d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5z" />
                                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -52,19 +52,17 @@
                                     class="grow text-center !rounded-none !outline-none !focus:ring-transparent bg-transparent w-full border-b-2 border-gray-400"
                                     type="text" id="amount" :placeholder="t('Wallet.AmountPlaceholder')" />
                                 <div class="fixed-width">
-                                    <img src="../assets/logo.png" width="20" alt="Veil coin" class="block ml-1 my-1">
+                                    <img src="../../assets/logo.png" width="20" alt="Veil coin" class="block ml-1 my-1">
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <div v-if="!loading">
-                        <button @click="next"
-                            class="m-auto mt-6 text-center block px-4 py-2 my-1 w-full md:max-w-xs rounded transition-colors text-gray-50 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
-                            {{t("Wallet.Next")}}</button>
-                        <button @click="back"
-                            class="m-auto text-center block px-4 py-2 my-1 w-full md:max-w-xs rounded transition-colors text-gray-50 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
-                            {{t("Wallet.Back")}}</button>
+                        <BaseButton @click="next" class="m-auto mt-6 my-1 w-full md:max-w-xs">
+                            {{t("Wallet.Next")}}</BaseButton>
+                        <BaseButton @click="back" class="m-auto my-1 w-full md:max-w-xs">
+                            {{t("Wallet.Back")}}</BaseButton>
                     </div>
                     <div v-else>
                         <div class="mt-6 mb-4 text-center">
@@ -98,22 +96,19 @@
                         </div>
                         <div>
                             <div class="border-b-1 border-gray-400 py-1 px-1 overflow-hidden truncate">
-                                <a class="p-2 w-full text-sm overflow-hidden truncate text-center underline underline-offset-3 transition-colors hover:text-blue-600 dark:hover:text-blue-700"
+                                <a class="p-2 w-full text-sm overflow-hidden truncate text-center underline underline-offset-3 transition-colors hover:text-blue-500 dark:hover:text-blue-600"
                                     :href="LightwalletService.txViewUrl + txid" target="_blank">Txid: {{txid}}</a>
                             </div>
-                            <button @click="back"
-                                class="m-auto text-center block px-4 py-2 my-1 w-full md:max-w-xs rounded transition-colors text-gray-50 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
-                                {{t("Wallet.Continue")}}</button>
+                            <BaseButton @click="back" class="m-auto my-1 w-full md:max-w-xs">
+                                {{t("Wallet.Continue")}}</BaseButton>
                         </div>
                     </div>
                     <div v-else>
                         <div v-if="!loading">
-                            <button @click="publish"
-                                class="m-auto mt-6 text-center block px-4 py-2 my-1 w-full md:max-w-xs rounded transition-colors text-gray-50 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
-                                {{t("Wallet.Publish")}}</button>
-                            <button @click="back"
-                                class="m-auto text-center block px-4 py-2 my-1 w-full md:max-w-xs rounded transition-colors text-gray-50 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
-                                {{t("Wallet.Back")}}</button>
+                            <BaseButton @click="publish" class="m-auto mt-6 my-1 w-full md:max-w-xs">
+                                {{t("Wallet.Publish")}}</BaseButton>
+                            <BaseButton @click="back" class="m-auto my-1 w-full md:max-w-xs">
+                                {{t("Wallet.Back")}}</BaseButton>
                         </div>
                         <div v-else>
                             <div class="mt-6 mb-4 text-center">
@@ -132,8 +127,9 @@ import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { computed } from "@vue/reactivity";
 import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from "vue-qrcode-reader";
-import LightwalletService from "@/lightwallet/LightwalletService";
 import { getParameterByName } from "@/core/Core";
+import LightwalletService from "@/lightwallet/LightwalletService";
+import BaseButton from "../ui/BaseButton.vue";
 
 // eslint-disable-next-line
 const props = defineProps({

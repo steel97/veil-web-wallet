@@ -3,13 +3,16 @@
         <div class="mt-2">
             <div class="flex flex-col items-center md:items-start md:flex-row">
                 <div class="w-full md:w-fit flex items-center flex-col">
-                    <vue-qr :logoCornerRadius="4" :margin="10" :size="120" :text="'veil:' + address" qid="testid">
+                    <div class="text-center font-semibold text-sm mb-2">
+                        {{t("Wallet.CurrentAddress")}}
+                    </div>
+                    <vue-qr :logoCornerRadius="4" :margin="10" :size="126" :text="'veil:' + address" qid="testid">
                     </vue-qr>
                     <div class="flex items-center mt-2 w-full">
                         <div class="fixed-width">
                             <button @click="copyToClipboard(address)">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                    class="w-5 h-5 text-blue-500 hover:text-blue-600 dark:text-blue-600 dark:hover:text-blue-700 transition-colors">
+                                    class="w-5 h-5 text-blue-500 hover:text-blue-600 dark:text-blue-500 dark:hover:text-blue-600 transition-colors">
                                     <path fill-rule="evenodd"
                                         d="M7.502 6h7.128A3.375 3.375 0 0118 9.375v9.375a3 3 0 003-3V6.108c0-1.505-1.125-2.811-2.664-2.94a48.972 48.972 0 00-.673-.05A3 3 0 0015 1.5h-1.5a3 3 0 00-2.663 1.618c-.225.015-.45.032-.673.05C8.662 3.295 7.554 4.542 7.502 6zM13.5 3A1.5 1.5 0 0012 4.5h4.5A1.5 1.5 0 0015 3h-1.5z"
                                         clip-rule="evenodd" />
@@ -42,7 +45,7 @@
                     <div class="flex items-center w-fit md:w-full">
                         <div class="fixed-width">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                class="w-5 h-5">
+                                class="w-5 h-5 text-blue-500 dark:text-blue-500">
                                 <path fill-rule="evenodd"
                                     d="M12 1.5a5.25 5.25 0 00-5.25 5.25v3a3 3 0 00-3 3v6.75a3 3 0 003 3h10.5a3 3 0 003-3v-6.75a3 3 0 00-3-3v-3c0-2.9-2.35-5.25-5.25-5.25zm3.75 8.25v-3a3.75 3.75 0 10-7.5 0v3h7.5z"
                                     clip-rule="evenodd" />
@@ -51,20 +54,19 @@
                         <div class="text-sm">{{balanceLocked}}</div>
                     </div>
                     <div class="w-full hidden md:block md:w-fit">
-                        <button @click="showSend()"
-                            class="button m-auto mt-2 text-center block px-4 py-2 my-1 w-full rounded transition-colors text-gray-50 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
-                            {{t("Wallet.Send")}}</button>
+                        <BaseButton @click="showSend()" class="button m-auto mt-2 w-full">
+                            {{t("Wallet.Send")}}</BaseButton>
                     </div>
                     <div class="w-full md:hidden" v-if="!isSendState">
-                        <button @click="showSend()"
-                            class="button m-auto mt-2 text-center block px-4 py-2 my-1 w-full rounded transition-colors text-gray-50 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
-                            {{t("Wallet.Send")}}</button>
+                        <BaseButton @click="showSend()" class="button m-auto my-1 mt-2 w-full">
+                            {{t("Wallet.Send")}}</BaseButton>
                     </div>
                 </div>
                 <div class="w-2"></div>
                 <div class="w-full grow">
-                    <div class="text-center font-semibold" v-if="!isSendState">{{t("Wallet.Transactions")}}</div>
-                    <div class="text-center font-semibold" v-else>{{t("Wallet.NewTransaction")}}</div>
+                    <div class="text-center font-semibold text-sm" v-if="!isSendState">{{t("Wallet.Transactions")}}
+                    </div>
+                    <div class="text-center font-semibold text-sm" v-else>{{t("Wallet.NewTransaction")}}</div>
                     <transition name="fade" mode="out-in">
                         <TransactionsTable :addressIndex="addressIndex" v-if="!isSendState" />
                         <TransactionBuilder @close="showTxes" :addressIndex="addressIndex" v-else />
@@ -75,15 +77,16 @@
     </div>
 </template>
 <script lang="ts" setup>
-import LightwalletService from "@/lightwallet/LightwalletService";
 import { coreUIStore } from "@/store/modules/CoreUI";
 import { computed } from "@vue/reactivity";
 import { onMounted, onUnmounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import TransactionsTable from "@/components/TransactionsTable.vue";
-import TransactionBuilder from "@/components/TransactionBuilder.vue";
-import vueQr from "vue-qr/src/packages/vue-qr.vue";
 import { sleep } from "@/core/Core";
+import LightwalletService from "@/lightwallet/LightwalletService";
+import vueQr from "vue-qr/src/packages/vue-qr.vue";
+import TransactionsTable from "@/components/actions/TransactionsTable.vue";
+import TransactionBuilder from "@/components/actions/TransactionBuilder.vue";
+import BaseButton from "@/components/ui/BaseButton.vue";
 
 const uiState = coreUIStore.getState();
 const { t } = useI18n();

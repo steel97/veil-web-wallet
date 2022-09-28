@@ -19,12 +19,10 @@
             </div>
         </div>
 
-        <button @click="verify"
-            class="m-auto mt-6 text-center block px-4 py-2 my-1 w-full max-w-xs rounded transition-colors text-gray-50 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
-            {{t("Create.Verify")}}</button>
-        <router-link to="/"
-            class="m-auto text-center block px-4 py-2 my-2 w-full max-w-xs rounded transition-colors text-gray-50 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
-            {{t("Create.Back")}}</router-link>
+        <BaseButton @click="verify" class="m-auto mt-6 my-1 w-full max-w-xs">
+            {{t("Create.Verify")}}</BaseButton>
+        <RouterButton to="/" class="m-auto my-2 w-full max-w-xs">
+            {{t("Create.Back")}}</RouterButton>
     </div>
 </template>
 
@@ -33,6 +31,8 @@ import { coreUIStore } from "@/store/modules/CoreUI";
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
+import BaseButton from "@/components/ui/BaseButton.vue";
+import RouterButton from "@/components/ui/RouterButton.vue";
 
 const mnemonic = ref<Array<string>>(new Array(24));
 

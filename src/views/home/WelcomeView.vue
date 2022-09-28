@@ -1,11 +1,9 @@
 <template>
   <div class="flex flex-col items-center justify-center">
-    <router-link to="/create"
-      class="mt-4 text-center block px-4 py-2 my-1 w-full max-w-xs rounded transition-colors text-gray-50 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
-      {{t("Welcome.Create")}}</router-link>
-    <router-link to="/import"
-      class="text-center block px-4 py-2 my-1 w-full max-w-xs rounded transition-colors text-gray-50 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
-      {{t("Welcome.Import")}}</router-link>
+    <RouterButton to="/create" class="mt-4 my-1 w-full max-w-xs0">
+      {{t("Welcome.Create")}}</RouterButton>
+    <RouterButton to="/import" class="my-1 w-full max-w-xs">
+      {{t("Welcome.Import")}}</RouterButton>
     <div class="my-4 mt-8">
       <div class="flex flex-col justify-center items-center">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -23,6 +21,7 @@
 
 <script lang="ts" setup>
 import { useI18n } from "vue-i18n";
+import RouterButton from "@/components/ui/RouterButton.vue";
 
 const { t, tm } = useI18n();
 </script>

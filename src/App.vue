@@ -5,13 +5,12 @@
         v-if="updateAvailable">
         <div class="max-w-md w-full bg-gray-50 text-gray-700 dark:bg-gray-800 dark:text-gray-300 p-4 rounded">
           {{t("Core.UpdateAvailable")}}
-          <button @click="update"
-            class="m-auto text-center block px-4 py-2 my-1 w-full rounded transition-colors text-gray-50 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
-            {{t("Core.Reload")}}</button>
+          <BaseButton @click="update" class="m-auto my-1 w-full">
+            {{t("Core.Reload")}}</BaseButton>
         </div>
       </div>
     </transition>
-    <div class="transition-all bg-gray-50 text-gray-700 dark:bg-gray-800 dark:text-gray-300">
+    <div class="transition-all bg-gray-100 text-gray-700 dark:bg-gray-900 dark:text-gray-300">
       <router-view />
     </div>
   </div>
@@ -35,6 +34,7 @@ import { hash } from "@/core/Core";
 import { WalletDb } from "@/database/WalletDb";
 import { PreferenceKey, Preferences } from "./core/Preferences";
 import LightwalletService from "./lightwallet/LightwalletService";
+import BaseButton from "./components/ui/BaseButton.vue";
 
 const uiState = coreUIStore.getState();
 

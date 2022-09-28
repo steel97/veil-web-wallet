@@ -19,12 +19,10 @@
             </div>
         </div>
 
-        <button @click="importWallet"
-            class="m-auto mt-6 text-center block px-4 py-2 my-1 w-full max-w-xs rounded transition-colors text-gray-50 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
-            {{t("Import.Import")}}</button>
-        <router-link to="/"
-            class="m-auto text-center block px-4 py-2 my-2 w-full max-w-xs rounded transition-colors text-gray-50 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
-            {{t("Import.Back")}}</router-link>
+        <BaseButton @click="importWallet" class="m-auto mt-6 px-4 py-2 my-1 w-full max-w-xs">
+            {{t("Import.Import")}}</BaseButton>
+        <RouterButton to="/" class="m-auto px-4 py-2 my-2 w-full max-w-xs">
+            {{t("Import.Back")}}</RouterButton>
     </div>
 </template>
 
@@ -34,6 +32,8 @@ import { Lightwallet } from "veil-light";
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
+import BaseButton from "@/components/ui/BaseButton.vue";
+import RouterButton from "@/components/ui/RouterButton.vue";
 
 const mnemonic = ref<Array<string>>(new Array(24));
 

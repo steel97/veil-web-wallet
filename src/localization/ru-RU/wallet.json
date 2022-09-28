@@ -13,6 +13,7 @@
     "Publish": "Отправить",
     "TxSent": "Транзакция успешно отправлена",
     "Scanning": "Сканирование",
+    "CurrentAddress": "Текущий адрес",
     "Form": {
         "Recipient": "Получатель",
         "AmountSend": "К отправке",

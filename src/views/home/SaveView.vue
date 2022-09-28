@@ -43,12 +43,10 @@
         </div>
 
         <div v-if="!loading">
-            <button @click="save"
-                class="m-auto mt-6 text-center block px-4 py-2 my-1 w-full max-w-xs rounded transition-colors text-gray-50 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
-                {{t("Save.Save")}}</button>
-            <router-link to="/"
-                class="m-auto text-center block px-4 py-2 my-2 w-full max-w-xs rounded transition-colors text-gray-50 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
-                {{t("Save.Back")}}</router-link>
+            <BaseButton @click="save" class="m-auto mt-6 px-4 py-2 my-1 w-full max-w-xs">
+                {{t("Save.Save")}}</BaseButton>
+            <RouterButton to="/" class="m-auto px-4 py-2 my-2 w-full max-w-xs">
+                {{t("Save.Back")}}</RouterButton>
         </div>
         <div v-else>
             <div class="mt-6 mb-4 text-center">
@@ -68,6 +66,8 @@ import { applyEncryptionMiddleware, cryptoOptions } from "dexie-encrypted";
 import { hash } from "@/core/Core";
 import { WalletDb, IWallet } from "@/database/WalletDb";
 import { PreferenceKey, Preferences } from "@/core/Preferences";
+import BaseButton from "@/components/ui/BaseButton.vue";
+import RouterButton from "@/components/ui/RouterButton.vue";
 
 const { t } = useI18n();
 const router = useRouter();

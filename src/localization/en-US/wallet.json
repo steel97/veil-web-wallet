@@ -13,6 +13,7 @@
     "Publish": "Send transaction",
     "TxSent": "Transaction successfully sent!",
     "Scanning": "Scanning",
+    "CurrentAddress": "Current address",
     "Form": {
         "Recipient": "Recipient",
         "AmountSend": "Amount to send",

@@ -19,7 +19,7 @@
 import { useI18n } from "vue-i18n";
 import { coreUIStore } from "@/store/modules/CoreUI";
 import { onMounted } from "vue";
-import QuickSettings from "@/components/QuickSettings.vue";
+import QuickSettings from "@/components/actions/QuickSettings.vue";
 
 const { t } = useI18n();
 

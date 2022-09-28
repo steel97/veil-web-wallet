@@ -16,12 +16,10 @@
         <div class="m-auto max-w-md text-sm text-center text-rose-600 dark:text-rose-500 mt-2">
             {{(tm('Create.Notice') as Array<string>).join(' ')}}
         </div>
-        <router-link to="/verify"
-            class="m-auto mt-6 text-center block px-4 py-2 my-1 w-full max-w-xs rounded transition-colors text-gray-50 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
-            {{t("Create.Next")}}</router-link>
-        <router-link to="/"
-            class="m-auto text-center block px-4 py-2 my-2 w-full max-w-xs rounded transition-colors text-gray-50 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
-            {{t("Create.Back")}}</router-link>
+        <RouterButton to="/verify" class="m-auto mt-6 px-4 py-2 my-1 w-full max-w-xs">
+            {{t("Create.Next")}}</RouterButton>
+        <RouterButton to="/" class="m-auto px-4 py-2 my-2 w-full max-w-xs">
+            {{t("Create.Back")}}</RouterButton>
     </div>
 </template>
 
@@ -30,6 +28,7 @@ import { coreUIStore } from "@/store/modules/CoreUI";
 import { Lightwallet } from "veil-light";
 import { onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
+import RouterButton from "@/components/ui/RouterButton.vue";
 
 const { t, tm } = useI18n();
 const mnemonic = ref<Array<string>>([]);

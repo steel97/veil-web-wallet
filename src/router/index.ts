@@ -15,14 +15,14 @@ const routes: Array<RouteRecordRaw> = [
     path: "/",
     name: "home",
     component: HomeView,
-    meta: {
-      skipLoad: true
-    },
     children: [
       {
         path: "/",
         name: "welcome",
-        component: WelcomeView
+        component: WelcomeView,
+        meta: {
+          skipLoad: true
+        }
       },
       {
         path: "/create",
