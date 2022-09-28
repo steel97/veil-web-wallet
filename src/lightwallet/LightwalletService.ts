@@ -31,6 +31,10 @@ export default class LightwalletService {
         return (Number(LightwalletService.params.CENT) / Number(LightwalletService.params.COIN));
     }
 
+    public static toDisplayValue(input: number) {
+        return (input / Number(LightwalletService.params.COIN));
+    }
+
     public static isAddressValid(address: string) {
         try {
             CVeilAddress.parse(LightwalletService.params, address);
@@ -50,7 +54,7 @@ export default class LightwalletService {
             const pending = LightwalletService._lockedUtxos;
 
             const targetUtxos: Array<CWatchOnlyTxWithIndex> = [];
-            const fee = LightwalletService.getFee();
+            const fee = LightwalletService.getFee() * 2; // TO-DO, real fee calculation
             const targetAmount = amount + fee;
             let currentAmount = 0;
             LightwalletService._pendingUtxos = [];

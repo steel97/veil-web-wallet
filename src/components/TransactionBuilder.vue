@@ -201,7 +201,7 @@ const address = ref("");
 const amount = ref("");
 const txid = ref("");
 
-const fee = ref(LightwalletService.getFee());
+const fee = ref(0);
 const computeFee = computed(() => LightwalletService.formatAmount(fee.value));
 const camount = computed(() => {
     try {
@@ -226,7 +226,9 @@ const next = async () => {
     try {
         loading.value = true;
         const tamount = parseFloat(amount.value);
-        rawTx = await LightwalletService.buildTransaction(props.addressIndex, tamount, address.value);
+        const txBuildRes = await LightwalletService.buildTransaction(props.addressIndex, tamount, address.value);
+        fee.value = LightwalletService.toDisplayValue(txBuildRes?.fee ?? 0);
+        rawTx = txBuildRes?.txid;
         if (rawTx == undefined) throw new Error();
         step.value = TxBuildState.BUILT;
     } catch {
