@@ -14,6 +14,7 @@
     "TxSent": "Transaction successfully sent!",
     "Scanning": "Scanning",
     "CurrentAddress": "Current address",
+    "AddressCopied": "Address copied",
     "Form": {
         "Recipient": "Recipient",
         "AmountSend": "Amount to send",

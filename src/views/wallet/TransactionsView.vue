@@ -82,11 +82,14 @@ import { computed } from "@vue/reactivity";
 import { onMounted, onUnmounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { sleep } from "@/core/Core";
+import { toast } from "vue3-toastify";
 import LightwalletService from "@/lightwallet/LightwalletService";
 import vueQr from "vue-qr/src/packages/vue-qr.vue";
 import TransactionsTable from "@/components/actions/TransactionsTable.vue";
 import TransactionBuilder from "@/components/actions/TransactionBuilder.vue";
 import BaseButton from "@/components/ui/BaseButton.vue";
+import "vue3-toastify/dist/index.css";
+
 
 const uiState = coreUIStore.getState();
 const { t } = useI18n();
@@ -143,6 +146,10 @@ const runScan = async () => {
 
 const copyToClipboard = async (content: string) => {
     await navigator.clipboard.writeText(content);
+    toast(t("Wallet.AddressCopied"), {
+        autoClose: 1000,
+        theme: uiState.darkTheme ? "light" : "light" // for now use light everywhere
+    });
 };
 
 onMounted(async () => {

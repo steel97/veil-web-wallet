@@ -14,6 +14,7 @@
     "TxSent": "Транзакция успешно отправлена",
     "Scanning": "Сканирование",
     "CurrentAddress": "Текущий адрес",
+    "AddressCopied": "Адрес скопирован",
     "Form": {
         "Recipient": "Получатель",
         "AmountSend": "К отправке",

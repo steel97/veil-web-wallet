@@ -11,7 +11,9 @@
       </div>
     </transition>
     <div class="transition-all bg-gray-100 text-gray-700 dark:bg-gray-900 dark:text-gray-300">
-      <router-view />
+      <router-view v-slot="{ Component, route }">
+        <component :is="Component" v-bind="route.params"></component>
+      </router-view>
     </div>
   </div>
 </template>
