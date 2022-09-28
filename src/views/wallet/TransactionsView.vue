@@ -5,7 +5,7 @@
                 <div class="absolute bg-gray-900/70 w-full h-screen top-0 left-0 flex justify-center items-center"
                     v-if="coinsFAQActive">
                     <div
-                        class="max-w-xs bg-gray-50 text-gray-700 dark:bg-gray-800 dark:text-gray-300 p-4 rounded text-sm">
+                        class="max-w-md bg-gray-50 text-gray-700 dark:bg-gray-800 dark:text-gray-300 p-4 rounded text-sm">
                         <div v-for="(entry, index) in (tm('FAQ.CoinsFAQ') as Array<string>)" :key="'coins-faq-' + index"
                             v-html="entry">
                         </div>
