@@ -45,7 +45,7 @@ const router = useRouter();
 const updateAvailable = ref(false);
 
 const update = () => {
-  window.location.href = window.location.href.replace(/#.*$/, "");
+  location.reload();
 };
 
 const printWarnMessage = () => {
