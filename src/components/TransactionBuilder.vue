@@ -175,7 +175,6 @@ const onQrDecode = (decodedString: string) => {
 
     // check amounts
     const localAmount = getParameterByName("amount", target);
-    console.log(localAmount);
 
     target = target.split("?")[0];
 
