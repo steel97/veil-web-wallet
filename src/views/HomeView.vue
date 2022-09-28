@@ -17,11 +17,11 @@
   
 <script lang="ts" setup>
 import { useI18n } from "vue-i18n";
-import { computed } from "@vue/reactivity";
 import { coreUIStore } from "@/store/modules/CoreUI";
+import { onMounted } from "vue";
 import QuickSettings from "@/components/QuickSettings.vue";
 
 const { t } = useI18n();
 
-computed(() => coreUIStore.setWalletLoaded(true));
+onMounted(() => coreUIStore.setWalletLoaded(true));
 </script>

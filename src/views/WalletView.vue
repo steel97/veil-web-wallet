@@ -61,6 +61,7 @@ const switchAddress = async (index: number) => {
 };
 
 onMounted(async () => {
+    coreUIStore.setWalletLoaded(true);
     await LightwalletService.setWallet(uiState.currentWallet);
     loading.value = false;
 });

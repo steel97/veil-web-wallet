@@ -56,6 +56,7 @@ const routes: Array<RouteRecordRaw> = [
     name: "wallet",
     component: WalletView,
     meta: {
+      skipLoad: true,
       wallet: true
     },
     children: [
