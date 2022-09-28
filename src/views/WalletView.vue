@@ -1,5 +1,17 @@
 <template>
     <div class="min-h-screen flex flex-col items-center">
+        <transition name="fade" mode="out-in">
+            <div class="absolute bg-gray-900/70 w-full h-screen top-0 left-0 flex justify-center items-center"
+                v-if="failedToLoad">
+                <div
+                    class="max-w-xs bg-gray-50 text-gray-700 dark:bg-gray-800 dark:text-gray-300 p-4 rounded flex items-center justify-center">
+                    <div class="text-center">{{t("Wallet.LoadFailedRetrying")}}</div>
+                    <div v-if="loading" class="flex justify-center h-screen items-center">
+                        <span class="loader"></span>
+                    </div>
+                </div>
+            </div>
+        </transition>
         <div class="max-w-5xl w-full p-2">
             <router-view v-slot="{ Component, route }">
                 <transition name="fade" mode="out-in">
@@ -14,13 +26,22 @@
                                     {{uiState.currentWallet?.name}}
                                 </div>
                             </button>
-                            <div class="grow h-min mx-2 md:ml-24 md:mx-10 flex justify-center">
+                            <div class="grow h-min mx-2 md:ml-24 md:mx-10 justify-center hidden md:flex">
                                 <button class="px-4 py-2 border-b-2"
                                     :class="uiState.addressIndex == 0 ? 'border-blue-500 text-blue-500 hover:text-blue-600 dark:text-blue-500 dark:hover:text-blue-600': 'border-gray-400'"
-                                    @click="switchAddress(0)">Main</button>
+                                    @click="switchAddress(0)">{{t("Wallet.Addresses.Main")}}</button>
                                 <button class="px-4 py-2 border-b-2"
                                     :class="uiState.addressIndex == 1 ? 'border-blue-500 text-blue-500 hover:text-blue-600 dark:text-blue-500 dark:hover:text-blue-600': 'border-gray-400'"
-                                    @click="switchAddress(1)">Change</button>
+                                    @click="switchAddress(1)">{{t("Wallet.Addresses.Change")}}</button>
+                            </div>
+                            <div class="ml-8 h-min flex md:hidden">
+                                <select name="select" v-model="uiState.addressIndex"
+                                    class="p-2 px-3 text-center rounded bg-gray-200 text-gray-600 dark:bg-gray-500 dark:text-gray-300">
+                                    <option :value="0">
+                                        {{t("Wallet.Addresses.Main")}}</option>
+                                    <option :value="0">
+                                        {{t("Wallet.Addresses.Change")}}</option>
+                                </select>
                             </div>
                             <div class="flex">
                                 <button
@@ -61,18 +82,50 @@ import { coreUIStore } from "@/store/modules/CoreUI";
 import { onMounted, ref } from "vue";
 import LightwalletService from "@/lightwallet/LightwalletService";
 import QuickSettings from "@/components/actions/QuickSettings.vue";
+import { useI18n } from "vue-i18n";
+import { sleep } from "@/core/Core";
 
 const uiState = coreUIStore.getState();
 const loading = ref(true);
+const { t } = useI18n();
+const failedToLoad = ref(false);
 
 const switchAddress = async (index: number) => {
     coreUIStore.setAddressIndex(index);
 };
 
+const tryReloadWallet = async () => {
+    while (true) {
+        try {
+            await LightwalletService.setWallet(uiState.currentWallet);
+            failedToLoad.value = false;
+            loading.value = false;
+            return;
+        } catch {
+
+        }
+        await sleep(3000);
+    }
+};
+
 onMounted(async () => {
     coreUIStore.setWalletLoaded(true);
-    await LightwalletService.setWallet(uiState.currentWallet);
-    loading.value = false;
+    let loaded = false;
+    for (let i = 0; i < 3; i++) {
+        try {
+            await LightwalletService.setWallet(uiState.currentWallet);
+            loaded = true;
+            break;
+        } catch {
+
+        }
+    }
+    if (!loaded) {
+        failedToLoad.value = true;
+        tryReloadWallet();
+    } else {
+        loading.value = false;
+    }
 });
 </script>
 

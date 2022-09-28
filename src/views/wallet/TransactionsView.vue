@@ -1,6 +1,20 @@
 <template>
     <div>
         <div class="mt-2">
+            <transition name="fade" mode="out-in">
+                <div class="absolute bg-gray-900/70 w-full h-screen top-0 left-0 flex justify-center items-center"
+                    v-if="coinsFAQActive">
+                    <div
+                        class="max-w-xs bg-gray-50 text-gray-700 dark:bg-gray-800 dark:text-gray-300 p-4 rounded text-sm">
+                        <div v-for="(entry, index) in (tm('FAQ.CoinsFAQ') as Array<string>)" :key="'coins-faq-' + index"
+                            v-html="entry">
+                        </div>
+                        <button @click="showCoinsFAQ(false)"
+                            class="m-auto text-center block px-4 py-2 my-1 w-full rounded transition-colors text-gray-50 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
+                            {{t("Wallet.Close")}}</button>
+                    </div>
+                </div>
+            </transition>
             <div class="flex flex-col items-center md:items-start md:flex-row">
                 <div class="w-full md:w-fit flex items-center flex-col">
                     <div class="text-center font-semibold text-sm mb-2">
@@ -23,7 +37,7 @@
                             </button>
                         </div>
                         <a :href="LightwalletService.addressViewUrl + address" target="_blank"
-                            class="overflow-hidden truncate text-center static-width font-semibold text-xs underline underline-offset-3">
+                            class="overflow-hidden truncate text-center static-width font-semibold text-xs underline underline-offset-3 text-blue-500 hover:text-blue-600 dark:text-blue-500 dark:hover:text-blue-600">
                             {{address}}
                         </a>
                     </div>
@@ -52,6 +66,10 @@
                             </svg>
                         </div>
                         <div class="text-sm">{{balanceLocked}}</div>
+                    </div>
+                    <div class="text-xs mt-1">
+                        <button @click="showCoinsFAQ(true)"
+                            class="underline underline-offset-3 text-blue-500 hover:text-blue-600 dark:text-blue-500 dark:hover:text-blue-600">{{t("Wallet.NoCoins")}}</button>
                     </div>
                     <div class="w-full hidden md:block md:w-fit">
                         <BaseButton @click="showSend()" class="button m-auto mt-2 w-full">
@@ -92,7 +110,7 @@ import "vue3-toastify/dist/index.css";
 
 
 const uiState = coreUIStore.getState();
-const { t } = useI18n();
+const { t, tm } = useI18n();
 const addressIndex = ref(0);
 const isSendState = ref(false);
 const scanned = ref(false);
@@ -108,10 +126,16 @@ watch(uiState, () => {
         scan();
     }
 });
+
 const address = computed(() => {
     return LightwalletService.getAddress(addressIndex.value).getStringAddress();
 });
 
+const showCoinsFAQ = (show: boolean) => {
+    coinsFAQActive.value = show;
+};
+
+const coinsFAQActive = ref(false);
 const balanceAvailable = ref("0");
 const balanceLocked = ref("0");
 const forceScan = ref(0);

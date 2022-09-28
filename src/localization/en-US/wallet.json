@@ -15,6 +15,13 @@
     "Scanning": "Scanning",
     "CurrentAddress": "Current address",
     "AddressCopied": "Address copied",
+    "NoCoins": "Can't see your coins?",
+    "LoadFailedRetrying": "Failed to fetch data from node. Retrying...",
+    "Close": "Close",
+    "Addresses": {
+        "Main": "Main",
+        "Change": "Change"
+    },
     "Form": {
         "Recipient": "Recipient",
         "AmountSend": "Amount to send",

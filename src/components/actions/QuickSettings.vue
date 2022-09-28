@@ -2,7 +2,7 @@
     <div class="w-full flex flex-col items-center">
         <div class="mt-4">
             <select name="select" v-model="selectedLocale"
-                class="p-2 px-3 rounded bg-gray-200 text-gray-600 dark:bg-gray-500 dark:text-gray-300">
+                class="p-2 px-3 rounded text-center bg-gray-200 text-gray-600 dark:bg-gray-500 dark:text-gray-300">
                 <option v-for="(loc, index) in availableLocales" :key="index" :value="loc">
                     {{localeNames[index]}}</option>
             </select>

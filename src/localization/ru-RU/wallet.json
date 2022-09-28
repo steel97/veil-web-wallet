@@ -15,6 +15,13 @@
     "Scanning": "Сканирование",
     "CurrentAddress": "Текущий адрес",
     "AddressCopied": "Адрес скопирован",
+    "NoCoins": "Не видите монеты?",
+    "LoadFailedRetrying": "Не удалось загрузить данные. Попытка загрузки...",
+    "Close": "Закрыть",
+    "Addresses": {
+        "Main": "Основной",
+        "Change": "Сдача"
+    },
     "Form": {
         "Recipient": "Получатель",
         "AmountSend": "К отправке",
