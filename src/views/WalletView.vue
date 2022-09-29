@@ -19,7 +19,7 @@
                         <span class="loader"></span>
                     </div>
                     <div v-else>
-                        <div class="flex justify-between w-full">
+                        <div class="flex justify-between w-full items-center">
                             <button class="flex items-center md:mr-16" @click="navigateToTx">
                                 <img src="../assets/logo.png" width="42" alt="Veil Web Wallet" class="block">
                                 <div class="font-semibold ml-1 text-xs uppercase hidden sm:block">
@@ -34,7 +34,7 @@
                                     :class="uiState.addressIndex == 1 ? 'border-blue-500 text-blue-500 hover:text-blue-600 dark:text-blue-500 dark:hover:text-blue-600': 'border-gray-400'"
                                     @click="switchAddress(1)">{{t("Wallet.Addresses.Change")}}</button>
                             </div>
-                            <div class="ml-8 h-min flex md:hidden">
+                            <div class="ml-8 h-min flex md:hidden items-center">
                                 <select name="select" v-model="tempAddressIndex"
                                     class="p-2 px-3 text-center rounded bg-gray-200 text-gray-600 dark:bg-gray-500 dark:text-gray-300">
                                     <option :value="0">
