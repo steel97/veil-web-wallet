@@ -14,7 +14,8 @@
                 <div class="w-full grow">
                     <router-view v-slot="{ Component, route }">
                         <transition name="fade" mode="out-in">
-                            <component :is="Component" v-bind="route.params" :addressIndex="addressIndex"></component>
+                            <component :is="Component" v-bind="route.params" :addressIndex="addressIndex"
+                                :balanceAvailable="balanceAvailable"></component>
                         </transition>
                     </router-view>
                 </div>

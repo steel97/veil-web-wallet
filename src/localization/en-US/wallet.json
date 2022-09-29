@@ -19,6 +19,7 @@
     "LoadFailedRetrying": "Failed to fetch data from node. Retrying...",
     "Close": "Close",
     "TxSummary": "Summary",
+    "AvailableBanalce": "Available",
     "Addresses": {
         "Main": "Main",
         "Change": "Change"

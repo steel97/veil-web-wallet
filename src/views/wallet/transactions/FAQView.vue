@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="text-center font-semibold text-sm">{{ t("FAQ.Title") }}</div>
+        <div class="text-center font-semibold text-sm mt-1">{{ t("FAQ.Title") }}</div>
     </div>
 </template>
 

@@ -19,6 +19,7 @@
     "LoadFailedRetrying": "Не удалось загрузить данные. Попытка загрузки...",
     "Close": "Закрыть",
     "TxSummary": "Сводка",
+    "AvailableBanalce": "Доступно",
     "Addresses": {
         "Main": "Основной",
         "Change": "Сдача"

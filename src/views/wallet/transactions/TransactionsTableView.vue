@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="text-center font-semibold text-sm">{{ t("Wallet.Transactions") }}</div>
+        <div class="text-center font-semibold text-sm mt-1">{{ t("Wallet.Transactions") }}</div>
         <div class="w-full" v-if="utxos.length > 0">
             <a v-for="utx in utxos" :key="utx.txid + '-'+utx.rid"
                 class="p-2 border-b-2 border-gray-400 w-full text-sm flex justify-between items-center"

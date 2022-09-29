@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="text-center font-semibold text-sm">{{ t("Wallet.NewTransaction") }}</div>
+        <div class="text-center font-semibold text-sm mt-1">{{ t("Wallet.NewTransaction") }}</div>
         <div class="flex justify-center">
             <transition name="fade" mode="out-in">
                 <div class="absolute bg-gray-900/70 w-full h-screen top-0 left-0 flex justify-center items-center"
@@ -62,10 +62,22 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="flex justify-center mt-2 items-center">
+                                    <div class="mr-2">
+                                        {{t("Wallet.AvailableBanalce")}}:
+                                    </div>
+                                    <div class="fixed-width">
+                                        <img src="../../../assets/logo.png" width="24" alt="Veil coin"
+                                            class="block grow mr-1 my-1">
+                                    </div>
+                                    <button type="button"
+                                        class="text-md underline underline-offset-3 text-blue-500 hover:text-blue-600 dark:text-blue-500 dark:hover:text-blue-600"
+                                        @click="setAmount(balanceAvailable)">{{balanceAvailable}}</button>
+                                </div>
                             </div>
 
                             <div v-if="!loading">
-                                <BaseButton type="submit" @click="next" class="m-auto mt-6 my-1 w-full md:max-w-xs">
+                                <BaseButton type="submit" @click="next" class="m-auto mt-2 my-1 w-full md:max-w-xs">
                                     {{t("Wallet.Next")}}</BaseButton>
                                 <BaseButton @click="back" class="m-auto my-1 w-full md:max-w-xs">
                                     {{t("Wallet.Back")}}</BaseButton>
@@ -145,7 +157,8 @@ import BaseButton from "@/components/ui/BaseButton.vue";
 
 // eslint-disable-next-line
 const props = defineProps({
-    addressIndex: { type: Number, required: true }
+    addressIndex: { type: Number, required: true },
+    balanceAvailable: { type: String, required: true }
 });
 
 enum TxBuildState {
@@ -157,11 +170,14 @@ const { t } = useI18n();
 const loading = ref(false);
 const step = ref(TxBuildState.INFORMATION);
 const router = useRouter();
-
 const showQr = ref(false);
 
 const closeQr = () => {
     showQr.value = false;
+};
+
+const setAmount = (amountStr: string) => {
+    amount.value = amountStr;
 };
 
 const onQrDecode = (decodedString: string) => {
