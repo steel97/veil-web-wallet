@@ -43,7 +43,7 @@ const errorMessage = ref("");
 
 const importWallet = () => {
     const tprepared: Array<string> = [];
-    mnemonic.value.forEach(val => tprepared.push(val.trim()));
+    mnemonic.value.forEach(val => tprepared.push(val.trim().toLocaleLowerCase()));
     const typeMnemonic = tprepared.join(" ");
 
     if (!Lightwallet.verifyMnemonic(typeMnemonic)) {

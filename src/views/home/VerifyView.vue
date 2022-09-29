@@ -44,7 +44,7 @@ const errorMessage = ref("");
 const verify = () => {
     const genMnemonic = uiState.tmpMnemonic.join(" ");
     const tprepared: Array<string> = [];
-    mnemonic.value.forEach(val => tprepared.push(val.trim()));
+    mnemonic.value.forEach(val => tprepared.push(val.trim().toLowerCase()));
     const typeMnemonic = tprepared.join(" ");
 
     if (genMnemonic != typeMnemonic) {
