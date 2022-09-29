@@ -104,18 +104,22 @@ onMounted(async () => {
     router.replace("/unlock");
   });
 
-  db.setDb(2);
+  try {
+    db.setDb(2);
 
-  const wallet = await db.wallets.get(1);
-  if (wallet == undefined) {
-    // drop table?
-    return;
+    const wallet = await db.wallets.get(1);
+    if (wallet == undefined) {
+      // drop table?
+      return;
+    }
+
+    coreUIStore.setCurrentWallet(wallet);
+    coreUIStore.setPasshash(emptyHash);
+
+    router.replace("/wallet");
+  } catch {
+    router.replace("/unlock");
   }
-
-  coreUIStore.setCurrentWallet(wallet);
-  coreUIStore.setPasshash(emptyHash);
-
-  router.replace("/wallet");
 });
 </script>
 <style lang="scss">

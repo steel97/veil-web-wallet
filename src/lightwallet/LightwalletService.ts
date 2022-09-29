@@ -2,7 +2,7 @@ import { Logging, LogLevel } from "@/core/Logging";
 import { IWallet } from "@/database/WalletDb";
 import { IUtxo } from "@/models/IUtxo";
 import { coreUIStore } from "@/store/modules/CoreUI";
-import { AccountType, Chainparams, CVeilAddress, CWatchOnlyTxWithIndex, Lightwallet, LightwalletAccount, LightwalletAddress, mainNetParams } from "veil-light";
+import { AccountType, Chainparams, CVeilAddress, CWatchOnlyTxWithIndex, Lightwallet, LightwalletAccount, LightwalletAddress, mainNetParams, RpcRequester, GetRawMempool } from "veil-light";
 
 export default class LightwalletService {
     public static params: Chainparams;
@@ -19,6 +19,7 @@ export default class LightwalletService {
     private static _watching = false;
     private static _pendingUtxos: Array<string> = [];
     private static _lockedUtxos: Array<string> = [];
+    private static _mempool: Array<string> = [];
     private static _scanned = false;
 
     public static getScanned() {
@@ -52,7 +53,8 @@ export default class LightwalletService {
             const address = LightwalletService.getAddress(index);
             const recipientAddress = CVeilAddress.parse(LightwalletService.params, recipient);
 
-            const utxos = (await address.getUnspentOutputs()).sort((a, b) => a.getAmount(LightwalletService.params) - b.getAmount(LightwalletService.params));
+            const preparedUtxos = (await address.getUnspentOutputs()).filter(utxo => LightwalletService._mempool.indexOf(utxo.getId() ?? "") === -1);
+            const utxos = preparedUtxos.sort((a, b) => a.getAmount(LightwalletService.params) - b.getAmount(LightwalletService.params));
             const pending = LightwalletService._lockedUtxos;
 
             const targetUtxos: Array<CWatchOnlyTxWithIndex> = [];
@@ -108,8 +110,15 @@ export default class LightwalletService {
 
     public static async getAvailableBalance(index = 0) {
         const address = LightwalletService.getAddress(index);
-        const balance = await address.getBalance();
+        const balance = await address.getBalance(this._mempool);
         return balance;
+    }
+
+    public static async getPendingBalance(index = 0) {
+        const address = LightwalletService.getAddress(index);
+        const balance = await address.getBalance();
+        const balanceAvailable = await address.getBalance(this._mempool);
+        return balance - balanceAvailable;
     }
 
     public static async getLockedBalance(index = 0) {
@@ -190,8 +199,19 @@ export default class LightwalletService {
     }
 
     public static async reloadTxes(addr: LightwalletAddress) {
+        // fetch txes
         await addr.fetchTxes();
-        const utxos = (await addr.getUnspentOutputs() ?? []);
+        // fetch mempool
+        const result = await RpcRequester.send<GetRawMempool>({
+            jsonrpc: "1.0",
+            method: "getrawmempool",
+            params: []
+        });
+
+        if (result.error == null)
+            LightwalletService._mempool = result.result;
+
+        const utxos = (await addr.getUnspentOutputs(true) ?? []);
         LightwalletService._lockedUtxos = LightwalletService._lockedUtxos.filter(a => utxos.find(b => b.getId() == a) != undefined);
     }
 

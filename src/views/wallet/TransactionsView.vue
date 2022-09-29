@@ -41,7 +41,7 @@
                             {{address}}
                         </a>
                     </div>
-                    <div class="flex md:w-full" v-if="!scanned">
+                    <div class="flex md:w-full mb-1" v-if="!scanned">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                             class="w-4 h-4 mr-2 pending">
                             <path fill-rule="evenodd"
@@ -50,13 +50,34 @@
                         </svg>
                         <div class="font-semibold text-sm">{{t("Wallet.Scanning")}}</div>
                     </div>
-                    <div class="flex items-center w-fit md:w-full">
+                    <div class="flex items-center w-fit md:w-full mb-1">
                         <div class="fixed-width">
-                            <img src="../../assets/logo.png" width="20" alt="Veil coin" class="block grow mr-1 my-1">
+                            <img src="../../assets/logo.png" width="18" alt="Veil coin" class="block grow mr-1 my-1">
                         </div>
+                        <div class="text-sm font-semibold">{{balanceOverall}}</div>
+                    </div>
+                    <div class="flex items-center w-fit md:w-full mb-1">
+                        <div class="fixed-width">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-5 h-5 text-blue-500 dark:text-blue-500">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
+                            </svg>
+                        </div>
+
                         <div class="text-sm">{{balanceAvailable}}</div>
                     </div>
                     <div class="flex items-center w-fit md:w-full">
+                        <div class="fixed-width">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-5 h-5 text-blue-500 dark:text-blue-500">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <div class="text-sm">{{balancePending}}</div>
+                    </div>
+                    <!--<div class="flex items-center w-fit md:w-full">
                         <div class="fixed-width">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                 class="w-5 h-5 text-blue-500 dark:text-blue-500">
@@ -66,7 +87,7 @@
                             </svg>
                         </div>
                         <div class="text-sm">{{balanceLocked}}</div>
-                    </div>
+                    </div>-->
                     <div class="text-xs mt-1">
                         <button @click="showCoinsFAQ(true)"
                             class="underline underline-offset-3 text-blue-500 hover:text-blue-600 dark:text-blue-500 dark:hover:text-blue-600">{{t("Wallet.NoCoins")}}</button>
@@ -138,7 +159,9 @@ const showCoinsFAQ = (show: boolean) => {
 
 const coinsFAQActive = ref(false);
 const balanceAvailable = ref("0");
+const balanceOverall = ref("");
 const balanceLocked = ref("0");
+const balancePending = ref("0");
 const forceScan = ref(0);
 
 let stopScan = false;
@@ -148,8 +171,15 @@ const showSend = async () => {
 };
 
 const scan = async () => {
-    balanceAvailable.value = LightwalletService.formatAmount(await LightwalletService.getAvailableBalance(addressIndex.value));
-    balanceLocked.value = LightwalletService.formatAmount(await LightwalletService.getLockedBalance(addressIndex.value));
+    const available = await LightwalletService.getAvailableBalance(addressIndex.value);
+    const locked = await LightwalletService.getLockedBalance(addressIndex.value);
+    const pending = await LightwalletService.getPendingBalance(addressIndex.value);
+
+    balanceAvailable.value = LightwalletService.formatAmount(available);
+    balanceLocked.value = LightwalletService.formatAmount(locked);
+    balancePending.value = LightwalletService.formatAmount(pending);
+    balanceOverall.value = LightwalletService.formatAmount(pending + available);
+
     scanned.value = LightwalletService.getScanned();
 };
 
