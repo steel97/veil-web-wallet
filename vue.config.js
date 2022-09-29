@@ -16,6 +16,9 @@ module.exports = defineConfig({
     name: "Veil Wallet",
     themeColor: "#FFFFFF",
     appleMobileWebAppCapable: "yes",
+    workboxOptions: {
+      skipWaiting: true
+    }
   },
   configureWebpack: config => {
     config.experiments = {

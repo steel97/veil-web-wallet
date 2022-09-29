@@ -47,7 +47,13 @@ const router = useRouter();
 const updateAvailable = ref(false);
 
 const update = () => {
-  location.reload();
+  try {
+    // eslint-disable-next-line
+    // @ts-ignore: Unreachable code error
+    location.reload(true);
+  } catch {
+    location.reload();
+  }
 };
 
 const printWarnMessage = () => {

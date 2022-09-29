@@ -14,9 +14,8 @@ if (process.env.NODE_ENV === "production") {
     cached() {
       Logging.trace("Content has been cached for offline use.", LogLevel.INFO);
     },
-    updatefound(reg) {
+    updatefound() {
       Logging.trace("New content is downloading.", LogLevel.INFO);
-      reg.update();
       setTimeout(() => window.dispatchEvent(new CustomEvent("appUpdateFound")), 5000);
     },
     updated() {
