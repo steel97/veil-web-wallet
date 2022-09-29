@@ -20,6 +20,7 @@
     "Close": "Close",
     "TxSummary": "Summary",
     "AvailableBanalce": "Available",
+    "SubstractFeeFromAmount": "substract fee from amount",
     "Addresses": {
         "Main": "Main",
         "Change": "Change"

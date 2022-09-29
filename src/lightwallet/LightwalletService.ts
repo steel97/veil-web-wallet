@@ -17,7 +17,6 @@ export default class LightwalletService {
 
     private static _addresses: Array<LightwalletAddress> = [];
     private static _watching = false;
-    private static _pendingUtxos: Array<string> = [];
     private static _mempool: Array<string> = [];
     private static _scanned = false;
 
@@ -47,7 +46,7 @@ export default class LightwalletService {
         return false;
     }
 
-    public static async buildTransaction(index: number, amount: number, recipient: string) {
+    public static async buildTransaction(index: number, amount: number, recipient: string, substractFee = false) {
         try {
             const address = LightwalletService.getAddress(index);
             const recipientAddress = CVeilAddress.parse(LightwalletService.params, recipient);
@@ -56,18 +55,18 @@ export default class LightwalletService {
             const utxos = preparedUtxos.sort((a, b) => a.getAmount(LightwalletService.params) - b.getAmount(LightwalletService.params));
 
             const targetUtxos: Array<CWatchOnlyTxWithIndex> = [];
-            const fee = LightwalletService.getFee() * 2; // TO-DO, real fee calculation
-            const targetAmount = amount + fee;
+            const fee = LightwalletService.getFee(); // TO-DO, real fee calculation
+            const amountPrepared = substractFee ? amount - fee : amount;
+            const targetAmount = substractFee ? amountPrepared - fee : amountPrepared + fee;
+
             let currentAmount = 0;
-            LightwalletService._pendingUtxos = [];
             for (const utxo of utxos) {
                 currentAmount += utxo.getAmount(LightwalletService.params);
                 targetUtxos.push(utxo);
-                LightwalletService._pendingUtxos.push(utxo.getId()!);
                 if (currentAmount >= targetAmount)
                     break;
             }
-            const rawTx = await address.buildTransaction(amount, recipientAddress, targetUtxos);
+            const rawTx = await address.buildTransaction(amountPrepared, recipientAddress, targetUtxos);
             if (rawTx == undefined) return undefined;
 
             return rawTx;

@@ -61,6 +61,10 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="mt-4 flex justify-center">
+                                    <input type="checkbox" id="substract" class="mr-2" v-model="substractFee" />
+                                    <label>{{t("Wallet.SubstractFeeFromAmount")}}</label>
+                                </div>
                                 <div class="flex justify-center mt-2 items-center">
                                     <div class="mr-2">
                                         {{t("Wallet.AvailableBanalce")}}:
@@ -170,6 +174,7 @@ const loading = ref(false);
 const step = ref(TxBuildState.INFORMATION);
 const router = useRouter();
 const showQr = ref(false);
+const substractFee = ref(false);
 
 const closeQr = () => {
     showQr.value = false;
@@ -245,7 +250,7 @@ const next = async () => {
     try {
         loading.value = true;
         const tamount = parseFloat(amount.value);
-        const txBuildRes = await LightwalletService.buildTransaction(props.addressIndex, tamount, address.value);
+        const txBuildRes = await LightwalletService.buildTransaction(props.addressIndex, tamount, address.value, substractFee.value);
         fee.value = LightwalletService.toDisplayValue(txBuildRes?.fee ?? 0);
         rawTx = txBuildRes?.txid;
         if (rawTx == undefined) throw new Error();
