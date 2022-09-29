@@ -58,7 +58,7 @@ const printWarnMessage = () => {
 onMounted(async () => {
   // eslint-disable-next-line
   window.addEventListener("appUpdated", () => updateAvailable.value = true);
-  window.addEventListener("appUpdateFound", () => updateAvailable.value = true);
+  //window.addEventListener("appUpdateFound", () => updateAvailable.value = true);
 
   loadMode();
 

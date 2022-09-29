@@ -9,7 +9,7 @@
                         <component :is="Component" v-bind="route.params"></component>
                     </transition>
                 </router-view>
-                <QuickSettings />
+                <QuickSettingsWidget />
             </div>
         </div>
     </div>
@@ -19,7 +19,7 @@
 import { useI18n } from "vue-i18n";
 import { coreUIStore } from "@/store/modules/CoreUI";
 import { onMounted } from "vue";
-import QuickSettings from "@/components/actions/QuickSettings.vue";
+import QuickSettingsWidget from "@/components/widgets/QuickSettingsWidget.vue";
 
 const { t } = useI18n();
 

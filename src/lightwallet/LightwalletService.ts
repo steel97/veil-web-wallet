@@ -72,7 +72,7 @@ export default class LightwalletService {
 
             return rawTx;
         } catch (e) {
-            console.log(e);
+            Logging.trace(`can't build tx ${e}`, LogLevel.ERROR);
             return undefined;
         }
     }
@@ -198,8 +198,6 @@ export default class LightwalletService {
 
         if (result.error == null)
             LightwalletService._mempool = result.result;
-
-        const utxos = (await addr.getUnspentOutputs(true) ?? []);
     }
 
     public static async fetchData() {

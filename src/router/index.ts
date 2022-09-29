@@ -9,8 +9,9 @@ import SaveView from "@/views/home/SaveView.vue";
 import UnlockView from "@/views/home/UnlockView.vue";
 import WalletView from "@/views/WalletView.vue";
 import TransactionsView from "@/views/wallet/TransactionsView.vue";
-import TransactionsTable from "@/views/wallet/transactions/TransactionsTable.vue";
-import TransactionBuilder from "@/views/wallet/transactions/TransactionBuilder.vue";
+import TransactionsTableView from "@/views/wallet/transactions/TransactionsTableView.vue";
+import TransactionBuilderView from "@/views/wallet/transactions/TransactionBuilderView.vue";
+import FAQView from "@/views/wallet/transactions/FAQView.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -70,15 +71,20 @@ const routes: Array<RouteRecordRaw> = [
           {
             path: "/wallet",
             name: "transactionstable",
-            component: TransactionsTable,
+            component: TransactionsTableView,
+            meta: {
+              isTxList: true
+            }
           },
           {
             path: "/wallet/maketx",
             name: "transactionbuilder",
-            component: TransactionBuilder,
-            meta: {
-              isMakeTx: true
-            }
+            component: TransactionBuilderView
+          },
+          {
+            path: "/wallet/faq",
+            name: "faq",
+            component: FAQView
           }
         ]
       }

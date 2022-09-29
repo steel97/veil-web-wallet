@@ -96,17 +96,13 @@
                         <BaseButton @click="showSend()" class="button m-auto mt-2 w-full">
                             {{t("Wallet.Send")}}</BaseButton>
                     </div>
-                    <div class="w-full md:hidden" v-if="!route.meta.isMakeTx">
+                    <div class="w-full md:hidden" v-if="route.meta.isTxList">
                         <BaseButton @click="showSend()" class="button m-auto my-1 mt-2 w-full">
                             {{t("Wallet.Send")}}</BaseButton>
                     </div>
                 </div>
                 <div class="w-2"></div>
                 <div class="w-full grow">
-                    <div class="text-center font-semibold text-sm" v-if="!route.meta.isMakeTx">
-                        {{t("Wallet.Transactions")}}
-                    </div>
-                    <div class="text-center font-semibold text-sm" v-else>{{ t("Wallet.NewTransaction") }}</div>
                     <router-view v-slot="{ Component, route }">
                         <transition name="fade" mode="out-in">
                             <component :is="Component" v-bind="route.params" :addressIndex="addressIndex"></component>
