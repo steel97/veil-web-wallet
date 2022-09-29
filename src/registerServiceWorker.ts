@@ -1,34 +1,32 @@
 /* eslint-disable no-console */
 
 import { register } from "register-service-worker";
+import { Logging, LogLevel } from "./core/Logging";
 
 if (process.env.NODE_ENV === "production") {
   register(`${process.env.BASE_URL}service-worker.js`, {
     ready() {
-      console.log(
-        "App is being served from cache by a service worker.\n" +
-        "For more details, visit https://goo.gl/AFskqB"
-      );
+      Logging.trace("App is being served from cache by a service worker", LogLevel.INFO);
     },
     registered() {
-      console.log("Service worker has been registered.");
+      Logging.trace("Service worker has been registered.", LogLevel.INFO);
     },
     cached() {
-      console.log("Content has been cached for offline use.");
+      Logging.trace("Content has been cached for offline use.", LogLevel.INFO);
     },
     updatefound() {
-      console.log("New content is downloading.");
+      Logging.trace("New content is downloading.", LogLevel.INFO);
       window.dispatchEvent(new CustomEvent("appUpdateFound"));
     },
     updated() {
-      console.log("New content is available; please refresh.");
+      Logging.trace("New content is available; please refresh.", LogLevel.INFO);
       window.dispatchEvent(new CustomEvent("appUpdated"));
     },
     offline() {
-      console.log("No internet connection found. App is running in offline mode.");
+      Logging.trace("No internet connection found. App is running in offline mode.", LogLevel.INFO);
     },
     error(error) {
-      console.error("Error during service worker registration:", error);
+      Logging.trace(`Error during service worker registration: ${error}`, LogLevel.ERROR);
     }
   });
 }
