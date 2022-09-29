@@ -6,7 +6,7 @@
                 <div
                     class="max-w-xs bg-gray-50 text-gray-700 dark:bg-gray-800 dark:text-gray-300 p-4 rounded flex flex-col items-center justify-center">
                     <div class="text-center">{{t("Wallet.LoadFailedRetrying")}}</div>
-                    <div class="flex justify-center h-screen items-center">
+                    <div>
                         <span class="loader"></span>
                     </div>
                 </div>
