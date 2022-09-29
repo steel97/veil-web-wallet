@@ -111,7 +111,7 @@ onMounted(async () => {
     wallets: cryptoOptions.NON_INDEXED_FIELDS
   }, async () => {
     // redirect to enter password state
-    router.replace("/unlock");
+    router.replace("/home/unlock");
   });
 
   try {
@@ -128,7 +128,7 @@ onMounted(async () => {
 
     router.replace("/wallet");
   } catch {
-    router.replace("/unlock");
+    router.replace("/home/unlock");
   }
 });
 </script>
