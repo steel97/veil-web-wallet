@@ -52,7 +52,8 @@
                                     class="grow text-center !rounded-none !outline-none !focus:ring-transparent bg-transparent w-full border-b-2 border-gray-400"
                                     type="text" id="amount" :placeholder="t('Wallet.AmountPlaceholder')" />
                                 <div class="fixed-width">
-                                    <img src="../../assets/logo.png" width="20" alt="Veil coin" class="block ml-1 my-1">
+                                    <img src="../../../assets/logo.png" width="20" alt="Veil coin"
+                                        class="block ml-1 my-1">
                                 </div>
                             </div>
                         </div>
@@ -128,17 +129,14 @@ import { useI18n } from "vue-i18n";
 import { computed } from "@vue/reactivity";
 import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from "vue-qrcode-reader";
 import { getParameterByName } from "@/core/Core";
+import { useRouter } from "vue-router";
 import LightwalletService from "@/lightwallet/LightwalletService";
-import BaseButton from "../ui/BaseButton.vue";
+import BaseButton from "@/components/ui/BaseButton.vue";
 
 // eslint-disable-next-line
 const props = defineProps({
     addressIndex: { type: Number, required: true }
 });
-// eslint-disable-next-line
-const emit = defineEmits<{
-    (event: "close"): void
-}>();
 
 enum TxBuildState {
     INFORMATION,
@@ -148,6 +146,7 @@ enum TxBuildState {
 const { t } = useI18n();
 const loading = ref(false);
 const step = ref(TxBuildState.INFORMATION);
+const router = useRouter();
 
 const showQr = ref(false);
 
@@ -213,7 +212,7 @@ const computeTotal = computed(() => LightwalletService.formatAmount(camount.valu
 let rawTx: string | undefined = "";
 
 const back = () => {
-    emit("close");
+    router.replace("/wallet");
 };
 
 const next = async () => {

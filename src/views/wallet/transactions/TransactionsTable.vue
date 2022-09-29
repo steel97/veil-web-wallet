@@ -28,7 +28,7 @@
                 <div class="flex items-center">
                     <div class="text-sm">{{utx.amount}}</div>
                     <div class="fixed-width">
-                        <img src="../../assets/logo.png" width="20" alt="Veil coin" class="block ml-1 my-1">
+                        <img src="../../../assets/logo.png" width="20" alt="Veil coin" class="block ml-1 my-1">
                     </div>
                 </div>
             </div>
@@ -41,11 +41,11 @@
     </div>
 </template>
 <script lang="ts" setup>
-import LightwalletService from "@/lightwallet/LightwalletService";
 import { onMounted, onUnmounted, ref, watch } from "vue";
 import { IUtxo } from "@/models/IUtxo";
 import { useI18n } from "vue-i18n";
 import { coreUIStore } from "@/store/modules/CoreUI";
+import LightwalletService from "@/lightwallet/LightwalletService";
 
 const { t } = useI18n();
 const forceScan = ref(0);

@@ -75,20 +75,22 @@
                         <BaseButton @click="showSend()" class="button m-auto mt-2 w-full">
                             {{t("Wallet.Send")}}</BaseButton>
                     </div>
-                    <div class="w-full md:hidden" v-if="!isSendState">
+                    <div class="w-full md:hidden" v-if="!route.meta.isMakeTx">
                         <BaseButton @click="showSend()" class="button m-auto my-1 mt-2 w-full">
                             {{t("Wallet.Send")}}</BaseButton>
                     </div>
                 </div>
                 <div class="w-2"></div>
                 <div class="w-full grow">
-                    <div class="text-center font-semibold text-sm" v-if="!isSendState">{{t("Wallet.Transactions")}}
+                    <div class="text-center font-semibold text-sm" v-if="!route.meta.isMakeTx">
+                        {{t("Wallet.Transactions")}}
                     </div>
-                    <div class="text-center font-semibold text-sm" v-else>{{t("Wallet.NewTransaction")}}</div>
-                    <transition name="fade" mode="out-in">
-                        <TransactionsTable :addressIndex="addressIndex" v-if="!isSendState" />
-                        <TransactionBuilder @close="showTxes" :addressIndex="addressIndex" v-else />
-                    </transition>
+                    <div class="text-center font-semibold text-sm" v-else>{{ t("Wallet.NewTransaction") }}</div>
+                    <router-view v-slot="{ Component, route }">
+                        <transition name="fade" mode="out-in">
+                            <component :is="Component" v-bind="route.params" :addressIndex="addressIndex"></component>
+                        </transition>
+                    </router-view>
                 </div>
             </div>
         </div>
@@ -99,21 +101,20 @@ import { coreUIStore } from "@/store/modules/CoreUI";
 import { computed } from "@vue/reactivity";
 import { onMounted, onUnmounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { sleep } from "@/core/Core";
 import { toast } from "vue3-toastify";
 import LightwalletService from "@/lightwallet/LightwalletService";
 import vueQr from "vue-qr/src/packages/vue-qr.vue";
-import TransactionsTable from "@/components/actions/TransactionsTable.vue";
-import TransactionBuilder from "@/components/actions/TransactionBuilder.vue";
 import BaseButton from "@/components/ui/BaseButton.vue";
 import "vue3-toastify/dist/index.css";
+import { useRouter, useRoute } from "vue-router";
 
 
 const uiState = coreUIStore.getState();
 const { t, tm } = useI18n();
 const addressIndex = ref(0);
-const isSendState = ref(false);
 const scanned = ref(false);
+const router = useRouter();
+const route = useRoute();
 
 watch(uiState, () => {
     if (addressIndex.value != uiState.addressIndex) {
@@ -142,14 +143,8 @@ const forceScan = ref(0);
 
 let stopScan = false;
 
-const showTxes = () => {
-    isSendState.value = false;
-};
-
 const showSend = async () => {
-    isSendState.value = false;
-    await sleep(20);
-    isSendState.value = true;
+    router.replace("/wallet/maketx");
 };
 
 const scan = async () => {

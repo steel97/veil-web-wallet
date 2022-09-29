@@ -125,7 +125,7 @@ export default class LightwalletService {
         const pending = LightwalletService._lockedUtxos;
 
         const targetUtxos: Array<IUtxo> = [];
-        const indexNum = 0;
+        let indexNum = 0;
         utxos.forEach(utxo => {
             const isPending = pending?.find(val => val == address.getStringAddress() + "_" + utxo.getId());
             targetUtxos.unshift({
@@ -135,7 +135,7 @@ export default class LightwalletService {
                 amount: LightwalletService.formatAmount(utxo.getAmount(LightwalletService.params)),
                 amountUnformatted: utxo.getAmount(LightwalletService.params)
             });
-            index++;
+            indexNum++;
         });
 
         return targetUtxos;

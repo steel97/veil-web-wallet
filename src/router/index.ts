@@ -9,6 +9,8 @@ import SaveView from "@/views/home/SaveView.vue";
 import UnlockView from "@/views/home/UnlockView.vue";
 import WalletView from "@/views/WalletView.vue";
 import TransactionsView from "@/views/wallet/TransactionsView.vue";
+import TransactionsTable from "@/views/wallet/transactions/TransactionsTable.vue";
+import TransactionBuilder from "@/views/wallet/transactions/TransactionBuilder.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -63,7 +65,22 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "/wallet",
         name: "transactions",
-        component: TransactionsView
+        component: TransactionsView,
+        children: [
+          {
+            path: "/wallet",
+            name: "transactionstable",
+            component: TransactionsTable,
+          },
+          {
+            path: "/wallet/maketx",
+            name: "transactionbuilder",
+            component: TransactionBuilder,
+            meta: {
+              isMakeTx: true
+            }
+          }
+        ]
       }
     ]
   }

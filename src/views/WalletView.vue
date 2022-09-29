@@ -20,7 +20,7 @@
                     </div>
                     <div v-else>
                         <div class="flex justify-between w-full">
-                            <button class="flex items-center md:mr-16">
+                            <button class="flex items-center md:mr-16" @click="navigateToTx">
                                 <img src="../assets/logo.png" width="42" alt="Veil Web Wallet" class="block">
                                 <div class="font-semibold ml-1 text-xs uppercase hidden sm:block">
                                     {{uiState.currentWallet?.name}}
@@ -84,14 +84,20 @@ import LightwalletService from "@/lightwallet/LightwalletService";
 import QuickSettings from "@/components/actions/QuickSettings.vue";
 import { useI18n } from "vue-i18n";
 import { sleep } from "@/core/Core";
+import { useRouter } from "vue-router";
 
 const uiState = coreUIStore.getState();
 const loading = ref(true);
 const { t } = useI18n();
 const failedToLoad = ref(false);
+const router = useRouter();
 
 const switchAddress = async (index: number) => {
     coreUIStore.setAddressIndex(index);
+};
+
+const navigateToTx = () => {
+    router.replace("/wallet");
 };
 
 const tryReloadWallet = async () => {
