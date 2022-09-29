@@ -36,7 +36,7 @@
                                 </svg>
                             </button>
                         </div>
-                        <a :href="LightwalletService.addressViewUrl + address" target="_blank"
+                        <a :href="LightwalletService.addressViewUrl.replace('{address}', address)" target="_blank"
                             class="overflow-hidden truncate text-center static-width font-semibold text-xs underline underline-offset-3 text-blue-500 hover:text-blue-600 dark:text-blue-500 dark:hover:text-blue-600">
                             {{address}}
                         </a>

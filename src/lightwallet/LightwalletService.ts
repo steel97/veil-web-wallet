@@ -6,8 +6,10 @@ import { AccountType, Chainparams, CVeilAddress, CWatchOnlyTxWithIndex, Lightwal
 
 export default class LightwalletService {
     public static params: Chainparams;
-    public static addressViewUrl = "https://explorer.veil-project.com/address/";
-    public static txViewUrl = "https://explorer.veil-project.com/tx/";
+    public static defaultAddressViewUrl = process.env.VUE_APP_ADDRESS_VIEW_URL ?? "";
+    public static defaultTxViewUrl = process.env.VUE_APP_TX_VIEW_URL ?? "";
+    public static addressViewUrl = LightwalletService.defaultAddressViewUrl;
+    public static txViewUrl = LightwalletService.defaultTxViewUrl;
 
     private static _walletData: IWallet;
     private static _wallet: Lightwallet;
