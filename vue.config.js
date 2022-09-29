@@ -13,9 +13,9 @@ module.exports = defineConfig({
   transpileDependencies: true,
   publicPath: "./",
   pwa: {
+    name: "Veil Wallet",
     themeColor: "#FFFFFF",
     appleMobileWebAppCapable: "yes",
-
   },
   configureWebpack: config => {
     config.experiments = {
