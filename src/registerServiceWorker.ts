@@ -16,12 +16,12 @@ if (process.env.NODE_ENV === "production") {
     },
     updatefound(reg) {
       Logging.trace("New content is downloading.", LogLevel.INFO);
-      window.dispatchEvent(new CustomEvent("appUpdateFound"));
       reg.update();
+      setTimeout(() => window.dispatchEvent(new CustomEvent("appUpdateFound")), 5000);
     },
     updated() {
       Logging.trace("New content is available; please refresh.", LogLevel.INFO);
-      window.dispatchEvent(new CustomEvent("appUpdated"));
+      setTimeout(() => window.dispatchEvent(new CustomEvent("appUpdated")), 5000);
     },
     offline() {
       Logging.trace("No internet connection found. App is running in offline mode.", LogLevel.INFO);
