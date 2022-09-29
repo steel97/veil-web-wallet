@@ -18,7 +18,6 @@ export default class LightwalletService {
     private static _addresses: Array<LightwalletAddress> = [];
     private static _watching = false;
     private static _pendingUtxos: Array<string> = [];
-    private static _lockedUtxos: Array<string> = [];
     private static _mempool: Array<string> = [];
     private static _scanned = false;
 
@@ -55,7 +54,6 @@ export default class LightwalletService {
 
             const preparedUtxos = (await address.getUnspentOutputs()).filter(utxo => LightwalletService._mempool.indexOf(utxo.getId() ?? "") === -1);
             const utxos = preparedUtxos.sort((a, b) => a.getAmount(LightwalletService.params) - b.getAmount(LightwalletService.params));
-            const pending = LightwalletService._lockedUtxos;
 
             const targetUtxos: Array<CWatchOnlyTxWithIndex> = [];
             const fee = LightwalletService.getFee() * 2; // TO-DO, real fee calculation
@@ -63,8 +61,6 @@ export default class LightwalletService {
             let currentAmount = 0;
             LightwalletService._pendingUtxos = [];
             for (const utxo of utxos) {
-                const isPending = pending?.find(val => val == address.getStringAddress() + "_" + utxo.getId());
-                if (isPending) break;
                 currentAmount += utxo.getAmount(LightwalletService.params);
                 targetUtxos.push(utxo);
                 LightwalletService._pendingUtxos.push(utxo.getId()!);
@@ -87,13 +83,6 @@ export default class LightwalletService {
             const res = await Lightwallet.publishTransaction(rawTx);
             if (res.errorCode != null) {
                 return undefined;
-            }
-            // TO-DO save walletData to dexie database
-            // TO-DO return from build transaction which utxos was used
-            if (res.txid != undefined) {
-                LightwalletService._pendingUtxos.forEach(utxo => {
-                    LightwalletService._lockedUtxos.push(address.getStringAddress() + "_" + utxo);
-                });
             }
 
             try {
@@ -133,12 +122,11 @@ export default class LightwalletService {
     public static async getUtxos(index: number) {
         const address = LightwalletService.getAddress(index);
         const utxos = (await address.getAllOutputs() ?? []).slice();
-        const pending = LightwalletService._lockedUtxos;
 
         const targetUtxos: Array<IUtxo> = [];
         let indexNum = 0;
         utxos.forEach(utxo => {
-            const isPending = pending?.find(val => val == address.getStringAddress() + "_" + utxo.getId());
+            const isPending = LightwalletService._mempool.find(val => val == utxo.getId());
             targetUtxos.unshift({
                 rid: indexNum,
                 pending: isPending != undefined,
@@ -194,7 +182,7 @@ export default class LightwalletService {
         } catch (e) {
             Logging.trace(e, LogLevel.ERROR);
         }
-        // TO-DO fill _lockedUtxos from db
+
         setTimeout(LightwalletService.watchWallet, parseInt(reloadDelay));
     }
 
@@ -212,7 +200,6 @@ export default class LightwalletService {
             LightwalletService._mempool = result.result;
 
         const utxos = (await addr.getUnspentOutputs(true) ?? []);
-        LightwalletService._lockedUtxos = LightwalletService._lockedUtxos.filter(a => utxos.find(b => b.getId() == a) != undefined);
     }
 
     public static async fetchData() {
