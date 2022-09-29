@@ -17,11 +17,7 @@
   
 <script lang="ts" setup>
 import { useI18n } from "vue-i18n";
-import { coreUIStore } from "@/store/modules/CoreUI";
-import { onMounted } from "vue";
 import QuickSettingsWidget from "@/components/widgets/QuickSettingsWidget.vue";
 
 const { t } = useI18n();
-
-onMounted(() => coreUIStore.setWalletLoaded(true));
 </script>
