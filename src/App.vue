@@ -1,7 +1,7 @@
 <template>
   <div class="transition-all" :class="uiState.darkTheme ? 'dark' : ''">
     <transition name="fade" mode="out-in">
-      <div class="absolute bg-gray-900/70 w-full h-screen top-0 left-0 flex justify-center items-center"
+      <div class="absolute z-50 bg-gray-900/70 w-full h-screen top-0 left-0 flex justify-center items-center"
         v-if="updateAvailable">
         <div class="max-w-md w-full bg-gray-50 text-gray-700 dark:bg-gray-800 dark:text-gray-300 p-4 rounded">
           {{t("Core.UpdateAvailable")}}
