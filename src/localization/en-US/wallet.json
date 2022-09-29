@@ -18,6 +18,7 @@
     "NoCoins": "Can't see your coins?",
     "LoadFailedRetrying": "Failed to fetch data from node. Retrying...",
     "Close": "Close",
+    "TxSummary": "Summary",
     "Addresses": {
         "Main": "Main",
         "Change": "Change"

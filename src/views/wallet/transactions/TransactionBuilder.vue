@@ -24,56 +24,58 @@
             </transition>
             <transition name="fade" mode="out-in">
                 <div v-if="step == TxBuildState.INFORMATION">
-                    <div>
-                        <div class="mt-4">
-                            <label for="address" class="block text-center">{{t("Wallet.TargetAddress")}}:</label>
-                            <div class="flex">
-                                <div class="h-5 w-5"></div>
-                                <input v-model="address"
-                                    class="grow text-center !rounded-none !outline-none !focus:ring-transparent bg-transparent w-full border-b-2 border-gray-400"
-                                    type="text" id="address" :placeholder="t('Wallet.TargetAddressPlaceholder')" />
-                                <button @click="showQr = true">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke-width="1.5" stroke="currentColor"
-                                        class="w-6 h-6 text-blue-500 hover:text-blue-600 dark:text-blue-500 dark:hover:text-blue-600 transition-colors">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5z" />
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M6.75 6.75h.75v.75h-.75v-.75zM6.75 16.5h.75v.75h-.75v-.75zM16.5 6.75h.75v.75h-.75v-.75zM13.5 13.5h.75v.75h-.75v-.75zM13.5 19.5h.75v.75h-.75v-.75zM19.5 13.5h.75v.75h-.75v-.75zM19.5 19.5h.75v.75h-.75v-.75zM16.5 16.5h.75v.75h-.75v-.75z" />
-                                    </svg>
-                                </button>
+                    <form @submit.prevent="next">
+                        <div>
+                            <div class="mt-4">
+                                <label for="address" class="block text-center">{{t("Wallet.TargetAddress")}}:</label>
+                                <div class="flex">
+                                    <div class="h-5 w-5"></div>
+                                    <input v-model="address"
+                                        class="grow text-center !rounded-none !outline-none !focus:ring-transparent bg-transparent w-full border-b-2 border-gray-400"
+                                        type="text" id="address" :placeholder="t('Wallet.TargetAddressPlaceholder')" />
+                                    <button type="button" @click="showQr = true">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="1.5" stroke="currentColor"
+                                            class="w-6 h-6 text-blue-500 hover:text-blue-600 dark:text-blue-500 dark:hover:text-blue-600 transition-colors">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M6.75 6.75h.75v.75h-.75v-.75zM6.75 16.5h.75v.75h-.75v-.75zM16.5 6.75h.75v.75h-.75v-.75zM13.5 13.5h.75v.75h-.75v-.75zM13.5 19.5h.75v.75h-.75v-.75zM19.5 13.5h.75v.75h-.75v-.75zM19.5 19.5h.75v.75h-.75v-.75zM16.5 16.5h.75v.75h-.75v-.75z" />
+                                        </svg>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                        <div class="mt-4">
-                            <label for="amount" class="block text-center">{{t("Wallet.Amount")}}:</label>
-                            <div class="flex">
-                                <div class="h-5 w-5"></div>
-                                <input v-model="amount"
-                                    class="grow text-center !rounded-none !outline-none !focus:ring-transparent bg-transparent w-full border-b-2 border-gray-400"
-                                    type="text" id="amount" :placeholder="t('Wallet.AmountPlaceholder')" />
-                                <div class="fixed-width">
-                                    <img src="../../../assets/logo.png" width="20" alt="Veil coin"
-                                        class="block ml-1 my-1">
+                            <div class="mt-4">
+                                <label for="amount" class="block text-center">{{t("Wallet.Amount")}}:</label>
+                                <div class="flex">
+                                    <div class="h-5 w-5"></div>
+                                    <input v-model="amount"
+                                        class="grow text-center !rounded-none !outline-none !focus:ring-transparent bg-transparent w-full border-b-2 border-gray-400"
+                                        type="text" id="amount" :placeholder="t('Wallet.AmountPlaceholder')" />
+                                    <div class="fixed-width">
+                                        <img src="../../../assets/logo.png" width="20" alt="Veil coin"
+                                            class="block ml-1 my-1">
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div v-if="!loading">
-                        <BaseButton @click="next" class="m-auto mt-6 my-1 w-full md:max-w-xs">
-                            {{t("Wallet.Next")}}</BaseButton>
-                        <BaseButton @click="back" class="m-auto my-1 w-full md:max-w-xs">
-                            {{t("Wallet.Back")}}</BaseButton>
-                    </div>
-                    <div v-else>
-                        <div class="mt-6 mb-4 text-center">
-                            <span class="loader"></span>
+                        <div v-if="!loading">
+                            <BaseButton type="submit" @click="next" class="m-auto mt-6 my-1 w-full md:max-w-xs">
+                                {{t("Wallet.Next")}}</BaseButton>
+                            <BaseButton @click="back" class="m-auto my-1 w-full md:max-w-xs">
+                                {{t("Wallet.Back")}}</BaseButton>
                         </div>
-                    </div>
+                        <div v-else>
+                            <div class="mt-6 mb-4 text-center">
+                                <span class="loader"></span>
+                            </div>
+                        </div>
+                    </form>
                 </div>
                 <div v-else-if="step == TxBuildState.BUILT">
-                    <div class="font-semibold text-md">Summary:</div>
-                    <div class="grid grid-cols-2 text-xs">
+                    <!--<div class="font-semibold text-sm text-center">{{t("Wallet.TxSummary")}}</div>-->
+                    <div class="grid grid-cols-2 text-xs bg-gray-200 rounded p-2 mt-2">
                         <div class="border-b-1 border-gray-400 py-1 px-1">{{t("Wallet.Form.Recipient")}}:</div>
                         <div class="border-b-1 border-gray-400 py-1 px-1 overflow-hidden truncate">{{address}}</div>
                         <div class="border-b-1 border-gray-400 py-1 px-1">{{t("Wallet.Form.AmountSend")}}:</div>
@@ -106,7 +108,7 @@
                     </div>
                     <div v-else>
                         <div v-if="!loading">
-                            <BaseButton @click="publish" class="m-auto mt-6 my-1 w-full md:max-w-xs">
+                            <BaseButton @click="publish" class="m-auto mt-4 my-1 w-full md:max-w-xs">
                                 {{t("Wallet.Publish")}}</BaseButton>
                             <BaseButton @click="back" class="m-auto my-1 w-full md:max-w-xs">
                                 {{t("Wallet.Back")}}</BaseButton>

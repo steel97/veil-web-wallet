@@ -9,19 +9,21 @@
                 </transition>
             </div>
         </transition>
-        <div>
-            <div class="mt-4">
-                <label for="password" class="block text-center">{{t("Unlock.PasswordTitle")}}:</label>
-                <input v-model="password"
-                    class="text-center !rounded-none !outline-none !focus:ring-transparent bg-transparent w-full border-b-2 border-gray-400"
-                    type="password" id="password" :placeholder="t('Unlock.PasswordPlaceholder')" />
+        <form @submit.prevent="unlock">
+            <div>
+                <div class="mt-4">
+                    <label for="password" class="block text-center">{{t("Unlock.PasswordTitle")}}:</label>
+                    <input v-model="password"
+                        class="text-center !rounded-none !outline-none !focus:ring-transparent bg-transparent w-full border-b-2 border-gray-400"
+                        type="password" id="password" :placeholder="t('Unlock.PasswordPlaceholder')" />
+                </div>
             </div>
-        </div>
 
-        <div>
-            <BaseButton @click="unlock" class="m-auto mt-6 my-1 w-full max-w-xs">
-                {{t("Unlock.Unlock")}}</BaseButton>
-        </div>
+            <div>
+                <BaseButton @click="unlock" class="m-auto mt-6 my-1 w-full max-w-xs">
+                    {{t("Unlock.Unlock")}}</BaseButton>
+            </div>
+        </form>
     </div>
 </template>
 

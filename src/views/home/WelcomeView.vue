@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col items-center justify-center">
-    <RouterButton to="/create" class="mt-4 my-1 w-full max-w-xs0">
+    <RouterButton to="/create" class="mt-4 my-1 w-full max-w-xs">
       {{t("Welcome.Create")}}</RouterButton>
     <RouterButton to="/import" class="my-1 w-full max-w-xs">
       {{t("Welcome.Import")}}</RouterButton>

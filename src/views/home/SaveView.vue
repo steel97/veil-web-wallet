@@ -9,50 +9,52 @@
                 </transition>
             </div>
         </transition>
-        <div>
-            <div class="mt-4">
-                <label for="name" class="block text-center">{{t("Save.WalletName")}}:</label>
-                <input v-model="name"
-                    class="text-center !rounded-none !outline-none !focus:ring-transparent bg-transparent w-full border-b-2 border-gray-400"
-                    type="text" id="name" placeholder="Default" />
+        <form @submit.prevent="save">
+            <div>
+                <div class="mt-4">
+                    <label for="name" class="block text-center">{{t("Save.WalletName")}}:</label>
+                    <input v-model="name"
+                        class="text-center !rounded-none !outline-none !focus:ring-transparent bg-transparent w-full border-b-2 border-gray-400"
+                        type="text" id="name" placeholder="Default" />
+                </div>
+                <div class="mt-4">
+                    <label for="password" class="block text-center">{{t("Save.PasswordTitle")}}:</label>
+                    <input v-model="password"
+                        class="text-center !rounded-none !outline-none !focus:ring-transparent bg-transparent w-full border-b-2 border-gray-400"
+                        type="password" id="password" :placeholder="t('Save.PasswordPlaceholder')" />
+                </div>
+                <div class="mt-4" v-if="password.length > 0">
+                    <label for="re-password" class="block text-center">{{t("Save.RePasswordTitle")}}:</label>
+                    <input v-model="repassword"
+                        class="text-center !rounded-none !outline-none !focus:ring-transparent bg-transparent w-full border-b-2 border-gray-400"
+                        type="password" id="re-password" :placeholder="t('Save.RePasswordPlaceholder')" />
+                </div>
+                <div class="mt-4">
+                    <label for="wpassword" class="block text-center">{{t("Save.WalletPasswordTitle")}}:</label>
+                    <input v-model="walletPassword"
+                        class="text-center !rounded-none !outline-none !focus:ring-transparent bg-transparent w-full border-b-2 border-gray-400"
+                        type="password" id="wpassword" :placeholder="t('Save.WalletPasswordTitlePlaceholder')" />
+                </div>
+                <div class="mt-4" v-if="walletPassword.length > 0">
+                    <label for="re2-password" class="block text-center">{{t("Save.RePasswordTitle")}}:</label>
+                    <input v-model="walletRePassword"
+                        class="text-center !rounded-none !outline-none !focus:ring-transparent bg-transparent w-full border-b-2 border-gray-400"
+                        type="password" id="re2-password" :placeholder="t('Save.RePasswordPlaceholder')" />
+                </div>
             </div>
-            <div class="mt-4">
-                <label for="password" class="block text-center">{{t("Save.PasswordTitle")}}:</label>
-                <input v-model="password"
-                    class="text-center !rounded-none !outline-none !focus:ring-transparent bg-transparent w-full border-b-2 border-gray-400"
-                    type="password" id="password" :placeholder="t('Save.PasswordPlaceholder')" />
-            </div>
-            <div class="mt-4" v-if="password.length > 0">
-                <label for="re-password" class="block text-center">{{t("Save.RePasswordTitle")}}:</label>
-                <input v-model="repassword"
-                    class="text-center !rounded-none !outline-none !focus:ring-transparent bg-transparent w-full border-b-2 border-gray-400"
-                    type="password" id="re-password" :placeholder="t('Save.RePasswordPlaceholder')" />
-            </div>
-            <div class="mt-4">
-                <label for="wpassword" class="block text-center">{{t("Save.WalletPasswordTitle")}}:</label>
-                <input v-model="walletPassword"
-                    class="text-center !rounded-none !outline-none !focus:ring-transparent bg-transparent w-full border-b-2 border-gray-400"
-                    type="password" id="wpassword" :placeholder="t('Save.WalletPasswordTitlePlaceholder')" />
-            </div>
-            <div class="mt-4" v-if="walletPassword.length > 0">
-                <label for="re2-password" class="block text-center">{{t("Save.RePasswordTitle")}}:</label>
-                <input v-model="walletRePassword"
-                    class="text-center !rounded-none !outline-none !focus:ring-transparent bg-transparent w-full border-b-2 border-gray-400"
-                    type="password" id="re2-password" :placeholder="t('Save.RePasswordPlaceholder')" />
-            </div>
-        </div>
 
-        <div v-if="!loading">
-            <BaseButton @click="save" class="m-auto mt-6 px-4 py-2 my-1 w-full max-w-xs">
-                {{t("Save.Save")}}</BaseButton>
-            <RouterButton to="/" class="m-auto px-4 py-2 my-2 w-full max-w-xs">
-                {{t("Save.Back")}}</RouterButton>
-        </div>
-        <div v-else>
-            <div class="mt-6 mb-4 text-center">
-                <span class="loader"></span>
+            <div v-if="!loading">
+                <BaseButton type="submit" @click="save" class="m-auto mt-6 px-4 py-2 my-1 w-full max-w-xs">
+                    {{t("Save.Save")}}</BaseButton>
+                <RouterButton to="/" class="m-auto px-4 py-2 my-2 w-full max-w-xs">
+                    {{t("Save.Back")}}</RouterButton>
             </div>
-        </div>
+            <div v-else>
+                <div class="mt-6 mb-4 text-center">
+                    <span class="loader"></span>
+                </div>
+            </div>
+        </form>
     </div>
 </template>
 

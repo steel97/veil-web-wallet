@@ -9,20 +9,22 @@
                 </transition>
             </div>
         </transition>
-        <div class="w-full grid grid-cols-2 md:grid-cols-4 gap-2 mt-4 text-sm">
-            <div v-for="(word, index) in mnemonic" :key="'word-'+index" class="flex justify-between items-center">
-                <span class="w-10">{{(index + 1)}})</span>
-                <span class="px-2 py-2 rounded w-full bg-gray-200 dark:bg-gray-600 dark:text-gray-300">
-                    <input type="text" v-model="mnemonic[index]"
-                        class="!rounded-none !outline-none !focus:ring-transparent bg-transparent w-full border-b-2 border-gray-400" />
-                </span>
+        <form @submit.prevent="verify">
+            <div class="w-full grid grid-cols-2 md:grid-cols-4 gap-2 mt-4 text-sm">
+                <div v-for="(word, index) in mnemonic" :key="'word-'+index" class="flex justify-between items-center">
+                    <span class="w-10">{{(index + 1)}})</span>
+                    <span class="px-2 py-2 rounded w-full bg-gray-200 dark:bg-gray-600 dark:text-gray-300">
+                        <input type="text" v-model="mnemonic[index]"
+                            class="!rounded-none !outline-none !focus:ring-transparent bg-transparent w-full border-b-2 border-gray-400 lowercase" />
+                    </span>
+                </div>
             </div>
-        </div>
 
-        <BaseButton @click="verify" class="m-auto mt-6 my-1 w-full max-w-xs">
-            {{t("Create.Verify")}}</BaseButton>
-        <RouterButton to="/" class="m-auto my-2 w-full max-w-xs">
-            {{t("Create.Back")}}</RouterButton>
+            <BaseButton @click="verify" class="m-auto mt-6 my-1 w-full max-w-xs">
+                {{t("Create.Verify")}}</BaseButton>
+            <RouterButton to="/" class="m-auto my-2 w-full max-w-xs">
+                {{t("Create.Back")}}</RouterButton>
+        </form>
     </div>
 </template>
 
