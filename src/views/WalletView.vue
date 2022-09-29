@@ -35,11 +35,11 @@
                                     @click="switchAddress(1)">{{t("Wallet.Addresses.Change")}}</button>
                             </div>
                             <div class="ml-8 h-min flex md:hidden">
-                                <select name="select" v-model="uiState.addressIndex"
+                                <select name="select" v-model="tempAddressIndex"
                                     class="p-2 px-3 text-center rounded bg-gray-200 text-gray-600 dark:bg-gray-500 dark:text-gray-300">
                                     <option :value="0">
                                         {{t("Wallet.Addresses.Main")}}</option>
-                                    <option :value="0">
+                                    <option :value="1">
                                         {{t("Wallet.Addresses.Change")}}</option>
                                 </select>
                             </div>
@@ -78,7 +78,7 @@
 </template>
 <script lang="ts" setup>
 import { coreUIStore } from "@/store/modules/CoreUI";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { sleep } from "@/core/Core";
 import { useRouter } from "vue-router";
@@ -86,10 +86,15 @@ import LightwalletService from "@/lightwallet/LightwalletService";
 import QuickSettingsWidget from "@/components/widgets/QuickSettingsWidget.vue";
 
 const uiState = coreUIStore.getState();
+const tempAddressIndex = ref(0);
 const loading = ref(true);
 const { t } = useI18n();
 const failedToLoad = ref(false);
 const router = useRouter();
+
+watch(tempAddressIndex, (nval) => {
+    coreUIStore.setAddressIndex(nval);
+});
 
 const switchAddress = async (index: number) => {
     coreUIStore.setAddressIndex(index);
