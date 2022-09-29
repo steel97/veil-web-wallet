@@ -1,5 +1,6 @@
 {
     "Title": "Часто задаваемые вопросы",
+    "Back": "Назад",
     "CoinsFAQ": [
         "<b>1. Типы адресов</b>",
         "Данная версия кошелька поддерживает только RingCT, вы не сможете пользоваться basecoin(bv) или stealth монетами. Использовать другие виды монет можно через standalone кошелек который можно скачать <a href='https://github.com/Veil-Project/veil/releases' target='_blank' class='underline underline-offset-3 text-blue-500 hover:text-blue-600 dark:text-blue-500 dark:hover:text-blue-600'>здесь</a>",
@@ -7,5 +8,22 @@
         "Если вы видите текст \"сканирование\" - значит кошелек ещё не полностью просканирован, баланс отобразится позже",
         "<b>3. Переводы</b>",
         "Перевод монет не моментален, иногда нужно подождать несколько минут перед тем как средства станут доступны. Если прошло много времени, а баланс не отобразился, пожалуйста посмотрите первый пункт."
+    ],
+    "MainFAQ": [
+        "<b>1. Балансы</b>",
+        "Под QR кодом вы можете найти адрес вашего кошелька, кнопку \"скопировать\" адрес, а так же, балансы вашего кошелька.",
+        "Первый баланс означает общий баланс, состоящий из доступных и ожидающих подтверждения монет.",
+        "<u>Важно!</u> Данный кошелек поддерживает отправку на любой адрес, однако, вы не увидите монеты полученные на basecoin (bv) или stealth адреса.",
+        "&nbsp;",
+        "<b>2. Что означает \"Основной\" и \"Сдача\"?</b>",
+        "Эта два ваших адреса, первый - основной, второй остался для совместимости (оригинальный кошелек отправляет сдачу на отдельный RingCT адрес).",
+        "&nbsp;",
+        "<b>3. Почему я не вижу все свои транзакции?</b>",
+        "В настоящее время данный кошелек может показывать только последние транзакции.",
+        "&nbsp;",
+        "<b>4. У меня все ещё остались вопросы</b>",
+        "Вы можете посмотреть общее FAQ доступное <a href='https://veil.freshdesk.com/support/home' class='underline underline-offset-3 text-blue-500 hover:text-blue-600 dark:text-blue-500 dark:hover:text-blue-600' target='_blank'>здесь</a>.",
+        "Так же можете посетить оффициальный веб-сайт проекта <a href='https://veil-project.com' class='underline underline-offset-3 text-blue-500 hover:text-blue-600 dark:text-blue-500 dark:hover:text-blue-600' target='_blank'>veil-project.com</a>",
+        "Оффициальный дискорд: <a href='https://discord.veil-project.com' class='underline underline-offset-3 text-blue-500 hover:text-blue-600 dark:text-blue-500 dark:hover:text-blue-600' target='_blank'>discord.veil-project.com</a>"
     ]
 }

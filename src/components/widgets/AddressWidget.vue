@@ -7,9 +7,8 @@
                     <div v-for="(entry, index) in (tm('FAQ.CoinsFAQ') as Array<string>)" :key="'coins-faq-' + index"
                         v-html="entry">
                     </div>
-                    <button @click="showCoinsFAQ(false)"
-                        class="m-auto text-center block px-4 py-2 my-1 w-full rounded transition-colors text-gray-50 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
-                        {{t("Wallet.Close")}}</button>
+                    <BaseButton @click="showCoinsFAQ(false)" class="m-auto my-1 w-full">
+                        {{t("Wallet.Close")}}</BaseButton>
                 </div>
             </div>
         </transition>

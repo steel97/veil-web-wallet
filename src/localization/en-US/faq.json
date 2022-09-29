@@ -1,5 +1,6 @@
 {
     "Title": "Frequently Asked Questions",
+    "Back": "Back",
     "CoinsFAQ": [
         "<b>1. Address types</b>",
         "Veil Web Wallet only support RingCT coins, you can't use basecoin(bv) or stealth coins here. To use different types of coins you can use standalone wallet, which you can download <a href='https://github.com/Veil-Project/veil/releases' target='_blank' class='underline underline-offset-3 text-blue-500 hover:text-blue-600 dark:text-blue-500 dark:hover:text-blue-600'>here</a>",
@@ -7,5 +8,22 @@
         "If you see text \"scanning\", wallet is not yet scanned, balance will appear a little bit later",
         "<b>3. Can't see transaction</b>",
         "Coins transfer isn't immidiate, please wait few minutes before you can see your balance. If you still can't see it, please refer to step 1."
+    ],
+    "MainFAQ": [
+        "<b>1. Balances</b>",
+        "Under your QR code you can see address, copy button and balances.",
+        "First balance mean overall balance, composed of available and pending balance.",
+        "<u>Important!</u> This wallet only support sending to any veil address, however, you can't see coins received to basecoin(bv) or stealth addresses.",
+        "&nbsp;",
+        "<b>2. What mean \"Main\" and \"Change\"?</b>",
+        "These are two addresses, first is your primary address, and second left here for compatibility purpose (original wallet send change to separate RingCT address).",
+        "&nbsp;",
+        "<b>3. Why I can't see all my transactions?</b>",
+        "At this time wallet show only latest transactions.",
+        "&nbsp;",
+        "<b>4. I still have questions</b>",
+        "You can see another FAQ <a href='https://veil.freshdesk.com/support/home' class='underline underline-offset-3 text-blue-500 hover:text-blue-600 dark:text-blue-500 dark:hover:text-blue-600' target='_blank'>here</a>.",
+        "Also please check out project website <a href='https://veil-project.com' class='underline underline-offset-3 text-blue-500 hover:text-blue-600 dark:text-blue-500 dark:hover:text-blue-600' target='_blank'>veil-project.com</a>",
+        "Or official discord: <a href='https://discord.veil-project.com' class='underline underline-offset-3 text-blue-500 hover:text-blue-600 dark:text-blue-500 dark:hover:text-blue-600' target='_blank'>discord.veil-project.com</a>"
     ]
 }

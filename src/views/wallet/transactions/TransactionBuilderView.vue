@@ -9,9 +9,8 @@
                         <qrcode-stream @decode="onQrDecode"></qrcode-stream>
                         <qrcode-drop-zone @decode="onQrDecode"></qrcode-drop-zone>
                         <qrcode-capture @decode="onQrDecode"></qrcode-capture>
-                        <button @click="closeQr"
-                            class="m-auto text-center block px-4 py-2 my-1 w-full rounded transition-colors text-gray-50 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
-                            {{t("Wallet.Back")}}</button>
+                        <BaseButton @click="closeQr" class="m-auto my-1 w-full">
+                            {{t("Wallet.Back")}}</BaseButton>
                     </div>
                 </div>
             </transition>
