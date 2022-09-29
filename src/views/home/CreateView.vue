@@ -16,9 +16,9 @@
         <div class="m-auto max-w-md text-sm text-center text-rose-600 dark:text-rose-500 mt-2">
             {{(tm('Create.Notice') as Array<string>).join(' ')}}
         </div>
-        <RouterButton to="/verify" class="m-auto mt-6 px-4 py-2 my-1 w-full max-w-xs">
+        <RouterButton to="/home/verify" class="m-auto mt-6 px-4 py-2 my-1 w-full max-w-xs">
             {{t("Create.Next")}}</RouterButton>
-        <RouterButton to="/" class="m-auto px-4 py-2 my-2 w-full max-w-xs">
+        <RouterButton to="/home" class="m-auto px-4 py-2 my-2 w-full max-w-xs">
             {{t("Create.Back")}}</RouterButton>
     </div>
 </template>

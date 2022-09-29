@@ -46,7 +46,7 @@
             <div v-if="!loading">
                 <BaseButton type="submit" @click="save" class="m-auto mt-6 px-4 py-2 my-1 w-full max-w-xs">
                     {{t("Save.Save")}}</BaseButton>
-                <RouterButton to="/" class="m-auto px-4 py-2 my-2 w-full max-w-xs">
+                <RouterButton to="/home" class="m-auto px-4 py-2 my-2 w-full max-w-xs">
                     {{t("Save.Back")}}</RouterButton>
             </div>
             <div v-else>

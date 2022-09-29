@@ -1,8 +1,8 @@
 <template>
   <div class="flex flex-col items-center justify-center">
-    <RouterButton to="/create" class="mt-4 my-1 w-full max-w-xs">
+    <RouterButton to="/home/create" class="mt-4 my-1 w-full max-w-xs">
       {{t("Welcome.Create")}}</RouterButton>
-    <RouterButton to="/import" class="my-1 w-full max-w-xs">
+    <RouterButton to="/home/import" class="my-1 w-full max-w-xs">
       {{t("Welcome.Import")}}</RouterButton>
     <div class="my-4 mt-8">
       <div class="flex flex-col justify-center items-center">

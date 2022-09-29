@@ -99,7 +99,10 @@ onMounted(async () => {
   LightwalletService.run();
 
   const walname = Preferences.getString(PreferenceKey.PRIMARY_WALLET, "");
-  if (walname == "") return;
+  if (walname == "") {
+    router.replace("/home");
+    return;
+  }
 
   const emptyHash = hash("");
   const symmetricKey = Buffer.from(emptyHash, "hex");

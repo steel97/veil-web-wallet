@@ -22,7 +22,7 @@
 
             <BaseButton @click="verify" class="m-auto mt-6 my-1 w-full max-w-xs">
                 {{t("Create.Verify")}}</BaseButton>
-            <RouterButton to="/" class="m-auto my-2 w-full max-w-xs">
+            <RouterButton to="/home" class="m-auto my-2 w-full max-w-xs">
                 {{t("Create.Back")}}</RouterButton>
         </form>
     </div>
@@ -53,7 +53,7 @@ const verify = () => {
         // alert somehow
         errorMessage.value = t("Create.Errors.UserInputFailed");
     } else {
-        router.replace("/save");
+        router.replace("/home/save");
     }
 };
 </script>

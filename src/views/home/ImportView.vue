@@ -22,7 +22,7 @@
 
             <BaseButton type="submit" @click="importWallet" class="m-auto mt-6 px-4 py-2 my-1 w-full max-w-xs">
                 {{t("Import.Import")}}</BaseButton>
-            <RouterButton to="/" class="m-auto px-4 py-2 my-2 w-full max-w-xs">
+            <RouterButton to="/home" class="m-auto px-4 py-2 my-2 w-full max-w-xs">
                 {{t("Import.Back")}}</RouterButton>
         </form>
     </div>
@@ -53,7 +53,7 @@ const importWallet = () => {
     } else {
         coreUIStore.setIsNewWallet(false);
         coreUIStore.setTmpMnemonic(tprepared);
-        router.replace("/save");
+        router.replace("/home/save");
     }
 };
 </script>

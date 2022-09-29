@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 import { coreUIStore } from "@/store/modules/CoreUI";
+import LoadingView from "@/views/LoadingView.vue";
 import HomeView from "@/views/HomeView.vue";
 import WelcomeView from "@/views/home/WelcomeView.vue";
 import CreateView from "@/views/home/CreateView.vue";
@@ -16,39 +17,44 @@ import FAQView from "@/views/wallet/transactions/FAQView.vue";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
+    name: "loading",
+    component: LoadingView,
+    meta: {
+      skipLoad: true
+    }
+  },
+  {
+    path: "/home",
     name: "home",
     component: HomeView,
     children: [
       {
-        path: "/",
+        path: "/home",
         name: "welcome",
-        component: WelcomeView,
-        meta: {
-          skipLoad: true
-        }
+        component: WelcomeView
       },
       {
-        path: "/create",
+        path: "/home/create",
         name: "create",
         component: CreateView
       },
       {
-        path: "/verify",
+        path: "/home/verify",
         name: "verify",
         component: VerifyView
       },
       {
-        path: "/import",
+        path: "/home/import",
         name: "import",
         component: ImportView
       },
       {
-        path: "/save",
+        path: "/home/save",
         name: "save",
         component: SaveView
       },
       {
-        path: "/unlock",
+        path: "/home/unlock",
         name: "unlock",
         component: UnlockView
       }
