@@ -4,9 +4,9 @@
             <div class="absolute bg-gray-900/70 w-full h-screen top-0 left-0 flex justify-center items-center"
                 v-if="failedToLoad">
                 <div
-                    class="max-w-xs bg-gray-50 text-gray-700 dark:bg-gray-800 dark:text-gray-300 p-4 rounded flex items-center justify-center">
+                    class="max-w-xs bg-gray-50 text-gray-700 dark:bg-gray-800 dark:text-gray-300 p-4 rounded flex flex-col items-center justify-center">
                     <div class="text-center">{{t("Wallet.LoadFailedRetrying")}}</div>
-                    <div v-if="loading" class="flex justify-center h-screen items-center">
+                    <div class="flex justify-center h-screen items-center">
                         <span class="loader"></span>
                     </div>
                 </div>
@@ -15,7 +15,7 @@
         <div class="max-w-5xl w-full p-2">
             <router-view v-slot="{ Component, route }">
                 <transition name="fade" mode="out-in">
-                    <div v-if="loading" class="flex justify-center h-screen items-center">
+                    <div v-if="loading && !failedToLoad" class="flex justify-center h-screen items-center">
                         <span class="loader"></span>
                     </div>
                     <div v-else>
