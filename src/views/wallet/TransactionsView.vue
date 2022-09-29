@@ -15,7 +15,7 @@
                     <router-view v-slot="{ Component, route }">
                         <transition name="fade" mode="out-in">
                             <component :is="Component" v-bind="route.params" :addressIndex="addressIndex"
-                                :balanceAvailable="balanceAvailable"></component>
+                                :balanceAvailable="balanceAvailable" :scanCounter="scanCounter"></component>
                         </transition>
                     </router-view>
                 </div>
@@ -35,6 +35,7 @@ import "vue3-toastify/dist/index.css";
 
 const uiState = coreUIStore.getState();
 const addressIndex = ref(0);
+const scanCounter = ref(0);
 const scanned = ref(false);
 const route = useRoute();
 
@@ -69,6 +70,8 @@ const scan = async () => {
     balanceOverall.value = LightwalletService.formatAmount(pending + available);
 
     scanned.value = LightwalletService.getScanned();
+
+    scanCounter.value++;
 };
 
 const runScan = async () => {
@@ -78,7 +81,7 @@ const runScan = async () => {
     } catch {
 
     }
-    setTimeout(runScan, 20000);
+    setTimeout(runScan, 5000);
 };
 
 onMounted(async () => {

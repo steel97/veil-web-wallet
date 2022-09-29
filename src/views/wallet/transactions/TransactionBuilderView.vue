@@ -102,8 +102,8 @@
                             <div class="border-b border-gray-400 py-1 px-1 text-right">{{computeAmount}}</div>
                             <div class="border-b border-gray-400 py-1 px-1">{{t("Wallet.Form.Fee")}}:</div>
                             <div class="border-b border-gray-400 py-1 px-1 text-right">{{computeFee}}</div>
-                            <div class="border-b border-gray-400 py-1 px-1">{{t("Wallet.Form.Total")}}:</div>
-                            <div class="border-b border-gray-400 py-1 px-1 text-right">{{computeTotal}}</div>
+                            <div class="border-b py-1 px-1">{{t("Wallet.Form.Total")}}:</div>
+                            <div class="border-b py-1 px-1 text-right">{{computeTotal}}</div>
                         </div>
                         <div v-if="successMessage != ''">
                             <div class="flex items-center justify-center">
@@ -253,6 +253,7 @@ const next = async () => {
         const txBuildRes = await LightwalletService.buildTransaction(props.addressIndex, tamount, address.value, substractFee.value);
         fee.value = LightwalletService.toDisplayValue(txBuildRes?.fee ?? 0);
         rawTx = txBuildRes?.txid;
+        amount.value = LightwalletService.formatAmount(LightwalletService.toDisplayValue(txBuildRes?.amountSent ?? 0));
         if (rawTx == undefined) throw new Error();
         step.value = TxBuildState.BUILT;
     } catch {

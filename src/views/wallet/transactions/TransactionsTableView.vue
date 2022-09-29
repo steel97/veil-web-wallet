@@ -44,7 +44,7 @@
     </div>
 </template>
 <script lang="ts" setup>
-import { onMounted, onUnmounted, ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { IUtxo } from "@/models/IUtxo";
 import { useI18n } from "vue-i18n";
 import { coreUIStore } from "@/store/modules/CoreUI";
@@ -56,12 +56,13 @@ const uiState = coreUIStore.getState();
 
 // eslint-disable-next-line
 const props = defineProps({
-    addressIndex: { type: Number, required: true }
+    addressIndex: { type: Number, required: true },
+    scanCounter: { type: Number, required: true }
 });
 
 const addressIndex = ref(0);
 
-watch(props, (nval) => {
+watch(props, nval => {
     if (addressIndex.value != nval.addressIndex) {
         addressIndex.value = nval.addressIndex;
         scan();
@@ -73,34 +74,21 @@ watch(props, (nval) => {
         scan();
         return;
     }
+
+    scan();
 });
 
 const utxos = ref<Array<IUtxo>>([]);
-
-let stopScan = false;
-
 const scan = async () => {
     // fetch utxos    
     const utx = await LightwalletService.getUtxos(addressIndex.value);
     utxos.value = utx.slice(0, parseInt(process.env.VUE_APP_TRANSACTIONS_LOG ?? "10"));
 };
 
-const runScan = async () => {
-    if (stopScan) return;
-    try {
-        scan();
-    } catch {
-
-    }
-    setTimeout(runScan, 20000);
-};
-
 onMounted(async () => {
     forceScan.value = uiState.forceScan;
-    runScan();
+    scan();
 });
-
-onUnmounted(() => stopScan = true);
 </script>
 <style scoped>
 .fixed-width {
