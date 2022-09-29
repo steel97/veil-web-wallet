@@ -66,7 +66,7 @@ export default class LightwalletService {
                 if (currentAmount >= targetAmount)
                     break;
             }
-            const rawTx = await address.buildTransaction(amountPrepared, recipientAddress, targetUtxos);
+            const rawTx = await address.buildTransaction(amountPrepared, recipientAddress, targetUtxos, false);
             if (rawTx == undefined) return undefined;
 
             return rawTx;
