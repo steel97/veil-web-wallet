@@ -1,7 +1,7 @@
 <template>
     <div class="min-h-screen flex flex-col items-center">
         <transition name="fade" mode="out-in">
-            <div class="absolute bg-gray-900/70 w-full h-screen top-0 left-0 flex justify-center items-center"
+            <div class="absolute z-50 bg-gray-900/70 w-full h-screen top-0 left-0 flex justify-center items-center"
                 v-if="failedToLoad">
                 <div
                     class="max-w-xs bg-gray-50 text-gray-700 dark:bg-gray-800 dark:text-gray-300 p-4 rounded flex flex-col items-center justify-center">
@@ -18,7 +18,7 @@
                     <div v-if="loading && !failedToLoad" class="flex justify-center h-screen items-center">
                         <span class="loader"></span>
                     </div>
-                    <div v-else>
+                    <div v-else-if="!failedToLoad">
                         <div class="flex justify-between w-full items-center">
                             <button class="flex items-center md:mr-16" @click="navigateToTx">
                                 <img src="../assets/logo.png" width="42" alt="Veil Web Wallet" class="block">
