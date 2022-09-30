@@ -71,6 +71,11 @@ onMounted(async () => {
   const detectedLocale = detectLocale();
   await setLocale(detectedLocale[0], detectedLocale[1]);
 
+  // frame ancestors not work in html meta tags, and github pages doesn't allow to send custom headers, so...
+  if (window.self != window.top) {
+    location.replace("https://veil-project.com");
+    return;
+  }
 
   // this should be registerd ASAP
   try {

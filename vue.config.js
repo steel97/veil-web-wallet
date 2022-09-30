@@ -31,7 +31,25 @@ module.exports = defineConfig({
     })]);
 
     //config.plugins.push(new HtmlWebpackPlugin());
-    config.plugins.push(new CspHtmlWebpackPlugin());
+    config.plugins.push(new CspHtmlWebpackPlugin({
+      "base-uri": "'self'",
+      "default-src": "'self'",
+      "connect-src": "*",
+      "script-src": ["'unsafe-inline'", "'self'", "'unsafe-eval'"],
+      "style-src": ["'unsafe-inline'", "'self'", "'unsafe-eval'"],
+      "img-src": ["'self'", "data:"],
+      "font-src": ["'self'", "data:"],
+      "media-src": "'self'",
+      "object-src": "'self'",
+      "child-src": "'self'",
+      "frame-src": "'self'",
+      "worker-src": "'self'",
+      // "frame-ancestors": "'self'", // not work in meta
+      "form-action": "'self'",
+      "upgrade-insecure-requests": "",
+      "block-all-mixed-content": "",
+      "manifest-src": "'self'"
+    }));
 
     config.plugins.push(
       new webpack.DefinePlugin({
