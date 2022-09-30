@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve --https true",
+    "serve": "vue-cli-service serve --modern --no-legacy --https true",
     "build": "vue-cli-service build --modern --no-legacy --no-unsafe-inline",
     "lint": "vue-cli-service lint"
   },

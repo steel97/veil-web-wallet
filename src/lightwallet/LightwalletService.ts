@@ -68,7 +68,7 @@ export default class LightwalletService {
             const targetUtxos: Array<CWatchOnlyTxWithIndex> = [];
             const fee = LightwalletService.getFee(); // TO-DO, real fee calculation
             const amountPrepared = substractFee ? amount - fee : amount;
-            const targetAmount = substractFee ? amountPrepared - fee : amountPrepared + fee;
+            const targetAmount = substractFee ? amountPrepared + fee : amountPrepared;
 
             let currentAmount = 0;
             for (const utxo of utxos) {
