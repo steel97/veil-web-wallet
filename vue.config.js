@@ -36,7 +36,7 @@ module.exports = defineConfig({
       "default-src": "'self'",
       "connect-src": "*",
       "script-src": ["'unsafe-inline'", "'self'", "'unsafe-eval'"],
-      "style-src": ["'unsafe-inline'", "'self'", "'unsafe-eval'"],
+      "style-src": ["'unsafe-inline'", "'self'", "'unsafe-eval'", "inline"],
       "img-src": ["'self'", "data:"],
       "font-src": ["'self'", "data:"],
       "media-src": "'self'",
