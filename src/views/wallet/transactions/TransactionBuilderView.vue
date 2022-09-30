@@ -268,7 +268,13 @@ const next = async () => {
             return;
         }
 
-        const txBuildRes = await LightwalletService.buildTransaction(props.addressIndex, tamount, address.value, substractFee.value);
+        const addr = address.value;
+        if (LightwalletService.isAddressValid(addr)) {
+            errorMessage.value = t("Wallet.Errors.InvalidAddress");
+            return;
+        }
+
+        const txBuildRes = await LightwalletService.buildTransaction(props.addressIndex, tamount, addr, substractFee.value);
         if ((txBuildRes as BuildTransactionException).errorName != undefined) {
             errorMessage.value = t("Wallet.Errors.UnknownRes", { error: (txBuildRes as BuildTransactionException).errorName });
             return;

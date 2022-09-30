@@ -37,6 +37,7 @@
         "CantExtractFeeFromZero": "Невозможно вычесть комиссию из нулевой суммы",
         "AmountOverBalance": "Сумма превышает баланс",
         "UnknownRes": "Произошла ошибка: {error}",
-        "AmountMustNotBeNegative": "Сумма не может быть отрицательной"
+        "AmountMustNotBeNegative": "Сумма не может быть отрицательной",
+        "InvalidAddress": "Неверный адрес получателя"
     }
 }

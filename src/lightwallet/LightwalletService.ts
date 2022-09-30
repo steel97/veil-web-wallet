@@ -52,6 +52,11 @@ export default class LightwalletService {
         return false;
     }
 
+    public static validateAddress(address: string) {
+        const recipientAddress = CVeilAddress.parse(LightwalletService.params, address);
+        return recipientAddress.isValid() || recipientAddress.isValidStealthAddress();
+    }
+
     public static async buildTransaction(index: number, amount: number, recipient: string, substractFee = false) {
         try {
             const address = LightwalletService.getAddress(index);
