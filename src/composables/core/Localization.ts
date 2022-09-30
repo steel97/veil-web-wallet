@@ -6,7 +6,7 @@ import { availableLocales, defaultLanguage, defaultRegion } from "@/localization
 
 export const useLocalization = () => {
 
-    const { setLocaleMessage, locale } = useI18n();
+    const { locale } = useI18n();
 
     const setLocale = async (lang: string, region: string) => {
         let regionHandled = region.toUpperCase();
@@ -35,11 +35,11 @@ export const useLocalization = () => {
 
         const localeTarget = `${lang}-${regionHandled}`;
         Logging.trace(`using locale ${localeTarget}`);
-        const messages = await import(
-        /* webpackChunkName: "locale-[request]" */ `@/localization/${localeTarget}/index`
-        );
+        // const messages = await import(
+        // /* webpackChunkName: "locale-[request]" */ `@/localization/${localeTarget}/index`
+        // );
         // set locale and locale message
-        setLocaleMessage(localeTarget, messages.default);
+        //setLocaleMessage(localeTarget, messages.default);
         locale.value = localeTarget;
 
         document.querySelector("html")?.setAttribute("lang", localeTarget);

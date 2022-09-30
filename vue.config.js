@@ -1,5 +1,6 @@
 const { defineConfig } = require("@vue/cli-service");
 const webpack = require("webpack");
+const CspHtmlWebpackPlugin = require("csp-html-webpack-plugin");
 const childProcess = require("child_process"); let lastCommitHash = ""; try {
   lastCommitHash = childProcess
     .execSync("git rev-parse --short HEAD")
@@ -29,6 +30,9 @@ module.exports = defineConfig({
       Buffer: ["buffer", "Buffer"],
     })]);
 
+    //config.plugins.push(new HtmlWebpackPlugin());
+    config.plugins.push(new CspHtmlWebpackPlugin());
+
     config.plugins.push(
       new webpack.DefinePlugin({
         "process.env": {
@@ -53,5 +57,5 @@ module.exports = defineConfig({
 
       return definitions;
     });
-  },
+  }
 });

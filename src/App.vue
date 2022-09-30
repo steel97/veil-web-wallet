@@ -72,7 +72,7 @@ onMounted(async () => {
   await setLocale(detectedLocale[0], detectedLocale[1]);
 
 
-  // this should be registerd ASAP, so don't wait for registerEvents
+  // this should be registerd ASAP
   try {
     const useWarnMessage =
       process.env.VUE_APP_USE_DEVTOOLS_WARN?.toLowerCase() == "true";

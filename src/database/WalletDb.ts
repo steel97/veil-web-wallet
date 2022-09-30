@@ -23,4 +23,9 @@ export interface IWallet {
     name: string;
     mnemonic: string;
     walletEncryptPassword: string;
+    minimumPossibleUtxos: boolean;
+    nodeUrl: string;
+    nodePassword: string;
+    addressViewUrl: string;
+    txViewUrl: string;
 }

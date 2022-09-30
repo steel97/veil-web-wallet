@@ -1,5 +1,9 @@
-import { sha256 } from "js-sha256";
+import { Sha256 } from "@aws-crypto/sha256-js";
 //import { DateTime } from "luxon";
+
+// hex
+export const toHex = (input: Uint8Array, reverse = false) => reverse ? Buffer.from(input.reverse()).toString("hex") : Buffer.from(input).toString("hex");
+export const fromHex = (input: string, reverse = false) => reverse ? Buffer.from(input, "hex").reverse() : Buffer.from(input, "hex");
 
 // async
 export const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
@@ -53,7 +57,12 @@ export const pad = (num: number, size: number) => {
 
 
 
-export const hash = (base: string) => sha256(base);
+export const hash = (base: string) => {
+    const hash = new Sha256();
+    hash.update(base);
+    const result = hash.digestSync();
+    return toHex(result);
+};
 
 
 
