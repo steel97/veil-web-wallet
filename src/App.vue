@@ -21,7 +21,9 @@
 import "./assets/styles/tailwind.css";
 import "./assets/styles/transitions.css";
 import "./assets/styles/loaders.css";
+import "./assets/styles/qrfix.css";
 import "./assets/fonts/stylesheet.css";
+
 
 import { Logging, LogLevel } from "@/core/Logging";
 import { onMounted, ref } from "vue";
@@ -34,9 +36,9 @@ import { coreUIStore } from "./store/modules/CoreUI";
 import { hash, sleep } from "@/core/Core";
 import { IWallet, WalletDb } from "@/database/WalletDb";
 import { PreferenceKey, Preferences } from "./core/Preferences";
+import { decrypt } from "./core/Crypto";
 import LightwalletService from "./lightwallet/LightwalletService";
 import BaseButton from "./components/ui/BaseButton.vue";
-import { decrypt } from "./core/Crypto";
 
 const uiState = coreUIStore.getState();
 

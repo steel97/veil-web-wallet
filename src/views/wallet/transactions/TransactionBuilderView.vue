@@ -132,7 +132,7 @@
                             <div v-if="!loading">
                                 <BaseButton @click="publish" class="m-auto mt-4 my-1 w-full md:max-w-xs">
                                     {{t("Wallet.Publish")}}</BaseButton>
-                                <BaseButton @click="back" class="m-auto my-1 w-full md:max-w-xs">
+                                <BaseButton @click="backToInitial" class="m-auto my-1 w-full md:max-w-xs">
                                     {{t("Wallet.Back")}}</BaseButton>
                             </div>
                             <div v-else>
@@ -244,6 +244,12 @@ let rawTx: string | undefined = "";
 
 const back = () => {
     router.replace("/wallet");
+};
+
+const backToInitial = () => {
+    address.value = "";
+    amount.value = "";
+    step.value = TxBuildState.INFORMATION;
 };
 
 const next = async () => {

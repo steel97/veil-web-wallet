@@ -40,6 +40,7 @@ module.exports = defineConfig({
       "font-src": ["'self'", "data:"],
       "media-src": "'self'",
       "object-src": "'self'",
+      "child-src": "'self'",
       "frame-src": "'self'",
       // "frame-ancestors": "'self'", // not work in meta
       "form-action": "'self'",
