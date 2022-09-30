@@ -33,10 +33,9 @@ module.exports = defineConfig({
     //config.plugins.push(new HtmlWebpackPlugin());
     config.plugins.push(new CspHtmlWebpackPlugin({
       "base-uri": "'self'",
-      "default-src": "'self'",
       "connect-src": "*",
       "script-src": ["'unsafe-inline'", "'self'", "'unsafe-eval'"],
-      "style-src": ["'unsafe-inline'", "'self'", "'unsafe-eval'", "inline"],
+      "style-src": ["'unsafe-inline'", "'self'", "'unsafe-eval'"],
       "img-src": ["'self'", "data:"],
       "font-src": ["'self'", "data:"],
       "media-src": "'self'",
