@@ -13,6 +13,7 @@ import TransactionsView from "@/views/wallet/TransactionsView.vue";
 import TransactionsTableView from "@/views/wallet/transactions/TransactionsTableView.vue";
 import TransactionBuilderView from "@/views/wallet/transactions/TransactionBuilderView.vue";
 import FAQView from "@/views/wallet/transactions/FAQView.vue";
+import SettingsView from "@/views/wallet/transactions/SettingsView.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -91,6 +92,11 @@ const routes: Array<RouteRecordRaw> = [
             path: "/wallet/faq",
             name: "faq",
             component: FAQView
+          },
+          {
+            path: "/wallet/settings",
+            name: "settings",
+            component: SettingsView
           }
         ]
       }

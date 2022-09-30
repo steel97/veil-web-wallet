@@ -21,6 +21,7 @@
     "TxSummary": "Сводка",
     "AvailableBanalce": "Доступно",
     "SubstractFeeFromAmount": "вычесть комиссию из суммы",
+    "ResetRPC": "Сбросить адрес veil ноды",
     "Addresses": {
         "Main": "Основной",
         "Change": "Сдача"

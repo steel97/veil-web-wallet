@@ -63,7 +63,7 @@
                                 </div>
                                 <div class="mt-4 flex justify-center">
                                     <input type="checkbox" id="substract" class="mr-2" v-model="substractFee" />
-                                    <label>{{t("Wallet.SubstractFeeFromAmount")}}</label>
+                                    <label for="substract">{{t("Wallet.SubstractFeeFromAmount")}}</label>
                                 </div>
                                 <div class="flex justify-center mt-2 items-center">
                                     <div class="mr-2">
@@ -80,7 +80,7 @@
                             </div>
 
                             <div v-if="!loading">
-                                <BaseButton type="submit" @click="next" class="m-auto mt-2 my-1 w-full md:max-w-xs">
+                                <BaseButton type="submit" class="m-auto mt-2 my-1 w-full md:max-w-xs">
                                     {{t("Wallet.Next")}}</BaseButton>
                                 <BaseButton @click="back" class="m-auto my-1 w-full md:max-w-xs">
                                     {{t("Wallet.Back")}}</BaseButton>

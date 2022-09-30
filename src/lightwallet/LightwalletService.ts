@@ -6,10 +6,12 @@ import { AccountType, Chainparams, CVeilAddress, CWatchOnlyTxWithIndex, Lightwal
 
 export default class LightwalletService {
     public static params: Chainparams;
+    public static defaultNodeUrl = process.env.VUE_APP_NODE_URL ?? "";
     public static defaultAddressViewUrl = process.env.VUE_APP_ADDRESS_VIEW_URL ?? "";
     public static defaultTxViewUrl = process.env.VUE_APP_TX_VIEW_URL ?? "";
     public static addressViewUrl = LightwalletService.defaultAddressViewUrl;
     public static txViewUrl = LightwalletService.defaultTxViewUrl;
+    public static useMinimumUtxos = false;
 
     private static _walletData: IWallet;
     private static _wallet: Lightwallet;
@@ -66,7 +68,7 @@ export default class LightwalletService {
                 if (currentAmount >= targetAmount)
                     break;
             }
-            const rawTx = await address.buildTransaction(amountPrepared, recipientAddress, targetUtxos, false);
+            const rawTx = await address.buildTransaction(amountPrepared, recipientAddress, targetUtxos, LightwalletService.useMinimumUtxos);
             if (rawTx == undefined) return undefined;
 
             return rawTx;

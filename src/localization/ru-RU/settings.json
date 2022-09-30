@@ -1,0 +1,31 @@
+{
+    "Title": "Настройки",
+    "VeilNodeUrl": "Veil node адрес",
+    "VeilNodeAuth": "Veil node авторизация (можно оставить пустым)",
+    "TxExplorer": "Адрес обозревателя транзакций",
+    "AddressExplorer": "Адрес обозревателя кошельков",
+    "MinUtxos": "Использовать мин. входов",
+    "Save": "Сохранить",
+    "ChangePassword": "Изменить пароль",
+    "DeleteWallet": "Удалить кошелек",
+    "ResetToDefault": "сбросить",
+    "Saved": "Настройки сохранены!",
+    "ConfirmDelete": "Да, удалить",
+    "DeleteNotice": "Вы собираетесь удалить кошелек! Если вы его удалите, вы можете восстановить его с помощью мнемонической фразы. Вы уверены что хотите удалить кошелек?",
+    "Cancel": "Отмена",
+    "Back": "Назад",
+    "UpdatePassword": "Сохранить пароль",
+    "CurrentPasswordTitle": "Текущий пароль",
+    "CurrentPasswordPlaceholder": "Пароль",
+    "PasswordTitle": "Новый пароль (не обязательно)",
+    "PasswordPlaceholder": "Пароль",
+    "RePasswordTitle": "Повторите пароль",
+    "RePasswordPlaceholder": "Повторите пароль",
+    "PasswordUpdated": "Пароль успешно обновлен!",
+    "Errors": {
+        "PasswordTooShort": "Мин. длина пароля {len} символов",
+        "PasswordNotMatch": "Пароли не совпадают",
+        "Failed": "Ошибка базы данных!",
+        "InvalidPassword": "Неверный пароль!"
+    }
+}

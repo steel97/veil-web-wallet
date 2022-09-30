@@ -66,10 +66,10 @@ import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { WalletDb, IWallet } from "@/database/WalletDb";
 import { PreferenceKey, Preferences } from "@/core/Preferences";
-import BaseButton from "@/components/ui/BaseButton.vue";
-import RouterButton from "@/components/ui/RouterButton.vue";
 import { encrypt } from "@/core/Crypto";
 import { hash, randomString } from "@/core/Core";
+import BaseButton from "@/components/ui/BaseButton.vue";
+import RouterButton from "@/components/ui/RouterButton.vue";
 
 const { t } = useI18n();
 const router = useRouter();
@@ -86,8 +86,8 @@ const walletPassword = ref("");
 const walletRePassword = ref("");
 
 const save = async () => {
-    const minPassLen = 5;
-    const maxNameLen = 32;
+    const minPassLen = parseInt(process.env.VUE_APP_MIN_PASS_LEN ?? "5");
+    const maxNameLen = parseInt(process.env.VUE_APP_MAX_NAME_LEN ?? "32");
     const genMnemonic = uiState.tmpMnemonic.join(" ");
     // double check mnemonic
     if (!Lightwallet.verifyMnemonic(genMnemonic)) {

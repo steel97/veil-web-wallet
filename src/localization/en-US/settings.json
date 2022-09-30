@@ -1,0 +1,31 @@
+{
+    "Title": "Settings",
+    "VeilNodeUrl": "Veil node url",
+    "VeilNodeAuth": "Veil node basic auth (empty for explorer's node)",
+    "TxExplorer": "Transaction explorer url",
+    "AddressExplorer": "Address explorer url",
+    "MinUtxos": "Use minimum utxos",
+    "Save": "Save",
+    "ChangePassword": "Change lock password",
+    "DeleteWallet": "Delete wallet",
+    "ResetToDefault": "reset to default",
+    "Saved": "Settings saved!",
+    "ConfirmDelete": "Yes, delete",
+    "DeleteNotice": "You're going delete your wallet! If you delete it, you can restore it with mnemonic phrase. Are you sure, you want delete wallet?",
+    "Cancel": "Cancel",
+    "Back": "Back",
+    "UpdatePassword": "Update lock password",
+    "CurrentPasswordTitle": "Lock password (optional)",
+    "CurrentPasswordPlaceholder": "Password",
+    "PasswordTitle": "Lock password (optional)",
+    "PasswordPlaceholder": "New password",
+    "RePasswordTitle": "Repeat password",
+    "RePasswordPlaceholder": "Repeat password",
+    "PasswordUpdated": "Password successfully updated!",
+    "Errors": {
+        "PasswordTooShort": "Password should be at least {len} length",
+        "PasswordNotMatch": "Passwords doesn't match",
+        "Failed": "Database error!",
+        "InvalidPassword": "Invalid password!"
+    }
+}

@@ -20,7 +20,7 @@
                 </div>
             </div>
 
-            <BaseButton @click="verify" class="m-auto mt-6 my-1 w-full max-w-xs">
+            <BaseButton type="submit" @click="verify" class="m-auto mt-6 my-1 w-full max-w-xs">
                 {{t("Create.Verify")}}</BaseButton>
             <RouterButton to="/home" class="m-auto my-2 w-full max-w-xs">
                 {{t("Create.Back")}}</RouterButton>

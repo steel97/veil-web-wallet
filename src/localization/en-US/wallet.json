@@ -21,6 +21,7 @@
     "TxSummary": "Summary",
     "AvailableBanalce": "Available",
     "SubstractFeeFromAmount": "substract fee from amount",
+    "ResetRPC": "Reset veil node url",
     "Addresses": {
         "Main": "Main",
         "Change": "Change"

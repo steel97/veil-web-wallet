@@ -6,6 +6,7 @@ import Save from "./save.json";
 import Unlock from "./unlock.json";
 import Wallet from "./wallet.json";
 import FAQ from "./faq.json";
+import Settings from "./settings.json";
 
 const locale: any = {
     Core: Core,
@@ -15,7 +16,8 @@ const locale: any = {
     Save: Save,
     Unlock: Unlock,
     Wallet: Wallet,
-    FAQ: FAQ
+    FAQ: FAQ,
+    Settings: Settings
 };
 
 export default locale;
