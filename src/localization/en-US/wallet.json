@@ -33,6 +33,10 @@
         "Total": "Total"
     },
     "Errors": {
-        "Unknown": "Error occured"
+        "Unknown": "Error occured",
+        "CantExtractFeeFromZero": "Can't extract fee from zero amount",
+        "AmountOverBalance": "Amount is over balance",
+        "UnknownRes": "Error occured: {error}",
+        "AmountMustNotBeNegative": "Amount can't be negative"
     }
 }

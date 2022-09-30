@@ -155,8 +155,9 @@ import { computed } from "@vue/reactivity";
 import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from "vue-qrcode-reader";
 import { getParameterByName } from "@/core/Core";
 import { useRouter } from "vue-router";
-import LightwalletService from "@/lightwallet/LightwalletService";
+import LightwalletService, { BuildTransactionException } from "@/lightwallet/LightwalletService";
 import BaseButton from "@/components/ui/BaseButton.vue";
+import { BuildTransactionResult } from "veil-light";
 
 // eslint-disable-next-line
 const props = defineProps({
@@ -250,10 +251,33 @@ const next = async () => {
     try {
         loading.value = true;
         const tamount = parseFloat(amount.value);
+
+        if (tamount < 0) {
+            errorMessage.value = t("Wallet.Errors.AmountMustNotBeNegative");
+            return;
+        }
+
+        if (substractFee.value && tamount <= 0) {
+            errorMessage.value = t("Wallet.Errors.CantExtractFeeFromZero");
+            return;
+        }
+
+        const available = await LightwalletService.getAvailableBalance(props.addressIndex);
+        if (available < tamount + (substractFee.value ? 0 : LightwalletService.getFee())) {
+            errorMessage.value = t("Wallet.Errors.AmountOverBalance");
+            return;
+        }
+
         const txBuildRes = await LightwalletService.buildTransaction(props.addressIndex, tamount, address.value, substractFee.value);
-        fee.value = LightwalletService.toDisplayValue(txBuildRes?.fee ?? 0);
-        rawTx = txBuildRes?.txid;
-        amount.value = LightwalletService.formatAmount(LightwalletService.toDisplayValue(txBuildRes?.amountSent ?? 0));
+        if ((txBuildRes as BuildTransactionException).errorName != undefined) {
+            errorMessage.value = t("Wallet.Errors.UnknownRes", { error: (txBuildRes as BuildTransactionException).errorName });
+            return;
+        }
+
+        const txBuilt = (txBuildRes as BuildTransactionResult);
+        fee.value = LightwalletService.toDisplayValue(txBuilt.fee ?? 0);
+        rawTx = txBuilt.txid;
+        amount.value = LightwalletService.formatAmount(LightwalletService.toDisplayValue(txBuilt.amountSent ?? 0));
         if (rawTx == undefined) throw new Error();
         step.value = TxBuildState.BUILT;
     } catch {

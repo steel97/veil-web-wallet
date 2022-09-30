@@ -33,6 +33,10 @@
         "Total": "Всего"
     },
     "Errors": {
-        "Unknown": "Произошла ошибка"
+        "Unknown": "Произошла ошибка",
+        "CantExtractFeeFromZero": "Невозможно вычесть комиссию из нулевой суммы",
+        "AmountOverBalance": "Сумма превышает баланс",
+        "UnknownRes": "Произошла ошибка: {error}",
+        "AmountMustNotBeNegative": "Сумма не может быть отрицательной"
     }
 }

@@ -4,6 +4,10 @@ import { IUtxo } from "@/models/IUtxo";
 import { coreUIStore } from "@/store/modules/CoreUI";
 import { AccountType, Chainparams, CVeilAddress, CWatchOnlyTxWithIndex, Lightwallet, LightwalletAccount, LightwalletAddress, mainNetParams, RpcRequester, GetRawMempool } from "veil-light";
 
+export interface BuildTransactionException {
+    errorName: string
+}
+
 export default class LightwalletService {
     public static params: Chainparams;
     public static defaultNodeUrl = process.env.VUE_APP_NODE_URL ?? "";
@@ -69,12 +73,26 @@ export default class LightwalletService {
                     break;
             }
             const rawTx = await address.buildTransaction(amountPrepared, recipientAddress, targetUtxos, LightwalletService.useMinimumUtxos);
-            if (rawTx == undefined) return undefined;
+            if (rawTx == undefined) {
+                const txError: BuildTransactionException = {
+                    errorName: "unknown"
+                };
+                return txError;
+            }
 
             return rawTx;
         } catch (e) {
             Logging.trace(`can't build tx ${e}`, LogLevel.ERROR);
-            return undefined;
+            let errorName = "unknown";
+            try {
+                errorName = (e as any).name as string;
+            } catch {
+
+            }
+            const txError: BuildTransactionException = {
+                errorName: errorName
+            };
+            return txError;
         }
     }
 
