@@ -135,7 +135,11 @@ const resetRPC = async () => {
 };
 
 const switchAddress = async (index: number) => {
+    const curAddressIndex = uiState.addressIndex;
     coreUIStore.setAddressIndex(index);
+    if (curAddressIndex != index) {
+        router.replace("/wallet");
+    }
 };
 
 const navigateToTx = () => {
