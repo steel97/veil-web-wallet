@@ -269,7 +269,7 @@ const next = async () => {
         }
 
         const addr = address.value;
-        if (LightwalletService.isAddressValid(addr)) {
+        if (!LightwalletService.isAddressValid(addr)) {
             errorMessage.value = t("Wallet.Errors.InvalidAddress");
             return;
         }
