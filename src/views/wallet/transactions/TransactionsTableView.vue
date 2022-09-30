@@ -37,7 +37,7 @@
             </a>
         </div>
         <div v-else>
-            <div class="font-semibold flex justify-center mt-20">
+            <div class="font-semibold flex justify-center mt-24">
                 {{t("Wallet.NoTransactions")}}
             </div>
         </div>

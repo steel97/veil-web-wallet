@@ -64,12 +64,12 @@ import { AccountType, Lightwallet, LightwalletAccount, mainNetParams, RpcRequest
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
-import { applyEncryptionMiddleware, cryptoOptions } from "dexie-encrypted";
-import { hash } from "@/core/Core";
 import { WalletDb, IWallet } from "@/database/WalletDb";
 import { PreferenceKey, Preferences } from "@/core/Preferences";
 import BaseButton from "@/components/ui/BaseButton.vue";
 import RouterButton from "@/components/ui/RouterButton.vue";
+import { encrypt } from "@/core/Crypto";
+import { hash, randomString } from "@/core/Core";
 
 const { t } = useI18n();
 const router = useRouter();
@@ -175,27 +175,33 @@ const save = async () => {
     const walname = name.value.length > 0 ? name.value : "Default";
     Preferences.setString(PreferenceKey.PRIMARY_WALLET, walname);
 
-    const curHash = hash(password.value.length > 0 ? password.value : "");
-    const symmetricKey = Buffer.from(curHash, "hex");
+    const curHash = hash(password.value);
+
     const db = new WalletDb(walname);
-    applyEncryptionMiddleware(db, symmetricKey, {
-        wallets: cryptoOptions.NON_INDEXED_FIELDS
-    }, async () => {
-
-    });
-
-    db.setDb(2);
-
     await db.open();
 
     const dbWal: IWallet = {
-        id: 1,
         name: walname,
+        control: "dbencrypted",
         mnemonic: genMnemonic,
-        walletEncryptPassword: walletPassword.value
+        walletEncryptPassword: walletPassword.value,
+        minimumPossibleUtxos: undefined,
+        nodeUrl: undefined,
+        nodePassword: undefined,
+        addressViewUrl: undefined,
+        txViewUrl: undefined
     };
 
-    await db.table("wallets").add(dbWal);
+    const salt = randomString(32);
+    const encodedWallet = await encrypt(curHash, salt, JSON.stringify(dbWal));
+
+    await db.wallets.add({
+        name: dbWal.name,
+        salt: salt,
+        encryptedData: encodedWallet
+    });
+
+    db.close();
 
     // save current IWallet to ui store
     coreUIStore.setCurrentWallet(dbWal);

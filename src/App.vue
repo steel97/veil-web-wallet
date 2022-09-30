@@ -31,12 +31,12 @@ import { useI18n } from "vue-i18n";
 import devTools, { DevToolsEvent } from "devtools-detect";
 import { useTheming } from "./composables/core/Theming";
 import { coreUIStore } from "./store/modules/CoreUI";
-import { applyEncryptionMiddleware, cryptoOptions } from "dexie-encrypted";
-import { hash } from "@/core/Core";
-import { WalletDb } from "@/database/WalletDb";
+import { hash, sleep } from "@/core/Core";
+import { IWallet, WalletDb } from "@/database/WalletDb";
 import { PreferenceKey, Preferences } from "./core/Preferences";
 import LightwalletService from "./lightwallet/LightwalletService";
 import BaseButton from "./components/ui/BaseButton.vue";
+import { decrypt } from "./core/Crypto";
 
 const uiState = coreUIStore.getState();
 
@@ -96,6 +96,8 @@ onMounted(async () => {
     }, 250);
   }*/
 
+  await sleep(100);
+
   LightwalletService.run();
 
   const walname = Preferences.getString(PreferenceKey.PRIMARY_WALLET, "");
@@ -105,30 +107,46 @@ onMounted(async () => {
   }
 
   const emptyHash = hash("");
-  const symmetricKey = Buffer.from(emptyHash, "hex");
-  const db = new WalletDb(walname);
-  applyEncryptionMiddleware(db, symmetricKey, {
-    wallets: cryptoOptions.NON_INDEXED_FIELDS
-  }, async () => {
-    // redirect to enter password state
-    router.replace("/home/unlock");
-  });
-
+  let db: WalletDb | undefined;
   try {
-    db.setDb(2);
+    db = new WalletDb(walname);
+    await db.open();
 
-    const wallet = await db.wallets.get(1);
-    if (wallet == undefined) {
-      // drop table?
+    const encryptedWallet = await db.wallets.where("name").equals(walname).first();
+    if (encryptedWallet == undefined) {
+      db.close();
+      router.replace("/home");
       return;
     }
+    // try decrypt
+    const wallet = JSON.parse(await decrypt(emptyHash, encryptedWallet.salt, encryptedWallet.encryptedData)) as IWallet;
+    if (wallet.control != "dbencrypted") {
+      router.replace("/home/unlock");
+      db.close();
+      return;
+    }
+    db.close();
+
 
     coreUIStore.setCurrentWallet(wallet);
     coreUIStore.setPasshash(emptyHash);
 
+    db.close();
     router.replace("/wallet");
-  } catch {
-    router.replace("/home/unlock");
+  } catch (error: any) {
+    const name = error.name;
+    try {
+      db?.close();
+      if (name == "VersionError") {
+        router.replace("/home");
+        return;
+      }
+
+      router.replace("/home/unlock");
+
+    } catch {
+      router.replace("/home");
+    }
   }
 });
 </script>

@@ -3,7 +3,12 @@
     "PasswordTitle": "Your password",
     "PasswordPlaceholder": "Password",
     "Unlock": "Unlock",
+    "Delete": "Delete",
+    "DeleteNotice": "You're going delete your wallet! If you delete it, you can restore it with mnemonic phrase. Are you sure, you want delete wallet?",
+    "ForceDelete": "Yes, delete",
+    "Cancel": "Cancel",
     "Errors": {
+        "Failed": "Database error!",
         "InvalidPassword": "Invalid password!"
     }
 }
