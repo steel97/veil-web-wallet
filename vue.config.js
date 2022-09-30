@@ -42,11 +42,9 @@ module.exports = defineConfig({
       "object-src": "'self'",
       "child-src": "'self'",
       "frame-src": "'self'",
-      "worker-src": "*",
       // "frame-ancestors": "'self'", // not work in meta
       "form-action": "'self'",
       "upgrade-insecure-requests": "",
-      "block-all-mixed-content": "",
       "manifest-src": "'self'"
     }));
 
