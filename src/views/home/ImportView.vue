@@ -50,7 +50,7 @@ const pasteHandle = (event: ClipboardEvent, index: number) => {
     if (pastedData != undefined) {
         // parse clipboard
         const parsed = pastedData.split(" ");
-        var mnemonicCopy = [...mnemonic.value.slice()];
+        var mnemonicCopy = [...mnemonic.value];
         for (let i = index; i < mnemonic.value.length; i++) {
             mnemonicCopy[i] = parsed[i - index].trim().toLowerCase();
         }
