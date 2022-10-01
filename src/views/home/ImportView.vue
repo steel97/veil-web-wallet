@@ -15,6 +15,7 @@
                     <span class="w-10">{{(index + 1)}})</span>
                     <span class="px-2 py-2 rounded w-full bg-gray-200 dark:bg-gray-600 dark:text-gray-300">
                         <input type="text" v-model="mnemonic[index]"
+                            @paste.prevent="payload => pasteHandle(payload, index)"
                             class="!rounded-none !outline-none !focus:ring-transparent bg-transparent w-full border-b-2 border-gray-400 lowercase" />
                     </span>
                 </div>
@@ -42,6 +43,21 @@ const mnemonic = ref<Array<string>>(new Array(24));
 const { t } = useI18n();
 const router = useRouter();
 const errorMessage = ref("");
+
+const pasteHandle = (event: ClipboardEvent, index: number) => {
+    const clipboardData = event.clipboardData;
+    const pastedData = clipboardData?.getData("Text");
+    if (pastedData != undefined) {
+        // parse clipboard
+        const parsed = pastedData.split(" ");
+        var mnemonicCopy = [...mnemonic.value.slice()];
+        for (let i = index; i < mnemonic.value.length; i++) {
+            mnemonicCopy[i] = parsed[i - index].trim().toLowerCase();
+        }
+
+        mnemonic.value = mnemonicCopy;
+    }
+};
 
 const importWallet = () => {
     const tprepared: Array<string> = [];
