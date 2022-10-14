@@ -268,7 +268,7 @@ const next = async () => {
             return;
         }
 
-        const available = await LightwalletService.getAvailableBalance(props.addressIndex);
+        const available = parseFloat(LightwalletService.formatAmount(await LightwalletService.getAvailableBalance(props.addressIndex)));
         if (available < tamount + (substractFee.value ? 0 : LightwalletService.getFee())) {
             errorMessage.value = t("Wallet.Errors.AmountOverBalance");
             return;
